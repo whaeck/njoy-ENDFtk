@@ -158,8 +158,9 @@ SCENARIO( "tree::File" ) {
                                chunkMT102() + validSEND() +
                                validFEND();
 
-      auto stop = duplicates.end();
+      auto size = duplicates.size();
       duplicates += validFEND();
+      auto stop = duplicates.begin() + size;
 
       auto position = duplicates.begin();
       auto start = duplicates.begin();
@@ -214,8 +215,9 @@ SCENARIO( "tree::File" ) {
                                chunkMT2() + validSEND() +
                                chunkMT102() + validSEND();
 
-      auto stop = duplicates.end();
+      auto size = duplicates.size();
       duplicates += chunkMF4();
+      auto stop = duplicates.begin() + size;
 
       auto position = duplicates.begin();
       auto start = duplicates.begin();
