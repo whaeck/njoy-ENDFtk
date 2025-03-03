@@ -13,6 +13,12 @@
 #include "ENDFtk/section.hpp"
 #include "ENDFtk/section/ExplicitCovariance.hpp"
 
+// fix a MacOS issue with an NL1 macro being defined at this point
+#ifdef NL1
+#undef NL1
+#define __REDEFINE_NL1__
+#endif
+
 namespace njoy {
 namespace ENDFtk {
 namespace section{
@@ -90,5 +96,11 @@ namespace section{
 } // section namespace
 } // ENDFtk namespace
 } // njoy namespace
+
+// fix a MacOS issue with an NL1 macro being defined at this point
+#ifdef __REDEFINE_NL1__
+#define         NL1     0x00000100
+#undef __REDEFINE_NL1__
+#endif
 
 #endif
