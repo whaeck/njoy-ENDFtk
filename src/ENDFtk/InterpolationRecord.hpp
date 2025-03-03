@@ -69,8 +69,6 @@ namespace ENDFtk {
     using record::InterpolationBase::print;
   };
 
-  using TAB2 = InterpolationRecord;
-
 } // ENDFtk namespace
 } // njoy namespace
 
