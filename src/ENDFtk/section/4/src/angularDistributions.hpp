@@ -14,6 +14,10 @@ auto angularDistributions() const {
                     return std20::views::empty<Variant>; },
                [] ( const MixedDistributions& distributions ) -> VariantRange
                   { return distributions.angularDistributions(); },
+               [] ( const LegendreDistributions& distributions ) -> VariantRange
+                  { return distributions.angularDistributions(); },
+               [] ( const TabulatedDistributions&  distributions ) -> VariantRange
+                  { return distributions.angularDistributions(); },
                [&] ( const auto& distributions ) -> VariantRange
                    { using namespace njoy::tools;
                      return distributions.angularDistributions()
