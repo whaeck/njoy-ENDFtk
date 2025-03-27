@@ -3,7 +3,7 @@ include( FetchContent )
 
 FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         204c0cf81eab97f51d3f8372c69fcdfd073ce60b  # tag: v0.4.2
+    GIT_TAG         07c6d7a4a4d2f685d91ede05d97b53cfcc9e47ae   # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################
