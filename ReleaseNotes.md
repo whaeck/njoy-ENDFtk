@@ -32,6 +32,8 @@ The version of the tools dependency and the pybind11 dependency was upped to the
 
 Valgrind testing was added to the GitHub CI to detect memory issues in the future.
 
+A bug was fixed for MF1 MT451 descriptions strings when they did not include a terminating new line character
+
 ## [ENDFtk v1.1.0](https://github.com/njoy/ENDFtk/pull/198)
 This update adds additional interface functions to complete the human readable and ENDF speak interface for many objects:
   - the NBT() and INT() interface functions to complement the boundaries() and interpolants() functions already present in TAB1 and TAB2 style components
