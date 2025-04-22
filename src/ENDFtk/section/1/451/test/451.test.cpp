@@ -19,6 +19,7 @@ void verifyChunk( const section::Type< 1, 451 >& );
 std::string invalidNWD();
 std::string invalidNXC();
 std::string description();
+std::string description_missing_nl();
 std::vector< TextRecord > textRecords();
 std::vector< DirectoryRecord > index();
 std::string validSEND();
@@ -51,6 +52,51 @@ SCENARIO( "section::Type< 1, 451 >" ) {
       double temp = 19.;
       int ldrv = 21;
       std::string text = description();
+
+      section::Type< 1, 451 > chunk( zaid, awr, lrp, lfi, nlib, nmod,
+                                     elis, sta, lis, liso, nfor,
+                                     awi, emax, lrel, nsub, nver,
+                                     temp, ldrv,
+                                     text,
+                                     index() );
+
+      THEN( "a section::Type< 1, 451 > can be constructed and "
+            "members can be tested" ) {
+
+        verifyChunk( chunk );
+      } // THEN
+
+      THEN( "it can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        chunk.print( output, 125, 1 );
+
+        CHECK( buffer == sectionString );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is given explicitly" ) {
+
+      int zaid = 1001;
+      double awr = 0.9991673;
+      int lrp = 1;
+      int lfi = 2;
+      int nlib = 3;
+      int nmod = 4;
+      double elis = 5.;
+      double sta = 0.;
+      int lis = 7;
+      int liso = 8;
+      int nfor = 12;
+      double awi = 13.;
+      double emax = 14.;
+      int lrel = 15;
+      int nsub = 17;
+      int nver = 18;
+      double temp = 19.;
+      int ldrv = 21;
+      std::string text = description_missing_nl();
 
       section::Type< 1, 451 > chunk( zaid, awr, lrp, lfi, nlib, nmod,
                                      elis, sta, lis, liso, nfor,
@@ -326,6 +372,19 @@ std::string description() {
     " **************************************************************** \n"
     "                                                                  \n"
     " **************************************************************** \n";
+}
+
+std::string description_missing_nl() {
+  return
+    "  1-H -  1 LANL       EVAL-JUL16 G.M.Hale                         \n"
+    "                      DIST-JAN17                       20170124   \n"
+    "----ENDF/B-VIII.0     MATERIAL  125                               \n"
+    "-----INCIDENT NEUTRON DATA                                        \n"
+    "------ENDF-6 FORMAT                                               \n"
+    "                                                                  \n"
+    " **************************************************************** \n"
+    "                                                                  \n"
+    " **************************************************************** ";
 }
 
 std::vector< DirectoryRecord > index() {
