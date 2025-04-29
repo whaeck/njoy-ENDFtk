@@ -21,6 +21,7 @@ In addition, the following issues were corrected:
   - All electron subshell identifiers in MF26 MT533 are returned as an integers.
   - gcc-12 optimisation caused issues with MF8 MT457 values to not be properly initialised upon reading the section as a string. While this particular issue was corrected, caution is advised when using gcc-12 on Mac arm64 systems as similar issues may still be present in other parts of the library.
   - The MacOS 15.2 system include libraries seem to define a TAB1 and TAB2 macro, which causes a compiler error in ENDFtk since we define aliases for the TAB1 and TAB2 record. These aliases are not used in any of the ENDFtk source code so we removed them to fix the issue.
+  - A bug was fixed for MF1 MT451 descriptions strings when they did not include a terminating new line character
 
 The range-v3 dependency has been removed and replaced with a partial implementation of the C++20 and C++23 ranges standard (see the tools dependency release notes for more information). This change has no impact on functionality.
 
@@ -31,8 +32,6 @@ The GitHub CI was also updated: macos-14 (arm64 architecture) was added in addit
 The version of the tools dependency and the pybind11 dependency was upped to the latest release (no functionality changes result from these dependency changes).
 
 Valgrind testing was added to the GitHub CI to detect memory issues in the future.
-
-A bug was fixed for MF1 MT451 descriptions strings when they did not include a terminating new line character
 
 ## [ENDFtk v1.1.0](https://github.com/njoy/ENDFtk/pull/198)
 This update adds additional interface functions to complete the human readable and ENDF speak interface for many objects:
