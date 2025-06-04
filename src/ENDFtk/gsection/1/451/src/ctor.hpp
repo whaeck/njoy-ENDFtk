@@ -1,0 +1,64 @@
+private:
+
+gType(int zaid, double awr, int zero1, int nz, int gid, int ntw,
+    ListRecord&& list) :
+    BaseWithoutMT(zaid, awr), nz_(nz), gid_(gid), ntw_(ntw),
+    parameters_( std::move(list)) {}    
+
+public:
+/**
+ *  @brief Constructor
+ *  @param[in] zaid     the ZA value of the material
+ *  @param[in] awr      the atomic weight ratio
+ *  @param[in] zero1    empty allocation (spacer)
+ *  @param[in] nz       the number of sig_0 (dil. values)
+ *  @param[in] gid      the GENDF identifier (-1)
+ *  @param[in] ntw      the number of words in title
+ *  @param[in] temp     the temperature evaluated
+ *  @param[in] zero2    empty allocation
+ *  @param[in] ngn      number of neutron groups
+ *  @param[in] ngg      number of photon groups
+ *  @param[in] nw       number of words in list
+ *  @param[in] zero3    empty allocation
+ *  @param[in] zero4    empty allocation (used to be TITLE)
+ *  @param[in] sigz     dilution values (size(nz))
+ *  @param[in] egn      neutron group edges (size(ngn))
+ *  @param[in] egg      photon group edges (size(ngg))
+*/
+
+gType( int zaid, double awr, int zero1, int nz, int gid, int ntw, double temp,
+      double zero2, int ngn, int ngg, int nw, int zero3, int zero4, 
+      std::vector<double> sigz, std::vector<double> egn, std::vector<double> egg ) :
+    BaseWithoutMT(zaid, awr), nz_(nz), gid_(gid), ntw_(ntw),
+    parameters_(makeParameters(temp, zero2, ngn, ngg, zero3, sigz, egn, egg)) {}
+
+/**
+ *  @brief Constructor (from buffer)
+ * 
+ *  @tparam Iterator        a buffer iterator
+ * 
+ *  @param[in] head         the head record of the section
+ *  @param[in] begin        the current position in the buffer
+ *  @param[in] end          the end of the buffer
+ *  @param[in] lineNumber   the current line number
+ *  @param[in] MAT          the expected MAT number
+ */
+template<typename Iterator>
+gType(  HEAD& head,
+        Iterator& begin,
+        const Iterator& end,
+        long& lineNumber,
+        int MAT)
+    try:
+        BaseWithoutMT( head, MAT, 1), nz_(head.L2()), gid_(head.N1()),
+        ntw_(head.N2()),
+        parameters_(readParameters(begin, end, lineNumber, MAT)) {
+        readFEND(begin, end, lineNumber, MAT);
+        }
+    catch(std::exception& e) {
+        Log::info("Trouble reading gsection 451 of File 1 of Material {}",
+                    MAT);
+        Log::info("lineNumber: {}", lineNumber);
+        throw e;
+    }
+    

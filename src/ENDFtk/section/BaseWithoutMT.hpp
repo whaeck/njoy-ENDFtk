@@ -55,6 +55,8 @@ namespace section{
     constexpr double atomicWeightRatio() const { return this->AWR(); }
 
     #include "ENDFtk/section/BaseWithoutMT/src/readSEND.hpp"
+    #include "ENDFtk/section/BaseWithoutMT/src/readFEND.hpp"
+    
   };
 
 } // section namespace
