@@ -17,8 +17,6 @@ using gsection1451 = section::gType<1, 451>;
 std::string chunk();
 std::string validFEND();
 void verifyChunk( const section::gType<1 , 451>& );
-// std::vector<ControlRecord> contRecords();
-// std::vector<ListRecord> listRecords();
 
 SCENARIO("section::gType<1, 451>") {
     GIVEN("valid data for a section::gType<1,451>") {
@@ -78,7 +76,7 @@ SCENARIO("section::gType<1, 451>") {
 
             section::gType<1, 451> chunk(head, begin, end, lineNumber, 9228);
 
-            THEN("a sectiongType<1,451> can be constructed and "
+            THEN("a section gType<1,451> can be constructed and "
                  "members can be tested") {
                 verifyChunk(chunk);
             } // THEN

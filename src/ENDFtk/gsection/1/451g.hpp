@@ -46,7 +46,7 @@ namespace section {
         /**
          *  @brief Return the number of dilution values
          */
-        int getNumberSigma0() const {return this->NZ();}
+        int getNumberDilutions() const {return this->NZ();}
 
         /**
          *  @brief Return the GENDF file ID
