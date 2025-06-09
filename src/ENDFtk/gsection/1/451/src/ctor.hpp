@@ -1,8 +1,8 @@
 private:
 
-gType(int zaid, double awr, int zero1, int nz, int gid, int ntw,
+GType(int zaid, double awr, int nz,
     ListRecord&& list) :
-    BaseWithoutMT(zaid, awr), nz_(nz), gid_(gid), ntw_(ntw),
+    BaseWithoutMT(zaid, awr), nz_(nz),
     parameters_( std::move(list)) {}    
 
 public:
@@ -26,11 +26,11 @@ public:
  *  @param[in] egg      photon group edges (size(ngg))
 */
 
-gType( int zaid, double awr, int zero1, int nz, int gid, int ntw, double temp,
-      double zero2, int ngn, int ngg, int nw, int zero3, int zero4, 
+GType( int zaid, double awr, int nz, double temp,
+       int ngn, int ngg,
       std::vector<double> sigz, std::vector<double> egn, std::vector<double> egg ) :
-    BaseWithoutMT(zaid, awr), nz_(nz), gid_(gid), ntw_(ntw),
-    parameters_(makeParameters(temp, zero2, ngn, ngg, zero3, sigz, egn, egg)) {}
+    BaseWithoutMT(zaid, awr), nz_(nz),
+    parameters_(makeParameters(temp, ngn, ngg, sigz, egn, egg)) {}
 
 /**
  *  @brief Constructor (from buffer)
@@ -44,14 +44,13 @@ gType( int zaid, double awr, int zero1, int nz, int gid, int ntw, double temp,
  *  @param[in] MAT          the expected MAT number
  */
 template<typename Iterator>
-gType(  HEAD& head,
+GType(  HEAD& head,
         Iterator& begin,
         const Iterator& end,
         long& lineNumber,
         int MAT)
     try:
-        BaseWithoutMT( head, MAT, 1), nz_(head.L2()), gid_(head.N1()),
-        ntw_(head.N2()),
+        BaseWithoutMT( head, MAT, 1), nz_(head.L2()),
         parameters_(readParameters(begin, end, lineNumber, MAT)) {
         readFEND(begin, end, lineNumber, MAT);
         }

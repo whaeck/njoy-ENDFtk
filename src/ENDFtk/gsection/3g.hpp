@@ -17,16 +17,25 @@ namespace ENDFtk {
 namespace section {
 
     template<>
-    class ENDFTK_PYTHON_EXPORT gType<3> :
+    class ENDFTK_PYTHON_EXPORT GType<3> :
         protected Base {
-        
 
         /* fields */
         int nl_;
         int nz_;
         int lrflag_;
         int ngn_;
+        // TODO: Make this a vector of Data Records
         std::map<unsigned int, DataRecord> records_;
+
+// TODO: implement abstraction; read in the data but format everything as vectors.
+// This entails reading in GENDF -> internally sotre as vectors -> write out GENDF
+//   auto column( unsigned int i ) const {
+
+//     using namespace njoy::tools;
+//     return this->records_
+//              | std20::views::transform( [] ( auto&& record ) { return record.list()[i]; } );
+//   }
 
         /* auxiliary functions */
 
@@ -47,7 +56,7 @@ namespace section {
         /**
          *  @brief Return the number of legendre moments.
          */
-        int getNumberLegendreMoments() const {return this->NL();}
+        int numberMoments() const {return this->NL();}
 
         /**
          *  @brief Return the number of dilution values.
@@ -57,7 +66,7 @@ namespace section {
         /**
          *  @brief Return the number of dilution values.
          */        
-        int getNumberDilutions() const {return this->NZ();}
+        int numberDilutions() const {return this->NZ();}
 
         /**
          *  @brief Return the break up identifier flag.
@@ -67,7 +76,7 @@ namespace section {
         /**
          *  @brief Return the break up identifier flag.
          */
-        int getBreakUpID() const {return this->LRFLAG();}
+        int breakUpID() const {return this->LRFLAG();}
 
         /**
          *  @brief Return the number of neutron energy bins
@@ -77,14 +86,14 @@ namespace section {
         /**
          *  @brief Return the number of neutron energy bins
          */
-        int getNumberNeutronGroups() const {return this->NGN();}
+        int numberNeutronGroups() const {return this->NGN();}
 
         /**
          *  @brief Return a group's DataRecord
          * 
          *  @param[in] group    the group index
          */
-        const auto& getRecord_G(int group) const {
+        const auto& groupRecord(int group) const {
             return this->records_.at(group);
         }
 
@@ -112,13 +121,13 @@ namespace section {
          *  @param[in] order    the legendre order
          *  @param[in] sigz_idx the dilution index
          */
-        double getValue( int block, int group, int order, int sigz_idx) const{
+        double value( int block, int group, int order, int sigz_idx) const{
             if (!this->hasRecord(group)) {
                 return 0.0;
             }
 
             // else grab value
-            const auto& values = this->getRecord_G(group).data(block);
+            const auto& values = this->groupRecord(group).data(block);
             return values[this->nl_ * sigz_idx + order];
         }
 

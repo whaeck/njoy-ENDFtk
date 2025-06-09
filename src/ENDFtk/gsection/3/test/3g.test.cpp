@@ -17,24 +17,24 @@ std::string validSEND();
 std::string validMEND();
 std::string validTEND();
 
-void verifyChunk(const section::gType<3>& );
+void verifyChunk(const section::GType<3>& );
 
-SCENARIO("section::gType<3>") {
+SCENARIO("section::GType<3>") {
     
-    GIVEN("valid data for a section::gType<3>"){
+    GIVEN("valid data for a section::GType<3>"){
         std::string sectionString = chunk() + validSEND();
 
         WHEN("the data is given as a string") {
 
-        std::string line = chunk();
+        std::string line = chunk() + validSEND();
         auto begin = line.begin();
         auto end = line.end();
         long lineNumber = 0;
         auto head = StructureDivision(begin, end, lineNumber);
 
-        section::gType<3> chunk(asHead(head), begin, end, lineNumber, 9228);
+        section::GType<3> chunk(asHead(head), begin, end, lineNumber, 9228);
 
-            THEN("a section gType<3> can be constructed and members can be tested") {
+            THEN("a section GType<3> can be constructed and members can be tested") {
                 verifyChunk(chunk);
             } // THEN
         } // WHEN
@@ -138,10 +138,10 @@ std::string chunk() {
 
 std::string validSEND() {
     return
-    "                                                                  9228 3  099999\n";
+    "                                                                  9228 3  0     \n";
 }
 
-void verifyChunk(const section::gType<3>& chunk) {
+void verifyChunk(const section::GType<3>& chunk) {
     CHECK(92235 == chunk.ZA());
     CHECK(2 == chunk.NL());
     CHECK(30 == chunk.NGN());

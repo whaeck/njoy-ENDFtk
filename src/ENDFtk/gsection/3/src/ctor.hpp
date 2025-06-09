@@ -1,6 +1,6 @@
 protected:
 
-    gType(int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
+    GType(int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
         std::map<unsigned int, DataRecord > && records)
         :
         Base(zaid, awr, mt), nl_(nl), nz_(nz), lrflag_(lrflag), ngn_(ngn),
@@ -22,11 +22,11 @@ public:
      *  @param[in] ngn      the number of neutron energy bins
      *  @param[in] records  the data records 
      */
-    gType(int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
+    GType(int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
         std::vector<DataRecord>&& records)
         :
         Base(zaid, awr, mt), nl_(nl), nz_(nz), lrflag_(lrflag), ngn_(ngn),
-        std::move(mapRecords(std::move(records))) {}
+        records_(mapRecords(std::move(records))) {}
 
     /**
      *  @brief Constructor from buffer/string
@@ -40,13 +40,13 @@ public:
      *  @param[in] MAT          the expected MAT number
      */
     template<typename Iterator>
-    gType(const HEAD& head,
+    GType(const HEAD& head,
           Iterator& begin,
           const Iterator& end,
           long& lineNumber,
           int MAT)
         try:
-            gType(head.MT(), head.ZA(), head.AWR(), head.L1(),
+            GType(head.MT(), head.ZA(), head.AWR(), head.L1(),
              head.L2(), head.N1(), head.N2(),
             readRecords(begin, end, MAT, head.MF(),
                         head.MT(), head.N2())) {
