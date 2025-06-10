@@ -1,12 +1,12 @@
 protected:
 
-    GType(int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
-        std::map<unsigned int, DataRecord > && records)
-        :
-        Base(zaid, awr, mt), nl_(nl), nz_(nz), lrflag_(lrflag), ngn_(ngn),
-        records_(records) {
-            // verifyRecords();
-    }
+    // GType(int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
+    //     std::vector< DataRecord >&& records)
+    //     :
+    //     Base(zaid, awr, mt), nl_(nl), nz_(nz), lrflag_(lrflag), ngn_(ngn),
+    //     records_(records) {
+    //         // verifyRecords();
+    // }
 
 public:
 
@@ -26,7 +26,7 @@ public:
         std::vector<DataRecord>&& records)
         :
         Base(zaid, awr, mt), nl_(nl), nz_(nz), lrflag_(lrflag), ngn_(ngn),
-        records_(mapRecords(std::move(records))) {}
+        records_(std::move(records)) {}
 
     /**
      *  @brief Constructor from buffer/string

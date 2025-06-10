@@ -1,13 +1,13 @@
 template<typename Iterator>
 static auto readRecords(Iterator& it, const Iterator& end, 
                         int MAT, int MF, int MT, int NGN) {
-    std::map<unsigned int, DataRecord> mapped_record;
+    std::vector<DataRecord> records;
     do {
         long lineNumber = 0;
         auto record = DataRecord(it, end, lineNumber, MAT, MF, MT);
-        mapped_record.emplace(record.IG(), record);
+        records.emplace_back(record);
     }
-    while (mapped_record.rbegin()->first < NGN);
+    while (records.size() < NGN); //TODO: fix this
     
-    return mapped_record;
+    return records;
 }

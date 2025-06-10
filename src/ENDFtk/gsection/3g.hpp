@@ -9,6 +9,7 @@
 #include "ENDFtk/macros.hpp"
 #include "ENDFtk/HeadRecord.hpp"
 #include "ENDFtk/DataRecord.hpp"
+#include "ENDFtk/ControlRecord.hpp"
 #include "ENDFtk/section.hpp"
 #include "ENDFtk/readSequence.hpp"
 
@@ -26,7 +27,7 @@ namespace section {
         int lrflag_;
         int ngn_;
         // TODO: Make this a vector of Data Records
-        std::map<unsigned int, DataRecord> records_;
+        std::vector<DataRecord> records_;
 
 // TODO: implement abstraction; read in the data but format everything as vectors.
 // This entails reading in GENDF -> internally sotre as vectors -> write out GENDF
@@ -42,7 +43,7 @@ namespace section {
     public:
 
         /* constructor */
-        #include "ENDFtk/gsection/3/src/mapRecords.hpp"
+        // #include "ENDFtk/gsection/3/src/mapRecords.hpp"
         #include "ENDFtk/gsection/3/src/readRecords.hpp"
         #include "ENDFtk/gsection/3/src/ctor.hpp"
         
@@ -97,39 +98,41 @@ namespace section {
             return this->records_.at(group);
         }
 
-        /**
-         *  @brief Check if group has DataRecord
-         * 
-         *  @param[in] group    the group index
-         */
-        bool hasRecord(int group) const {
-            return this->records_.find(group) != this->records_.end();
-        }
+        // /**
+        //  *  @brief Check if group has DataRecord
+        //  * 
+        //  *  @param[in] group    the group index
+        //  */
+        // bool hasRecord(int group) const {
+        //     return this->records_.find(group) != this->records_.end();
+        // }
 
-        /**
-         *  @brief Return view of record data
-         */
-        auto RECORD() const {
-            using namespace njoy::tools;
-            return std20::ranges::views::values(this->records_);}
+        // /**
+        //  *  @brief Return view of record data
+        //  */
+        // auto RECORD() const {
+        //     using namespace njoy::tools;
+        //     return std20::ranges::views::values(this->records_);}
         
-        /**
-         *  @brief Return rxn value for given energy, legendre order, and dilution value
-         * 
-         *  @param[in] block    the block index
-         *  @param[in] group    the group index
-         *  @param[in] order    the legendre order
-         *  @param[in] sigz_idx the dilution index
-         */
-        double value( int block, int group, int order, int sigz_idx) const{
-            if (!this->hasRecord(group)) {
-                return 0.0;
-            }
+        // /**
+        //  *  @brief Return rxn value for given energy, legendre order, and dilution value
+        //  * 
+        //  *  @param[in] block    the block index
+        //  *  @param[in] group    the group index
+        //  *  @param[in] order    the legendre order
+        //  *  @param[in] sigz_idx the dilution index
+        //  */
+        // double value( int block, int group, int order, int sigz_idx) const{
+        //     if (!this->hasRecord(group)) {
+        //         return 0.0;
+        //     }
 
-            // else grab value
-            const auto& values = this->groupRecord(group).data(block);
-            return values[this->nl_ * sigz_idx + order];
-        }
+        //     // else grab value
+        //     const auto& values = this->groupRecord(group).data(block);
+        //     return values[this->nl_ * sigz_idx + order];
+        // }
+
+        #include "ENDFtk/gsection/3/src/print.hpp"
 
         using Base::MT;
         using Base::sectionNumber;

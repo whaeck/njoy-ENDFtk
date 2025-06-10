@@ -37,6 +37,14 @@ SCENARIO("section::GType<3>") {
             THEN("a section GType<3> can be constructed and members can be tested") {
                 verifyChunk(chunk);
             } // THEN
+
+            THEN("it can be printed") {
+                std::string buffer;
+                auto output = std::back_inserter(buffer);
+                chunk.print(output, 9228, 3, 1);
+                
+                CHECK(buffer == sectionString);
+            }
         } // WHEN
     } // GIVEN
 } // SCENARIO
@@ -144,6 +152,12 @@ std::string validSEND() {
 void verifyChunk(const section::GType<3>& chunk) {
     CHECK(92235 == chunk.ZA());
     CHECK(2 == chunk.NL());
+    CHECK(2 == chunk.numberMoments());
     CHECK(30 == chunk.NGN());
+    CHECK(30 == chunk.numberNeutronGroups());
     CHECK(3 == chunk.NZ());
+    CHECK(3 == chunk.numberDilutions());
+    CHECK(0 == chunk.LRFLAG());
+    CHECK(0 == chunk.breakUpID());
+
 }
