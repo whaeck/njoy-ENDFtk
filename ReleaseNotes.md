@@ -25,7 +25,7 @@ In addition, the following issues were corrected:
 
 The range-v3 dependency has been removed and replaced with a partial implementation of the C++20 and C++23 ranges standard (see the tools dependency release notes for more information). This change has no impact on functionality.
 
-A few updates were made in the CMake files and a few source files for Windows compilation issues.
+A few updates were made in the CMake files and a few source files for Windows compilation issues. We now also use shacl_cmake to be in line with ACEtk.
 
 The GitHub CI was also updated: macos-14 (arm64 architecture) was added in addition to macos-13 (intel architecture).
 
