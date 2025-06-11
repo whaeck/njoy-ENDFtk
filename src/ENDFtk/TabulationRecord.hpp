@@ -114,8 +114,6 @@ namespace ENDFtk {
     #include "ENDFtk/TabulationRecord/src/print.hpp"
   };
 
-  using TAB1 = TabulationRecord;
-
 } // ENDFtk namespace
 } // njoy namespace
 
