@@ -18,7 +18,10 @@ public:
   /**
    *  @brief Return the secondary subshell designator
    */
-  auto SUBJ() const { return this->chunk[0]; }
+  unsigned int SUBJ() const {
+
+    return static_cast< unsigned int >( std::round( this->chunk[0] ) );
+  }
 
   /**
    *  @brief Return the secondary subshell designator
@@ -28,12 +31,25 @@ public:
   /**
    *  @brief Return the tertiary subshell designator
    */
-  auto SUBK() const { return this->chunk[1]; }
+  unsigned int SUBK() const {
+
+    return static_cast< unsigned int >( std::round( this->chunk[1] ) );
+  }
 
   /**
    *  @brief Return the tertiary subshell designator
    */
   auto tertiarySubshellDesignator() const { return this->SUBK(); }
+
+  /**
+   *  @brief Return whether or not the transition is radiative
+   */
+  bool isRadiative() const { return this->SUBK() == 0; }
+
+  /**
+   *  @brief Return whether or not the transition is non-radiative
+   */
+  bool isNonRadiative() const { return ! this->isRadiative(); }
 
   /**
    *  @brief Return the transition energy

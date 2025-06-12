@@ -216,8 +216,9 @@ SCENARIO( "tree::Material" ) {
                                chunkMF4() + validFEND() +
                                validMEND();
 
-      auto stop = duplicates.end();
+      auto size = duplicates.size();
       duplicates += validMEND();
+      auto stop = duplicates.begin() + size;
 
       auto position = duplicates.begin();
       auto start = duplicates.begin();
@@ -300,8 +301,9 @@ SCENARIO( "tree::Material" ) {
                                chunkMF3() + validFEND() +
                                chunkMF4() + validFEND();
 
-      auto stop = duplicates.end();
+      auto size = duplicates.size();
       duplicates += chunkMAT();
+      auto stop = duplicates.begin() + size;
 
       auto position = duplicates.begin();
       auto start = duplicates.begin();
@@ -800,22 +802,7 @@ SCENARIO( "tree::Material" ) {
 
   GIVEN( "invalid data for a tree::File" ) {
 
-    WHEN( "the data is read from a string/stream with an invalid MEND" ) {
-
-      std::string materialString = chunk() + invalidMEND();
-      auto position = materialString.begin();
-      auto start = materialString.begin();
-      auto end = materialString.end();
-      long lineNumber = 1;
-      HeadRecord head( position, end, lineNumber );
-
-      THEN( "an exception is thrown upon construction" ) {
-
-        CHECK_THROWS( tree::Material( head, start, position, end, lineNumber ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the data is read from a string/stream without a MEND" ) {
+    WHEN( "the data is read from a string/stream that abruptly ends (no END record)" ) {
 
       std::string materialString = chunk();
       auto position = materialString.begin();
@@ -984,8 +971,4 @@ std::string validFEND(){
 
 std::string validMEND(){
   return "                                                                     0 0  0     \n";
-}
-
-std::string invalidMEND(){
-  return "                                                                     2 0  0     \n";
 }

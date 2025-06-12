@@ -12,8 +12,9 @@ class ENDFTK_PYTHON_EXPORT SubshellData : protected ListRecord {
 
   auto column( unsigned int i ) const {
 
-    return ListRecord::list() | ranges::views::drop_exactly( 6 + i )
-                              | ranges::views::stride( 6 );
+    using namespace njoy::tools;
+    return ListRecord::list() | std20::views::drop( 6 + i )
+                              | std23::views::stride( 6 );
   }
 
 public:
@@ -28,7 +29,10 @@ public:
   /**
    *  @brief Return the subshell designator
    */
-  unsigned int SUBI() const { return ListRecord::C1(); }
+  unsigned int SUBI() const {
+
+    return static_cast< unsigned int >( std::round( ListRecord::C1() ) );
+  }
 
   /**
    *  @brief Return the subshell designator
@@ -58,12 +62,12 @@ public:
   /**
    *  @brief Return the number of electrons in the subshell
    */
-  unsigned int ELN() const { return ListRecord::list()[1]; }
+  double ELN() const { return ListRecord::list()[1]; }
 
   /**
    *  @brief Return the number of electrons in the subshell
    */
-  unsigned int numberSubshellElectrons() const { return this->ELN(); }
+  double numberSubshellElectrons() const { return this->ELN(); }
 
   /**
    *  @brief Return the secondary subshell designators (one for each transition)
@@ -110,13 +114,13 @@ public:
    */
   auto transitions() const {
 
-    using Chunk = decltype( ( ListRecord::list()
-                                | ranges::views::chunk( 6 ) )[0] );
-    return ListRecord::list() | ranges::views::chunk( 6 )
-             | ranges::cpp20::views::transform(
+    using namespace njoy::tools;
+    using Chunk = decltype( ( ListRecord::list() | std23::views::chunk( 6 ) )[0] );
+    return ListRecord::list() | std23::views::chunk( 6 )
+             | std20::views::transform(
                  [] ( Chunk&& chunk ) -> Transition< Chunk >
                     { return { std::move( chunk ) }; } )
-             | ranges::views::drop_exactly( 1 );
+             | std20::views::drop( 1 );
   }
 
   using ListRecord::NC;

@@ -153,13 +153,17 @@ void verifyChunk( const section::Type< 28 >& chunk ) {
   CHECK( 2 == shell.numberTransitions() );
   CHECK_THAT( 1.156100e+4, WithinRel( shell.EBI() ) );
   CHECK_THAT( 1.156100e+4, WithinRel( shell.subshellBindingEnergy() ) );
-  CHECK( 2 == shell.ELN() );
-  CHECK( 2 == shell.numberSubshellElectrons() );
+  CHECK_THAT( 2, WithinRel( shell.ELN() ) );
+  CHECK_THAT( 2, WithinRel( shell.numberSubshellElectrons() ) );
   CHECK( 2 == shell.transitions().size() );
   CHECK( 3 == shell.transitions()[0].SUBJ() );
   CHECK( 4 == shell.transitions()[1].SUBJ() );
   CHECK( 2 == shell.transitions()[0].SUBK() );
   CHECK( 3 == shell.transitions()[1].SUBK() );
+  CHECK( false == shell.transitions()[0].isRadiative() );
+  CHECK( false == shell.transitions()[1].isRadiative() );
+  CHECK( true == shell.transitions()[0].isNonRadiative() );
+  CHECK( true == shell.transitions()[1].isNonRadiative() );
   CHECK_THAT( 9.5066e+4, WithinRel( shell.transitions()[0].ETR() ) );
   CHECK_THAT( 9.8928e+4, WithinRel( shell.transitions()[1].ETR() ) );
   CHECK_THAT( 0.75, WithinRel( shell.transitions()[0].FTR() ) );
@@ -172,11 +176,13 @@ void verifyChunk( const section::Type< 28 >& chunk ) {
   CHECK( 1 == shell.numberTransitions() );
   CHECK_THAT( 2000., WithinRel( shell.EBI() ) );
   CHECK_THAT( 2000., WithinRel( shell.subshellBindingEnergy() ) );
-  CHECK( 1 == shell.ELN() );
-  CHECK( 1 == shell.numberSubshellElectrons() );
+  CHECK_THAT( 1, WithinRel( shell.ELN() ) );
+  CHECK_THAT( 1, WithinRel( shell.numberSubshellElectrons() ) );
   CHECK( 1 == shell.transitions().size() );
   CHECK( 1 == shell.transitions()[0].SUBJ() );
   CHECK( 0 == shell.transitions()[0].SUBK() );
+  CHECK( true == shell.transitions()[0].isRadiative() );
+  CHECK( false == shell.transitions()[0].isNonRadiative() );
   CHECK_THAT( 1000., WithinRel( shell.transitions()[0].ETR() ) );
   CHECK_THAT( 1., WithinRel( shell.transitions()[0].FTR() ) );
 

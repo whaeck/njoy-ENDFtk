@@ -8,13 +8,8 @@
 #include <optional>
 
 // other includes
-#include "range/v3/algorithm/find.hpp"
-#include "range/v3/view/all.hpp"
-#include "range/v3/view/concat.hpp"
-#include "range/v3/view/drop_exactly.hpp"
-#include "range/v3/view/single.hpp"
-#include "range/v3/view/stride.hpp"
-#include "range/v3/view/transform.hpp"
+#include "tools/std20/views.hpp"
+#include "tools/std23/views.hpp"
 #include "ENDFtk/macros.hpp"
 #include "ENDFtk/ControlRecord.hpp"
 #include "ENDFtk/ListRecord.hpp"
@@ -27,7 +22,7 @@ namespace ENDFtk {
 namespace section{
 
   template<>
-  class ENDFTK_PYTHON_EXPORT Type< 7, 4 > : 
+  class ENDFTK_PYTHON_EXPORT Type< 7, 4 > :
     protected BaseWithoutMT< Type< 7, 4 > > {
 
     friend BaseWithoutMT< Type< 7, 4 > >;
@@ -126,7 +121,8 @@ namespace section{
      */
     auto secondaryEffectiveTemperatures() const {
 
-      return ranges::cpp20::views::all( this->secondary_ );
+      using namespace njoy::tools;
+      return std20::views::all( this->secondary_ );
     }
 
     #include "ENDFtk/section/7/4/src/NC.hpp"

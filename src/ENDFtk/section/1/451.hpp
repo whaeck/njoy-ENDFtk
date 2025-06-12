@@ -4,14 +4,7 @@
 // system includes
 
 // other includes
-#include "range/v3/iterator/operations.hpp"
-#include "range/v3/range/conversion.hpp"
-#include "range/v3/view/all.hpp"
-#include "range/v3/view/concat.hpp"
-#include "range/v3/view/join.hpp"
-#include "range/v3/view/single.hpp"
-#include "range/v3/view/split.hpp"
-#include "range/v3/view/transform.hpp"
+#include "tools/std20/views.hpp"
 #include "ENDFtk/macros.hpp"
 #include "ENDFtk/TextRecord.hpp"
 #include "ENDFtk/HeadRecord.hpp"
@@ -31,7 +24,7 @@ namespace section {
    *  See ENDF102, section 1.1 for more information.
    */
   template<>
-  class ENDFTK_PYTHON_EXPORT Type< 1, 451 > : 
+  class ENDFTK_PYTHON_EXPORT Type< 1, 451 > :
     protected BaseWithoutMT< Type< 1, 451 > > {
 
     friend BaseWithoutMT< Type< 1, 451 > >;
@@ -113,9 +106,14 @@ namespace section {
     double STA() const { return std::get< 0 >( this->parameters_ ).C2(); }
 
     /**
-     *  @brief Return the stability flag
+     *  @brief Return whether or not the nuclide is unstable
      */
-    bool isStable() const { return this->STA(); }
+    bool isUnstable() const { return this->STA() == 1; }
+
+    /**
+     *  @brief Return whether or not the nuclide is stable
+     */
+    bool isStable() const { return ! this->isUnstable(); }
 
     /**
      *  @brief Return the excited level number
@@ -242,7 +240,8 @@ namespace section {
      */
     auto index() const {
 
-      return ranges::cpp20::views::all( this->index_ );
+      using namespace njoy::tools;
+      return std20::views::all( this->index_ );
     }
 
     /**

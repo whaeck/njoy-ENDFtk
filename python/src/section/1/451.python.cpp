@@ -6,7 +6,7 @@
 #include "ENDFtk/DirectoryRecord.hpp"
 #include "ENDFtk/section/1/451.hpp"
 #include "definitions.hpp"
-#include "views.hpp"
+#include "tools/views/views-python.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -70,7 +70,7 @@ void wrapSection_1_451( python::module& module, python::module& viewmodule ) {
     "    nlib           the library type\n"
     "    nmod           the modification number\n"
     "    elis           the excitation energy\n"
-    "    sta            the stability flag\n"
+    "    sta            the stability flag (whether or not the nuclide is unstable)\n"
     "    lis            the excited level number\n"
     "    liso           the isomeric state number\n"
     "    nfor           the library format version number\n"
@@ -153,9 +153,15 @@ void wrapSection_1_451( python::module& module, python::module& viewmodule ) {
   )
   .def_property_readonly(
 
+    "is_unstable",
+    &Section::isUnstable,
+    "Flag to indicate whether or not the nuclide is unstable"
+  )
+  .def_property_readonly(
+
     "is_stable",
     &Section::isStable,
-    "The stability flag"
+    "Flag to indicate whether or not the nuclide is stable"
   )
   .def_property_readonly(
 
@@ -292,8 +298,7 @@ void wrapSection_1_451( python::module& module, python::module& viewmodule ) {
   .def_property_readonly(
 
     "description",
-    [] ( const Section& type ) -> std::string
-       { return ranges::to< std::string >( type.description() ); },
+    &Section::description,
     "The descriptive information"
   )
   .def_property_readonly(

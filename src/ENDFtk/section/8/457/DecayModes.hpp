@@ -12,6 +12,7 @@ class ENDFTK_PYTHON_EXPORT DecayModes : protected ListRecord {
   /* members */
 
   /* auxiliary functions */
+  #include "ENDFtk/section/8/457/DecayModes/src/readListRecord.hpp"
   #include "ENDFtk/section/8/457/DecayModes/src/verifyNDK.hpp"
   #include "ENDFtk/section/8/457/DecayModes/src/generateList.hpp"
 
@@ -57,9 +58,10 @@ public:
    */
   auto decayModes() const {
 
+    using namespace njoy::tools;
     return ListRecord::list()
-              | ranges::views::chunk( 6 )
-              | ranges::cpp20::views::transform(
+              | std23::views::chunk( 6 )
+              | std20::views::transform(
                   [] ( const auto& range )
                      { return DecayMode( range[0], range[1], range[2],
                                          range[3], range[4], range[5] ); } );

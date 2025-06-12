@@ -5,10 +5,8 @@
 #include <optional>
 
 // other includes
-#include "range/v3/action/join.hpp"
-#include "range/v3/range/conversion.hpp"
-#include "range/v3/view/chunk.hpp"
-#include "range/v3/view/join.hpp"
+#include "tools/std20/views.hpp"
+#include "tools/std23/views.hpp"
 #include "ENDFtk/macros.hpp"
 #include "ENDFtk/ControlRecord.hpp"
 #include "ENDFtk/ListRecord.hpp"
@@ -21,7 +19,7 @@ namespace ENDFtk {
 namespace section{
 
   template<>
-  class ENDFTK_PYTHON_EXPORT Type< 8, 457 > : 
+  class ENDFTK_PYTHON_EXPORT Type< 8, 457 > :
     protected BaseWithoutMT< Type< 8, 457 > > {
 
     friend BaseWithoutMT< Type< 8, 457 > >;
@@ -143,7 +141,8 @@ namespace section{
      */
     auto decaySpectra() const {
 
-      return ranges::cpp20::views::all( this->spectra_ );
+      using namespace njoy::tools;
+      return std20::views::all( this->spectra_ );
     }
 
     #include "ENDFtk/section/8/457/src/NC.hpp"

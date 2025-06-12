@@ -5,7 +5,6 @@
 #include <variant>
 
 // other includes
-#include "range/v3/algorithm/count_if.hpp"
 #include "ENDFtk/macros.hpp"
 #include "ENDFtk/ControlRecord.hpp"
 #include "ENDFtk/ListRecord.hpp"
@@ -81,7 +80,7 @@ namespace section {
      */
     int NI() const {
 
-      return ranges::count_if( this->photons_,
+      return std::count_if( this->photons_.begin(), this->photons_.end(),
                                [] ( const auto& entry )
                                   { return entry.index() == 0; } );
     }

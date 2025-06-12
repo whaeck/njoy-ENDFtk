@@ -5,7 +5,6 @@
 // local includes
 #include "ENDFtk/section/6.hpp"
 #include "definitions.hpp"
-#include "views.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -111,6 +110,7 @@ void wrapTabulatedDistribution( python::module& module, python::module& ) {
   );
 
   // add standard component definitions
+  addStandardInterpolationTableDefinitions< Component >( component );
   addStandardComponentDefinitions< Component >( component );
 }
 

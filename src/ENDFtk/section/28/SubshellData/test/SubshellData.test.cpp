@@ -111,14 +111,18 @@ void verifyChunk( const SubshellData& chunk ) {
 
   CHECK_THAT( 1.156100e+4, WithinRel( chunk.EBI() ) );
   CHECK_THAT( 1.156100e+4, WithinRel( chunk.subshellBindingEnergy() ) );
-  CHECK( 2 == chunk.ELN() );
-  CHECK( 2 == chunk.numberSubshellElectrons() );
+  CHECK_THAT( 2, WithinRel( chunk.ELN() ) );
+  CHECK_THAT( 2, WithinRel( chunk.numberSubshellElectrons() ) );
 
   CHECK( 2 == chunk.transitions().size() );
   CHECK( 3 == chunk.transitions()[0].SUBJ() );
   CHECK( 4 == chunk.transitions()[1].SUBJ() );
   CHECK( 2 == chunk.transitions()[0].SUBK() );
   CHECK( 3 == chunk.transitions()[1].SUBK() );
+  CHECK( false == chunk.transitions()[0].isRadiative() );
+  CHECK( false == chunk.transitions()[1].isRadiative() );
+  CHECK( true == chunk.transitions()[0].isNonRadiative() );
+  CHECK( true == chunk.transitions()[1].isNonRadiative() );
   CHECK_THAT( 9.5066e+4, WithinRel( chunk.transitions()[0].ETR() ) );
   CHECK_THAT( 9.8928e+4, WithinRel( chunk.transitions()[1].ETR() ) );
   CHECK_THAT( 0.75, WithinRel( chunk.transitions()[0].FTR() ) );

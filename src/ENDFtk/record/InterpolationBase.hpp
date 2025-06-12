@@ -5,11 +5,11 @@
 #include <vector>
 
 // other includes
+#include "tools/std20/views.hpp"
 #include "tools/disco/Integer.hpp"
 #include "tools/disco/ENDF.hpp"
 #include "tools/disco/Column.hpp"
 #include "tools/disco/Record.hpp"
-#include "range/v3/view/all.hpp"
 #include "ENDFtk/record/Base.hpp"
 #include "ENDFtk/record/Integer.hpp"
 #include "ENDFtk/record/Real.hpp"
@@ -79,17 +79,29 @@ namespace record {
 
     auto INT() const {
 
-      return ranges::cpp20::views::all( this->interpolationSchemeIndices );
+      using namespace njoy::tools;
+      return std20::views::all( this->interpolationSchemeIndices );
     }
 
-    auto interpolants() const { return this->INT(); }
+    auto interpolants() const
+    // MSVC has problems deducing the return type of this function
+    -> decltype( njoy::tools::std20::views::all( this->boundaryIndices ) ) {
+
+      return this->INT();
+    }
 
     auto NBT() const {
 
-      return ranges::cpp20::views::all( this->boundaryIndices );
+      using namespace njoy::tools;
+      return std20::views::all( this->boundaryIndices );
     }
 
-    auto boundaries() const { return this->NBT(); }
+    auto boundaries() const
+    // MSVC has problems deducing the return type of this function
+    -> decltype( njoy::tools::std20::views::all( this->boundaryIndices ) ) {
+
+      return this->NBT();
+    }
 
     bool operator==( const InterpolationBase& rhs ) const {
       return ( this->C1() == rhs.C1() )

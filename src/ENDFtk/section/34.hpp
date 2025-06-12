@@ -5,18 +5,19 @@
 #include <variant>
 
 // other includes
-#include "range/v3/range/conversion.hpp"
-#include "range/v3/view/all.hpp"
-#include "range/v3/view/concat.hpp"
-#include "range/v3/view/drop_exactly.hpp"
-#include "range/v3/view/take_exactly.hpp"
-#include "range/v3/view/stride.hpp"
+#include "tools/std20/views.hpp"
 #include "ENDFtk/macros.hpp"
 #include "ENDFtk/ControlRecord.hpp"
 #include "ENDFtk/ListRecord.hpp"
 #include "ENDFtk/readSequence.hpp"
 #include "ENDFtk/section.hpp"
 #include "ENDFtk/section/ExplicitCovariance.hpp"
+
+// fix a MacOS issue with an NL1 macro being defined at this point
+#ifdef NL1
+#undef NL1
+#define __REDEFINE_NL1__
+#endif
 
 namespace njoy {
 namespace ENDFtk {
@@ -77,7 +78,8 @@ namespace section{
      */
     auto reactions() const {
 
-      return ranges::cpp20::views::all( this->reactions_ );
+      using namespace njoy::tools;
+      return std20::views::all( this->reactions_ );
     }
 
     #include "ENDFtk/section/34/src/NC.hpp"
@@ -94,5 +96,11 @@ namespace section{
 } // section namespace
 } // ENDFtk namespace
 } // njoy namespace
+
+// fix a MacOS issue with an NL1 macro being defined at this point
+#ifdef __REDEFINE_NL1__
+#define         NL1     0x00000100
+#undef __REDEFINE_NL1__
+#endif
 
 #endif

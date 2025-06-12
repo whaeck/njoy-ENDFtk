@@ -4,8 +4,7 @@
 
 // local includes
 #include "ENDFtk/tree/Tape.hpp"
-#include "range/v3/range/operations.hpp"
-#include "views.hpp"
+#include "tools/views/views-python.hpp"
 #include "variants.hpp"
 
 // namespace aliases
@@ -98,8 +97,8 @@ void wrapTreeFile( python::module& module, python::module& viewmodule ) {
   .def_property_readonly(
 
     "section_numbers",
-    [] ( const File& self ) -> std::vector< int >
-       { return ranges::to< std::vector< int > >( self.sectionNumbers() ); },
+    [] ( const File& self ) -> IntList
+       { return self.sectionNumbers(); },
     "All section numbers in the file"
   )
   .def_property_readonly(

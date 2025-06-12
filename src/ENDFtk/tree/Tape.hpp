@@ -3,13 +3,11 @@
 
 // system includes
 #include <vector>
-#include <map>
+#include <list>
 #include <optional>
 
 // other includes
-#include "range/v3/action/sort.hpp"
-#include "range/v3/action/unique.hpp"
-#include "range/v3/range/operations.hpp"
+#include "tools/std20/views.hpp"
 #include "ENDFtk/TapeIdentification.hpp"
 #include "ENDFtk/Tape.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -36,10 +34,11 @@ namespace tree {
 
     /* fields */
     std::optional< TapeIdentification > tpid_;
-    std::multimap< int, Material > materials_;
+    std::list< Material > materials_;
 
     /* auxiliary function */
-    #include "ENDFtk/tree/Tape/src/createMap.hpp"
+    #include "ENDFtk/tree/Tape/src/find.hpp"
+    #include "ENDFtk/tree/Tape/src/fill.hpp"
 
   public:
 
@@ -79,7 +78,8 @@ namespace tree {
      */
     int numberMAT( int mat ) const {
 
-      return this->materials_.count( mat );
+      auto range = this->find( mat );
+      return std::distance( range.first, range.second );
     }
 
     /**
@@ -98,7 +98,8 @@ namespace tree {
      */
     bool hasMAT( int mat ) const {
 
-      return this->materials_.count( mat );
+      auto range = this->find( mat );
+      return range.first != range.second;
     }
 
     /**
@@ -114,7 +115,8 @@ namespace tree {
      */
     auto materials() {
 
-      return this->materials_ | ranges::cpp20::views::values;
+      using namespace njoy::tools;
+      return std20::views::all( this->materials_ );
     }
 
     /**
@@ -122,7 +124,8 @@ namespace tree {
      */
     auto materials() const {
 
-      return this->materials_ | ranges::cpp20::views::values;
+      using namespace njoy::tools;
+      return std20::views::all( this->materials_ );
     }
 
     /**
@@ -138,10 +141,7 @@ namespace tree {
     /**
      *  @brief Return a begin iterator to all materials
      */
-    auto begin() const {
-
-      return this->materials().begin();
-    }
+    auto begin() const { return this->materials().begin(); }
 
     /**
      *  @brief Return an end iterator to all materials
@@ -159,7 +159,7 @@ namespace tree {
     auto content() const {
 
       std::string content;
-      if ( this->tpid_ ) {
+      if ( this->tpid_.has_value() ) {
 
         auto output = std::back_inserter( content );
         this->tpid_->print( output, 0, 0, 0 );
@@ -189,9 +189,14 @@ namespace tree {
      */
     std::vector< int > materialNumbers() const {
 
-      return ranges::cpp20::views::keys( this->materials_ )
-               | ranges::to_vector
-               | ranges::actions::sort | ranges::actions::unique;
+      using namespace njoy::tools;
+      auto keys = this->materials_ | std20::views::transform(
+                                         [] ( auto&& material )
+                                            { return material.materialNumber(); } );
+      std::vector< int > materials( keys.begin(), keys.end() );
+      std::sort( materials.begin(), materials.end() );
+      materials.erase( std::unique( materials.begin(), materials.end() ), materials.end() );
+      return materials;
     }
 
     #include "ENDFtk/tree/Tape/src/remove.hpp"

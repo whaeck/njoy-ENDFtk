@@ -2,10 +2,21 @@ static
 std::vector< TextRecord >
 makeDescription( const std::string& description ) {
 
-  return ranges::to< std::vector< TextRecord > >(
-           ranges::cpp20::views::split( description, '\n' )
-             | ranges::cpp20::views::transform(
-                 [] ( const auto& line )
-                    { std::string string = ranges::to< std::string >( line );
-                      return TextRecord( std::move( string ) ); } ) );
+  std::vector< TextRecord > result;
+  auto begin = description.begin();
+  auto iter = std::find_if( begin, description.end(),
+                            [] ( auto&& character ) { return character == '\n'; } );
+  while ( begin != description.end() &&  iter != description.end() ) {
+
+    result.emplace_back( std::string( begin, iter ) );
+    begin = iter + 1;
+    iter = std::find_if( begin, description.end(),
+                         [] ( auto&& character ) { return character == '\n'; } );
+  }
+
+  if ( iter == description.end() && begin != description.end() ){
+	  result.emplace_back( std::string( begin, iter ) );
+  }
+
+  return result;
 }

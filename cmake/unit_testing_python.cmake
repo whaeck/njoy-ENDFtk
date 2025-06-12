@@ -6,13 +6,16 @@ enable_testing()
 
 function( add_python_test name source )
 
+  set(PYTHONPATH_PARTS ${tools_PYTHONPATH} ${ENDFtk_PYTHONPATH} $ENV{PYTHONPATH})
+  string( JOIN "${PATH_DELIM}" PYTHONPATH_VALUE ${PYTHONPATH_PARTS})
+
   set( test_name "ENDFtk.python.${name}.test" )
   add_test( NAME ${test_name}
             COMMAND ${PYTHON_EXECUTABLE} -m unittest -v test/${source}
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/python )
   set_tests_properties( ${test_name}
                         PROPERTIES ENVIRONMENT
-                        PYTHONPATH=${ENDFtk_PYTHONPATH}:$ENV{PYTHONPATH})
+                        "PYTHONPATH=${PYTHONPATH_VALUE}")
 
 endfunction()
 
@@ -21,6 +24,9 @@ endfunction()
 #######################################################################
 
 message( STATUS "Adding ENDFtk Python unit testing" )
+
+# missing tests
+#add_python_test( TextRecord          Test_ENDFtk_TextRecord.py )
 
 add_python_test( ControlRecord       Test_ENDFtk_ControlRecord.py )
 add_python_test( DirectoryRecord     Test_ENDFtk_DirectoryRecord.py )
