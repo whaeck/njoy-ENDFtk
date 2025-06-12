@@ -1,5 +1,6 @@
 if(ENDFtk.python)
 
+    find_package( Python3 REQUIRED )
     pybind11_add_module( ENDFtk.python
         ${CMAKE_CURRENT_SOURCE_DIR}/src/ENDFtk.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/record/ControlRecord.python.cpp
