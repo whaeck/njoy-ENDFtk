@@ -55,7 +55,7 @@ namespace ENDFtk {
         /**
          *  @brief Return the temperature
          */
-        double getTemperature() const {return this->TEMP();}
+        double temperature() const {return this->TEMP();}
 
         /**
          *  @brief Return the number of secondary positions
@@ -65,7 +65,7 @@ namespace ENDFtk {
         /**
          *  @brief Return the number of secondary positions
          */
-        int getNumberDataTypes() const {return this->NG2();}
+        int numberDataTypes() const {return this->NG2();}
 
         /**
          *  @brief Return this group's index to lowest non-zero group
@@ -75,7 +75,7 @@ namespace ENDFtk {
         /**
          *  @brief Return this group's index to lowest non-zero group
          */
-        int getIndexToLowestNonzero() const {return this->IG2LO();}
+        int indexToLowestNonzero() const {return this->IG2LO();}
 
         /**
          *  @brief Return the number of words in list
@@ -85,7 +85,7 @@ namespace ENDFtk {
         /**
          *  @brief Return the number of words in list
          */
-        int getNumberWords() const {return this->NW();}
+        int numberWords() const {return this->NW();}
 
         /**
          *  @brief Return the group index
@@ -95,19 +95,7 @@ namespace ENDFtk {
         /**
          *  @brief Return the group index
          */
-        int getGroupIndex() const {return this->IG();}
-
-        /**
-         *  @brief Return the requested data from list
-         * 
-         *  @param[in] block     the desired section block of the list  
-         */
-        auto data( long block) const {
-            using namespace njoy::tools;
-            long size = this->NW() / this->NG2();
-            return this->list() | std20::views::drop(block * size) | std20::views::take(size);
-        }
-
+        int groupIndex() const {return this->IG();}
 
         using ListRecord::list;
 

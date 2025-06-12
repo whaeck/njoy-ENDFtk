@@ -4,7 +4,6 @@
 
 // other includes (TODO: remove uneccessary headers)
 #include "tools/std20/views.hpp"
-#include <map>
 #include "ENDFtk/section/Base.hpp"
 #include "ENDFtk/macros.hpp"
 #include "ENDFtk/HeadRecord.hpp"
@@ -26,25 +25,25 @@ namespace section {
         int nz_;
         int lrflag_;
         int ngn_;
-        // TODO: Make this a vector of Data Records
         std::vector<DataRecord> records_;
 
-// TODO: implement abstraction; read in the data but format everything as vectors.
-// This entails reading in GENDF -> internally sotre as vectors -> write out GENDF
-//   auto column( unsigned int i ) const {
-
-//     using namespace njoy::tools;
-//     return this->records_
-//              | std20::views::transform( [] ( auto&& record ) { return record.list()[i]; } );
-//   }
-
         /* auxiliary functions */
+
+        /**
+         *  @brief template function to extract data
+         * 
+         *  @tparam Functor     the lambda expression for the fluxes and sigmas.
+         */
+        template < typename Functor > 
+        auto data( Functor functor ) const {
+            using namespace njoy::tools;
+            return this->records_ | std20::views::transform( functor ); 
+            }
 
     public:
 
         /* constructor */
-        // #include "ENDFtk/gsection/3/src/mapRecords.hpp"
-        #include "ENDFtk/gsection/3/src/readRecords.hpp"
+        // #include "ENDFtk/gsection/3/src/readRecords.hpp"
         #include "ENDFtk/gsection/3/src/ctor.hpp"
         
         /* methods */
@@ -94,43 +93,72 @@ namespace section {
          * 
          *  @param[in] group    the group index
          */
-        const auto& groupRecord(int group) const {
+        const auto groupRecord(int group) const {
             return this->records_.at(group);
         }
 
-        // /**
-        //  *  @brief Check if group has DataRecord
-        //  * 
-        //  *  @param[in] group    the group index
-        //  */
-        // bool hasRecord(int group) const {
-        //     return this->records_.find(group) != this->records_.end();
-        // }
+        /**
+         *  @brief Return the temperature of the material
+         */
+        double temperature() const { return this->groupRecord(0).TEMP(); }
 
-        // /**
-        //  *  @brief Return view of record data
-        //  */
-        // auto RECORD() const {
-        //     using namespace njoy::tools;
-        //     return std20::ranges::views::values(this->records_);}
-        
-        // /**
-        //  *  @brief Return rxn value for given energy, legendre order, and dilution value
-        //  * 
-        //  *  @param[in] block    the block index
-        //  *  @param[in] group    the group index
-        //  *  @param[in] order    the legendre order
-        //  *  @param[in] sigz_idx the dilution index
-        //  */
-        // double value( int block, int group, int order, int sigz_idx) const{
-        //     if (!this->hasRecord(group)) {
-        //         return 0.0;
-        //     }
+        /**
+         *  @brief Return the number of words contained in the DataRecord's list
+         */
+        int numberWords() const { return this->groupRecord(0).NW(); }
 
-        //     // else grab value
-        //     const auto& values = this->groupRecord(group).data(block);
-        //     return values[this->nl_ * sigz_idx + order];
-        // }
+        /**
+         *  @brief Return the group indices
+         */
+        auto groups() const {
+
+            return this->data( [] ( auto&& record ) { return record.IG(); } ); 
+        }
+
+        /**
+         *  @brief Return the group cross-sections
+         *  
+         *  @param[in] moment   the legendre moment requested
+         *  @param[in] diltuion the dilution index requested
+         */
+        auto crossSection(int moment, int dilution) const {
+            int numMoments = this->NL();
+            int block;
+            if (this->numberWords() == 3) {
+                block = this->numberWords() * 2 / 3;
+            } else {
+                block = this->numberWords() / 2;
+            }
+            int position = block + dilution * numMoments + moment;
+            return this->data( [ position ] ( auto&& record) {
+                return record.list()[ position ];
+            });
+        }
+
+        auto ratio(int moment, int dilution) const {
+            if (this->numberWords() != 3) {
+                throw std::runtime_error("Requested ratio for non-ratio qunatity!");
+            } else {
+                int numMoments = this->NL();
+                int block = this->numberWords() / 2;
+                int position = block + dilution * numMoments + moment;
+            return this->data( [ position ] (auto&& record ) {
+                return record.list()[ position ];
+                }); 
+            }
+            
+        }
+
+        /**
+         *  @brief Return the group fluxes
+         */
+        auto flux(int moment, int dilution) const {
+            int numMoments = this->NL();
+            int position = dilution * numMoments + moment;
+            return this->data( [ position ] ( auto&& record ) { 
+                return record.list()[position];
+            });
+        }
 
         #include "ENDFtk/gsection/3/src/print.hpp"
 

@@ -43,12 +43,11 @@ public:
     GType(const HEAD& head,
           Iterator& begin,
           const Iterator& end,
-          long& lineNumber,
-          int MAT)
+          long& lineNumber)
         try:
             GType(head.MT(), head.ZA(), head.AWR(), head.L1(),
              head.L2(), head.N1(), head.N2(),
-            readRecords(begin, end, MAT, head.MF(),
+            readSequence<DataRecord>(begin, end, lineNumber, head.MAT(), head.MF(),
                         head.MT(), head.N2())) {
             this->readSEND(begin, end, lineNumber, head.MAT(), head.MF());
         }
