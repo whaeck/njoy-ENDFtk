@@ -56,4 +56,13 @@ public:
                       " in GENDF file.", head.MT(), head.MF(), head.MAT());
             throw e;
         }
+
+    GType(int mt, int zaid, double awr, int nl, int nz, int lrflag,
+        int ngn, double temp, std::vector<size_t> groups,
+        std::vector < std::vector< std::vector<double> > > flux,
+        std::vector < std::vector< std::vector<double> > > sigma,
+        std::vector < std::vector< std::vector<double> > > ratio)
+        :
+        Base(zaid, awr, mt), nl_(nl), nz_(nz), lrflag_(lrflag), ngn_(ngn),
+        records_(std::move(makeRecords(temp, groups, flux, sigma, ratio))) {}
     

@@ -28,7 +28,8 @@ namespace section {
         std::vector<DataRecord> records_;
 
         /* auxiliary functions */
-
+        #include "ENDFtk/gsection/3/src/makeRecords.hpp"
+        
         /**
          *  @brief template function to extract data
          * 
@@ -43,7 +44,6 @@ namespace section {
     public:
 
         /* constructor */
-        // #include "ENDFtk/gsection/3/src/readRecords.hpp"
         #include "ENDFtk/gsection/3/src/ctor.hpp"
         
         /* methods */
@@ -121,7 +121,7 @@ namespace section {
          *  @param[in] moment   the legendre moment requested
          *  @param[in] diltuion the dilution index requested
          */
-        auto crossSection(int moment, int dilution) const {
+        auto crossSection( int moment, int dilution ) const {
             int numMoments = this->NL();
             int block;
             if (this->numberWords() == 3) {
@@ -135,7 +135,7 @@ namespace section {
             });
         }
 
-        auto ratio(int moment, int dilution) const {
+        auto ratio( int moment, int dilution ) const {
             if (this->numberWords() != 3) {
                 throw std::runtime_error("Requested ratio for non-ratio qunatity!");
             } else {
@@ -152,7 +152,7 @@ namespace section {
         /**
          *  @brief Return the group fluxes
          */
-        auto flux(int moment, int dilution) const {
+        auto flux( int moment, int dilution ) const {
             int numMoments = this->NL();
             int position = dilution * numMoments + moment;
             return this->data( [ position ] ( auto&& record ) { 
