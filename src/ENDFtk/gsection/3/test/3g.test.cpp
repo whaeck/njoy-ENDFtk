@@ -88,7 +88,7 @@ SCENARIO("section::GType<3>") {
                 1.193878, 1.123199, 1.185698, 1.244700, 1.280184, 1.259628, 1.197753, 1.108814, 1.438964,
                 1.778379, 1.730948, 1.873645, 2.067954, 2.135172}}};
 
-            section::GType<3> chunkRatios(mt, zaid, awr, nl, nz, lrflag, ngn, temp, groups, flux, ratio, sigma);
+            section::GType<3> chunkRatios(mt, zaid, awr, nl, nz, lrflag, ngn, temp, groups, flux, sigma, ratio );
 
             THEN("a section::GType<3> can be constructed and "
                 "members can be tested.") {
