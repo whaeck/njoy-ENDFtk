@@ -1,7 +1,8 @@
 static auto
 makeRecords(double temp, 
-            std::vector< size_t >& ig, const std::vector< std::vector< std::vector< double > > >& flux,  
+            std::vector< unsigned int >& ig, const std::vector< std::vector< std::vector< double > > >& flux,  
             const std::vector< std::vector< std::vector< double > > >& sigma ) {
+
     // ng2 is 2 for cross-sections
     int ng2 = 2; 
 
@@ -62,9 +63,10 @@ makeRecords(double temp,
 
 static auto
 makeRecords(double temp, 
-            std::vector< std::size_t >& ig, const std::vector< std::vector< std::vector< double > > >& flux,  
+            std::vector< unsigned int >& ig, const std::vector< std::vector< std::vector< double > > >& flux,  
             const std::vector< std::vector< std::vector< double > > >& sigma, 
             const std::vector< std::vector< std::vector<double> > >& ratio) {
+
     // ng2 is 3 for ratio quantities
     int ng2 = 3; 
 

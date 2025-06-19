@@ -51,7 +51,7 @@ namespace ENDFtk {
          *  @brief Return the temperature
          */
         double TEMP() const {return this->C1();}
-
+        
         /**
          *  @brief Return the temperature
          */

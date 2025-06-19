@@ -1,16 +1,64 @@
-protected:
+    GType(int mt, int zaid, double awr, int nl, int nz, int lrflag,
+        int ngn, double temp, std::vector<unsigned int > groups,
+        std::vector < std::vector< std::vector<double> > > flux,
+        std::vector < std::vector< std::vector<double> > > sigma,
+        std::vector < std::vector< std::vector<double> > > ratio)
+        :
+        Base(zaid, awr, mt), 
+        nl_(nl), 
+        nz_(nz), 
+        lrflag_(lrflag), 
+        ngn_(ngn),
+        temp_(temp),
+        groups_(groups),
+        flux_( std::move(flux) ), 
+        sigma_( std::move(sigma) ),
+        ratio_( std::move(ratio) ) {}
 
-    // GType(int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
-    //     std::vector< DataRecord >&& records)
-    //     :
-    //     Base(zaid, awr, mt), nl_(nl), nz_(nz), lrflag_(lrflag), ngn_(ngn),
-    //     records_(records) {
-    //         // verifyRecords();
-    // }
+    GType(int mt, int zaid, double awr, int nl, int nz, int lrflag,
+        int ngn, double temp, std::vector<unsigned int> groups,
+        std::vector < std::vector< std::vector<double> > > flux,
+        std::vector < std::vector< std::vector<double> > > sigma)
+        :
+        Base(zaid, awr, mt), 
+        nl_(nl), 
+        nz_(nz), 
+        lrflag_(lrflag), 
+        ngn_(ngn),
+        temp_(temp),
+        groups_(groups),
+        flux_( std::move(flux) ), 
+        sigma_( std::move(sigma) ) {}
 
-public:
+private: 
 
-    /**
+    GType(int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
+        std::tuple<double,
+                   std::vector<unsigned int>,
+                   std::vector < std::vector< std::vector<double> > >,
+                   std::vector < std::vector< std::vector<double> > >>&& data)
+        :
+        GType(mt, zaid, awr, nl, nz, lrflag, ngn,
+              std::move( std::get<0>(data) ),       // temp
+              std::move( std::get<1>(data) ),       // groups
+              std::move( std::get<2>(data) ),       // flux
+              std::move( std::get<3>(data) )) {}    // sigma
+
+    GType(int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
+        std::tuple<double,
+                   std::vector<unsigned int>,
+                   std::vector < std::vector< std::vector<double> > >,
+                   std::vector < std::vector< std::vector<double> > >,
+                   std::vector < std::vector< std::vector<double> > >>&& data)
+        :
+        GType(mt, zaid, awr, nl, nz, lrflag, ngn,
+              std::move( std::get<0>(data) ),       // temp
+              std::move( std::get<1>(data) ),       // groups
+              std::move( std::get<2>(data) ),       // flux 
+              std::move( std::get<3>(data) ),       // sigma
+              std::move( std::get<4>(data) )) {}    // ratio
+
+/**
      *  @brief Constructor from parameters
      * 
      *  @param[in] mt       the section number
@@ -25,8 +73,10 @@ public:
     GType(int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
         std::vector<DataRecord>&& records)
         :
-        Base(zaid, awr, mt), nl_(nl), nz_(nz), lrflag_(lrflag), ngn_(ngn),
-        records_(std::move(records)) {}
+        GType(mt, zaid, awr, nl, nz, lrflag, ngn,
+              makeVectors(records, nl, nz, ngn)) {}
+
+public:
 
     /**
      *  @brief Constructor from buffer/string
@@ -57,12 +107,4 @@ public:
             throw e;
         }
 
-    GType(int mt, int zaid, double awr, int nl, int nz, int lrflag,
-        int ngn, double temp, std::vector<size_t> groups,
-        std::vector < std::vector< std::vector<double> > > flux,
-        std::vector < std::vector< std::vector<double> > > sigma,
-        std::vector < std::vector< std::vector<double> > > ratio)
-        :
-        Base(zaid, awr, mt), nl_(nl), nz_(nz), lrflag_(lrflag), ngn_(ngn),
-        records_(std::move(makeRecords(temp, groups, flux, sigma, ratio))) {}
     

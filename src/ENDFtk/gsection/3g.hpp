@@ -11,6 +11,8 @@
 #include "ENDFtk/ControlRecord.hpp"
 #include "ENDFtk/section.hpp"
 #include "ENDFtk/readSequence.hpp"
+#include <numeric>
+#include <iostream>
 
 namespace njoy {
 namespace ENDFtk {
@@ -25,21 +27,16 @@ namespace section {
         int nz_;
         int lrflag_;
         int ngn_;
-        std::vector<DataRecord> records_;
+        double temp_;
+        std::vector< unsigned int > groups_;
+        std::vector< std::vector< std::vector< double > > > flux_;
+        std::vector< std::vector< std::vector< double > > > sigma_;
+        std::vector< std::vector< std::vector< double > > > ratio_;
 
         /* auxiliary functions */
+        #include "ENDFtk/gsection/3/src/makeVectors.hpp"
         #include "ENDFtk/gsection/3/src/makeRecords.hpp"
-        
-        /**
-         *  @brief template function to extract data
-         * 
-         *  @tparam Functor     the lambda expression for the fluxes and sigmas.
-         */
-        template < typename Functor > 
-        auto data( Functor functor ) const {
-            using namespace njoy::tools;
-            return this->records_ | std20::views::transform( functor ); 
-            }
+        #include "ENDFtk/gsection/3/src/vectorToRecords.hpp"
 
     public:
 
@@ -89,31 +86,14 @@ namespace section {
         int numberNeutronGroups() const {return this->NGN();}
 
         /**
-         *  @brief Return a group's DataRecord
-         * 
-         *  @param[in] group    the group index
+         *  @brief Return the temperature
          */
-        const auto groupRecord(int group) const {
-            return this->records_.at(group);
-        }
-
-        /**
-         *  @brief Return the temperature of the material
-         */
-        double temperature() const { return this->groupRecord(0).TEMP(); }
-
-        /**
-         *  @brief Return the number of words contained in the DataRecord's list
-         */
-        int numberWords() const { return this->groupRecord(0).NW(); }
+        double temperature() const {return this->temp_;}
 
         /**
          *  @brief Return the group indices
          */
-        auto groups() const {
-
-            return this->data( [] ( auto&& record ) { return record.IG(); } ); 
-        }
+        auto groups() const { return this->groups_;}
 
         /**
          *  @brief Return the group cross-sections
@@ -121,43 +101,23 @@ namespace section {
          *  @param[in] moment   the legendre moment requested
          *  @param[in] diltuion the dilution index requested
          */
-        auto crossSection( int moment, int dilution ) const {
-            int numMoments = this->NL();
-            int block;
-            if (this->numberWords() == 3) {
-                block = this->numberWords() * 2 / 3;
-            } else {
-                block = this->numberWords() / 2;
-            }
-            int position = block + dilution * numMoments + moment;
-            return this->data( [ position ] ( auto&& record) {
-                return record.list()[ position ];
-            });
+        auto crossSection( int moment, int dilution ) const { 
+            return this->sigma_[moment][dilution];
         }
 
         auto ratio( int moment, int dilution ) const {
-            if (this->numberWords() != 3) {
-                throw std::runtime_error("Requested ratio for non-ratio qunatity!");
+            if (this->ratio_.size() != 0) {
+                return this->ratio_[moment][dilution];
             } else {
-                int numMoments = this->NL();
-                int block = this->numberWords() / 2;
-                int position = block + dilution * numMoments + moment;
-            return this->data( [ position ] (auto&& record ) {
-                return record.list()[ position ];
-                }); 
+                throw std::runtime_error("Requested ratio when ratios are not present!");
             }
-            
         }
 
         /**
          *  @brief Return the group fluxes
          */
         auto flux( int moment, int dilution ) const {
-            int numMoments = this->NL();
-            int position = dilution * numMoments + moment;
-            return this->data( [ position ] ( auto&& record ) { 
-                return record.list()[position];
-            });
+            return this->flux_[moment][dilution];
         }
 
         #include "ENDFtk/gsection/3/src/print.hpp"
@@ -173,6 +133,5 @@ namespace section {
 } // section
 } // ENDFtk
 } // njoy
-
 
 #endif
