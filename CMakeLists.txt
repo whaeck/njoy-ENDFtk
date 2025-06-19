@@ -82,12 +82,12 @@ if (ENDFtk.python AND NOT TARGET njoy::tools.python)
   set(ENDFtk.python OFF)
 endif()
 
-if (ENDFtk.python)
-  add_subdirectory(python)
+if ( ENDFtk.python )
+  add_subdirectory( python )
 endif()
 
 if( ${ENDFtk.tests} )
-  include( cmake/unit_testing.cmake )
+  add_subdirectory( test )
 endif()
 
 #######################################################################
