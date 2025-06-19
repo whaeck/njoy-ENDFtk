@@ -151,3 +151,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_link_options(${PROJECT_NAME} INTERFACE "/INCREMENTAL")
   endif()
 endif()
+
+if (MSVC)
+    add_compile_options(/bigobj)
+endif()
