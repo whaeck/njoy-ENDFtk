@@ -153,5 +153,5 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 if (MSVC)
-    add_compile_options(/bigobj)
+    add_compile_options(${PROJECT_NAME} /bigobj)
 endif()
