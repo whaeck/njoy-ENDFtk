@@ -51,58 +51,58 @@ SCENARIO("section::GType<3>") {
         } // WHEN
     } // GIVEN
 
-    // GIVEN("valid data for a section::GType<3> with ratios") {
+    GIVEN("valid data for a section::GType<3> with ratios") {
 
-    //     std::string sectionString = chunkRatios() + validSEND(); 
+        std::string sectionString = chunkRatios() + validSEND(); 
 
-    //     WHEN("the correct parameters to construct a section::GType<3>") {
+        WHEN("the correct parameters to construct a section::GType<3>") {
 
-    //         int zaid = 92235;
-    //         double awr = 0.0;
-    //         int mt = 452;
-    //         int nl = 1;
-    //         int nz = 1;
-    //         int lrflag = 0;
-    //         int ngn = 30;
-    //         double temp = 293.6;
+            int zaid = 92235;
+            double awr = 0.0;
+            int mt = 452;
+            int nl = 1;
+            int nz = 1;
+            int lrflag = 0;
+            int ngn = 30;
+            double temp = 293.6;
 
-    //         std::vector< unsigned int > groups(30);
-    //         std::iota(groups.begin(), groups.end(), 1);
+            std::vector< unsigned int > groups(30);
+            std::iota(groups.begin(), groups.end(), 1);
 
-    //         std::vector < std::vector< std::vector<double> > > flux = 
-    //         {{{1.270791e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 1.153966e6,
-    //             1.154819e6, 1.153684e6, 1.154784e6, 1.152800e6, 1.156920e6, 1.154341e6, 1.157786e6, 1.156371e6, 5.809202e5,
-    //             7.341455e5, 1.030736e6, 1.175655e6, 5.407961e5, 4.481701e5, 3.429532e5, 2.344895e5, 2.235493e5, 4.396216e4,
-    //             2.311833e4, 1.410474e4, 1.905167e4, 7.393531e4, 3.724272e3}}};
+            std::vector < std::vector< std::vector<double> > > flux = 
+            {{{1.270791e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 1.153966e6,
+                1.154819e6, 1.153684e6, 1.154784e6, 1.152800e6, 1.156920e6, 1.154341e6, 1.157786e6, 1.156371e6, 5.809202e5,
+                7.341455e5, 1.030736e6, 1.175655e6, 5.407961e5, 4.481701e5, 3.429532e5, 2.344895e5, 2.235493e5, 4.396216e4,
+                2.311833e4, 1.410474e4, 1.905167e4, 7.393531e4, 3.724272e3}}};
             
-    //         std::vector < std::vector< std::vector<double> > > ratio = 
-    //         {{{2.429850, 2.431545, 2.433314, 2.402490, 2.402713, 2.397356, 2.426825,
-    //             2.436916, 2.442703, 2.430792, 2.434855, 2.419640, 2.426568, 2.417260, 2.439160, 2.467889,
-    //             2.479153, 2.496982, 2.528400, 2.586487, 2.642705, 2.716914, 2.800571, 2.988991, 3.409679,
-    //             3.663458, 3.968481, 4.260765, 4.415797, 4.651492}}};
+            std::vector < std::vector< std::vector<double> > > ratio = 
+            {{{2.429850, 2.431545, 2.433314, 2.402490, 2.402713, 2.397356, 2.426825,
+                2.436916, 2.442703, 2.430792, 2.434855, 2.419640, 2.426568, 2.417260, 2.439160, 2.467889,
+                2.479153, 2.496982, 2.528400, 2.586487, 2.642705, 2.716914, 2.800571, 2.988991, 3.409679,
+                3.663458, 3.968481, 4.260765, 4.415797, 4.651492}}};
 
-    //         std::vector < std::vector< std::vector<double> > > sigma = 
-    //         {{{5.232180e2, 1.754828e2, 7.256555e1, 2.118119e1, 2.022788e1, 6.453574e1, 4.674539e1,
-    //             2.265849e1, 1.763465e1, 1.090636e1, 5.999898, 3.849512, 2.560637, 1.929781, 1.536979, 1.298960,
-    //             1.193878, 1.123199, 1.185698, 1.244700, 1.280184, 1.259628, 1.197753, 1.108814, 1.438964,
-    //             1.778379, 1.730948, 1.873645, 2.067954, 2.135172}}};
+            std::vector < std::vector< std::vector<double> > > sigma = 
+            {{{5.232180e2, 1.754828e2, 7.256555e1, 2.118119e1, 2.022788e1, 6.453574e1, 4.674539e1,
+                2.265849e1, 1.763465e1, 1.090636e1, 5.999898, 3.849512, 2.560637, 1.929781, 1.536979, 1.298960,
+                1.193878, 1.123199, 1.185698, 1.244700, 1.280184, 1.259628, 1.197753, 1.108814, 1.438964,
+                1.778379, 1.730948, 1.873645, 2.067954, 2.135172}}};
 
-    //         section::GType<3> chunkRatios(mt, zaid, awr, nl, nz, lrflag, ngn, temp, groups, flux, sigma, ratio );
+            section::GType<3> chunkRatios(mt, zaid, awr, nl, nz, lrflag, ngn, temp, groups, flux, sigma, ratio );
 
-    //         THEN("a section::GType<3> can be constructed and "
-    //             "members can be tested.") {
-    //             verifyChunkRatios(chunkRatios);
-    //         } // THEN
+            THEN("a section::GType<3> can be constructed and "
+                "members can be tested.") {
+                verifyChunkRatios(chunkRatios);
+            } // THEN
 
-    //         THEN("it can be printed") {
-    //             std::string buffer;
-    //             auto output = std::back_inserter(buffer);
-    //             chunkRatios.print(output, 9228, 3, 452);
+            THEN("it can be printed") {
+                std::string buffer;
+                auto output = std::back_inserter(buffer);
+                chunkRatios.print(output, 9228, 3, 452);
 
-    //             CHECK(buffer == sectionString);
-    //         } // THEN
-    //     } // WHEN
-    // } // GIVEN
+                CHECK(buffer == sectionString);
+            } // THEN
+        } // WHEN
+    } // GIVEN
 } // SCENARIO
 
 std::string chunk() {
@@ -218,7 +218,7 @@ void verifyChunk(const section::GType<3>& chunk) {
     CHECK_THAT( 293.6, WithinRel( chunk.temperature() ) );
     std::vector<unsigned int> expected_groups(30);
     std::iota(expected_groups.begin(), expected_groups.end(), 1);
-    for (size_t i = 0; i < chunk.NGN(); i++) {
+    for (size_t i = 0; i < chunk.NGN(); ++i) {
         CHECK(expected_groups[i] == chunk.groups()[i]);
     }
     // flux_nl_nz
@@ -226,28 +226,35 @@ void verifyChunk(const section::GType<3>& chunk) {
        1.154819e6, 1.153684e6, 1.154784e6, 1.152800e6, 1.156920e6, 1.154341e6, 1.157786e6, 1.156371e6, 5.809202e5,
        7.341455e5, 1.030736e6, 1.175655e6, 5.407961e5, 4.481701e5, 3.429532e5, 2.344895e5, 2.235493e5, 4.396216e4,
        2.311833e4, 1.410474e4, 1.905167e4, 7.393531e4, 3.724272e3};
-    for (size_t i = 0; i < chunk.NGN(); i++) {
+    for (size_t i = 0; i < chunk.NGN(); ++i) {
         CHECK_THAT(flux_0_0[i], WithinRel(chunk.flux(0, 0)[i]));
     }
     std::vector<double> flux_1_2 = {3.552522e5, 1.113871e5, 3.080750e5, 6.075435e5, 6.180888e5, 4.707030e5, 4.826207e5,
         6.107359e5, 6.661531e5, 7.306688e5, 7.958322e5, 8.391668e5, 8.706505e5, 8.985596e5, 9.232978e5, 4.770473e5,
         6.179062e5, 8.878708e5, 1.029084e6, 4.738327e5, 3.899259e5, 2.958232e5, 2.011394e5, 1.924498e5, 3.860075e4,
         2.054803e4, 1.261378e4, 1.703561e4, 6.603351e4, 3.314928e3};
-    for (size_t i = 0; i< chunk.NGN(); i++) {
+    for (size_t i = 0; i< chunk.NGN(); ++i) {
         CHECK_THAT(flux_1_2[i], WithinRel(chunk.flux(1, 2)[i]));
+    }
+    std::vector< double > flux_1_0 = {1.270790e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 
+        1.153966e6, 1.154819e6, 1.153684e6, 1.154784e6, 1.152800e6, 1.156920e6, 1.154341e6, 1.157786e6, 1.156371e6,
+        5.809202e5, 7.341455e5, 1.030736e6, 1.175655e6, 5.407961e5, 4.481701e5, 3.429532e5, 2.344895e5, 2.235493e5,
+        4.396216e4, 2.311833e4, 1.410474e4, 1.905167e4, 7.393531e4, 3.724272e3};
+    for (size_t i = 0; i < chunk.NGN(); ++i) {
+        CHECK_THAT(flux_1_0[i], WithinRel(chunk.flux(1,0)[i]));
     }
     std::vector<double> sigma_0_0 = {6.266544e2, 2.261991e2, 9.695867e1, 4.242725e1, 5.437948e1, 1.185407e2, 8.411095e1,
         4.690043e1, 3.702289e1, 2.730364e1, 2.058304e1, 1.737549e1, 1.511328e1, 1.351391e1, 1.191600e1, 1.035308e1,
         9.002912, 7.747087, 6.884748, 6.832784, 7.209057, 7.671847, 7.972503, 7.778415, 6.719709,
         6.070456, 5.745072, 5.751786, 5.814161, 5.994611};
-    for (size_t i = 0; i < chunk.NGN(); i++) {
+    for (size_t i = 0; i < chunk.NGN(); ++i) {
         CHECK_THAT(sigma_0_0[i], WithinRel(chunk.crossSection(0,0)[i]));
     }
     std::vector<double> sigma_0_2 = {5.303243e2, 2.230897e2, 9.487519e1, 3.877662e1, 4.017175e1, 6.526800e1, 6.092206e1,
         3.996131e1, 3.304928e1, 2.619063e1, 2.042701e1, 1.740253e1, 1.513475e1, 1.351245e1, 1.191350e1, 1.035190e1, 
         9.001521, 7.745969, 6.884560, 6.832738, 7.208877, 7.671702, 7.972488, 7.777768, 6.719217, 6.070241, 
         5.745052, 5.751784, 5.814157, 5.994582};
-    for (size_t i = 0; i < chunk.NGN(); i++) {
+    for (size_t i = 0; i < chunk.NGN(); ++i) {
         CHECK_THAT(sigma_0_2[i], WithinRel(chunk.crossSection(0,2)[i]));
     }
 }
@@ -321,6 +328,8 @@ void verifyChunkRatios(const section::GType<3>& chunkRatios) {
     CHECK(92235 == chunkRatios.ZA());
     CHECK(1 == chunkRatios.NL());
     CHECK(1 == chunkRatios.numberMoments());
+    CHECK(1 == chunkRatios.NZ());
+    CHECK(1 == chunkRatios.numberDilutions());
     CHECK(30 == chunkRatios.NGN());
     CHECK(30 == chunkRatios.numberNeutronGroups());
     CHECK(1 == chunkRatios.NZ());
@@ -328,4 +337,36 @@ void verifyChunkRatios(const section::GType<3>& chunkRatios) {
     CHECK(0 == chunkRatios.LRFLAG());
     CHECK(0 == chunkRatios.breakUpID());
     CHECK_THAT( 293.6, WithinRel( chunkRatios.temperature() ) );
+    std::vector<unsigned int> expected_groups(30);
+    std::iota(expected_groups.begin(), expected_groups.end(), 1);
+    for (size_t i = 0; i < chunk.NGN(); ++i) {
+        CHECK(expected_groups[i] == chunk.groups()[i]);
+    }
+    std::vector < std::vector< std::vector<double> > > flux = 
+        {{{1.270791e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 1.153966e6,
+            1.154819e6, 1.153684e6, 1.154784e6, 1.152800e6, 1.156920e6, 1.154341e6, 1.157786e6, 1.156371e6, 5.809202e5,
+            7.341455e5, 1.030736e6, 1.175655e6, 5.407961e5, 4.481701e5, 3.429532e5, 2.344895e5, 2.235493e5, 4.396216e4,
+            2.311833e4, 1.410474e4, 1.905167e4, 7.393531e4, 3.724272e3}}};
+    for (size_t i = 0; i < chunk.NGN(); ++i) {
+        CHECK_THAT(flux[i], WithinRel(chunk.flux(0, 0)[i]));
+    }
+            
+    std::vector < std::vector< std::vector<double> > > ratio = 
+        {{{2.429850, 2.431545, 2.433314, 2.402490, 2.402713, 2.397356, 2.426825,
+            2.436916, 2.442703, 2.430792, 2.434855, 2.419640, 2.426568, 2.417260, 2.439160, 2.467889,
+            2.479153, 2.496982, 2.528400, 2.586487, 2.642705, 2.716914, 2.800571, 2.988991, 3.409679,
+            3.663458, 3.968481, 4.260765, 4.415797, 4.651492}}};
+    for (size_t i = 0; i < chunk.NGN(); ++i) {
+        CHECK_THAT(ratio[i], WithinRel(chunk.ratio(0, 0)[i]));
+    }
+
+    std::vector < std::vector< std::vector<double> > > sigma = 
+        {{{5.232180e2, 1.754828e2, 7.256555e1, 2.118119e1, 2.022788e1, 6.453574e1, 4.674539e1,
+            2.265849e1, 1.763465e1, 1.090636e1, 5.999898, 3.849512, 2.560637, 1.929781, 1.536979, 1.298960,
+            1.193878, 1.123199, 1.185698, 1.244700, 1.280184, 1.259628, 1.197753, 1.108814, 1.438964,
+            1.778379, 1.730948, 1.873645, 2.067954, 2.135172}}};
+    for (size_t i = 0; i < chunk.NGN(); ++i) {
+        CHECK_THAT(sigma[i], WithinRel(chunk.flux(0, 0)[i]));
+    }
+
 }

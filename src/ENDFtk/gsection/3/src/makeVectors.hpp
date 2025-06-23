@@ -2,12 +2,11 @@ static auto
 makeVectors(const std::vector <DataRecord> records, int nmoments,
             int ndilutions, int ngroups) { 
 
-
     std::vector< unsigned int > groups(ngroups);
     std::iota(groups.begin(), groups.end(), 1);
     std::vector< std::vector< std::vector< double > > > flux( nmoments );
     std::vector< std::vector< std::vector< double > > > sigma( nmoments );
-    std::vector< std::vector< std::vector< double > > > ratio( nmoments );
+    std::vector< std::vector< std::vector< double > > > ratio;
     int nentries;
     double temp;
     if (records.size() != 0) {
@@ -17,8 +16,8 @@ makeVectors(const std::vector <DataRecord> records, int nmoments,
     else {
         throw std::runtime_error("Vector of Data Records is empty!");
     }
-
     if (nentries == 3) {
+        ratio.resize( nmoments );
         int blockSigma = nentries * nmoments * ndilutions * 2 / 3;
         int blockRatio = nentries * 1 / 3;
         for ( const auto& record : records ) {
@@ -39,7 +38,6 @@ makeVectors(const std::vector <DataRecord> records, int nmoments,
                         sigma[l][z] = std::vector< double >( ngroups, 0. );
                         ratio[l][z] = std::vector< double >( ngroups, 0.); 
                     }
-
                     flux[l][z][g] = record.list()[z * nmoments + l];
                     sigma[l][z][g] = record.list()[blockSigma + z * nmoments + l];
                     ratio[l][z][g] = record.list()[blockRatio + z * nmoments + l];

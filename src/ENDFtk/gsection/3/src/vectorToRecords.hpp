@@ -12,7 +12,6 @@ vectorToRecords(double temp,
 
     if (nmoments > 0) {
         ndilutions = flux.front().size();
-        std::cout << "boop " << flux.front().size() << std::endl;
         if (flux.front().size() > 0) {
             ngroups = flux.front().front().size();
         }
@@ -23,7 +22,7 @@ vectorToRecords(double temp,
         throw std::exception();
     }
 
-    // check for match dimensions
+    // check for correct dimensions
     for ( unsigned int l = 0; l < nmoments; ++l ) {
         if ( ndilutions != flux[l].size() && ndilutions != sigma[l].size() && ndilutions != ratio[l].size() ) {
             // TODO: log error
@@ -44,8 +43,8 @@ vectorToRecords(double temp,
 
         // verify that all moments, dilutions have a group g that is zero
         bool allzero = true;
-        for (unsigned int l = 0; l < nmoments; ++l ) {
-            for (unsigned int z = 0; z < ndilutions; ++z ) {
+        for ( unsigned int l = 0; l < nmoments; ++l ) {
+            for ( unsigned int z = 0; z < ndilutions; ++z ) {
                 if (sigma[l][z][g] != 0.0) {
                     allzero = false;
                     break;
@@ -60,8 +59,8 @@ vectorToRecords(double temp,
         // if they are all zero: erase it
         if ( allzero ) {
 
-            for (unsigned int l = 0; l < nmoments; ++l ) {
-                for (unsigned int z = 0; z < ndilutions; ++z ) {
+            for ( unsigned int l = 0; l < nmoments; ++l ) {
+                for ( unsigned int z = 0; z < ndilutions; ++z ) {
                     
                     sigma[l][z].erase( sigma[l][z].begin() + g );
                     flux[l][z].erase( flux[l][z].begin() + g );
@@ -72,6 +71,7 @@ vectorToRecords(double temp,
 
         indices.insert( indices.begin(), g + 1 );
     }
+
 
     return makeRecords(temp, indices, flux, sigma, ratio);
 
@@ -88,6 +88,7 @@ vectorToRecords(double temp,
     auto ndilutions = 0;
     unsigned int ngroups = 0;
 
+
     if (flux.size() > 0) {
         ndilutions = flux.front().size();
         if (flux.front().size() > 0) {
@@ -100,7 +101,7 @@ vectorToRecords(double temp,
         throw std::exception();
     }
 
-    // check for match dimensions
+    // check for correct dimensions
     for ( unsigned int l = 0; l < nmoments; ++l ) {
         if ( ndilutions != flux[l].size() && ndilutions != sigma[l].size() ) {
             // TODO: log error
@@ -121,8 +122,8 @@ vectorToRecords(double temp,
 
         // verify that all moments, dilutions have a group g that is zero
         bool allzero = true;
-        for (unsigned int l = 0; l < nmoments; ++l ) {
-            for (unsigned int z = 0; z < ndilutions; ++z ) {
+        for ( unsigned int l = 0; l < nmoments; ++l ) {
+            for ( unsigned int z = 0; z < ndilutions; ++z ) {
                 if (sigma[l][z][g] != 0.0) {
                     allzero = false;
                     break;
@@ -137,8 +138,8 @@ vectorToRecords(double temp,
         // if they are all zero: erase it
         if ( allzero ) {
 
-            for (unsigned int l = 0; l < nmoments; ++l ) {
-                for (unsigned int z = 0; z < ndilutions; ++z ) {
+            for ( unsigned int l = 0; l < nmoments; ++l ) {
+                for ( unsigned int z = 0; z < ndilutions; ++z ) {
                     
                     sigma[l][z].erase( sigma[l][z].begin() + g );
                     flux[l][z].erase( flux[l][z].begin() + g );

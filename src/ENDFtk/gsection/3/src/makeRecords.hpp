@@ -46,10 +46,9 @@ makeRecords(double temp,
         std::vector< double > xs;
         list.reserve( 2 * nmoments * ndilutions );
         xs.reserve( nmoments * ndilutions );
-        for ( unsigned int l = 0; l < nmoments; ++l ) {
+        for ( unsigned int z = 0; z < ndilutions; ++z ) {
  
-            for ( unsigned int z = 0; z < ndilutions; ++z ) {
-
+            for ( unsigned int l = 0; l < nmoments; ++l ) {
                 list.push_back( flux[l][z][g] );
                 xs.push_back( sigma[l][z][g] );
             }
@@ -112,9 +111,9 @@ makeRecords(double temp,
         list.reserve( 3 * nmoments * ndilutions );
         xs.reserve( nmoments * ndilutions );
         ratios.reserve(nmoments * ndilutions );
-        for ( unsigned int l = 0; l < nmoments; ++l ) {
+        for ( unsigned int z = 0; z < ndilutions; ++z ) {
  
-            for ( unsigned int z = 0; z < ndilutions; ++z ) {
+            for ( unsigned int l = 0; l < nmoments; ++l ) {
 
                 list.push_back( flux[l][z][g] );
                 xs.push_back( sigma[l][z][g] );
