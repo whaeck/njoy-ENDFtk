@@ -163,6 +163,7 @@ namespace ENDFtk {
     long NC() const { return 1 + ( this->NPL() + 5 ) / 6; }
 
     #include "ENDFtk/ListRecord/src/print.hpp"
+
   };
 
   using LIST = ListRecord;

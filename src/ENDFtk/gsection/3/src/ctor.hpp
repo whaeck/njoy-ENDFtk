@@ -97,7 +97,7 @@ public:
         try:
             GType(head.MT(), head.ZA(), head.AWR(), head.L1(),
              head.L2(), head.N1(), head.N2(),
-            readSequence<DataRecord>(begin, end, lineNumber, head.MAT(), head.MF(),
+            readRecords(begin, end, lineNumber, head.MAT(), head.MF(),
                         head.MT(), head.N2())) {
             this->readSEND(begin, end, lineNumber, head.MAT(), head.MF());
         }

@@ -15,16 +15,16 @@ using namespace njoy::ENDFtk;
 
 std::string chunk();
 std::string chunkRatios();
+std::string chunkClipped();
 std::string validSEND();
-std::string validMEND();
-std::string validTEND();
 
-void verifyChunkRatios(const section::GType<3>& );
-void verifyChunk(const section::GType<3>& );
+void verifyChunkRatios(const section::GType< 3 >& );
+void verifyChunk(const section::GType< 3 >& );
+void verifyChunkClipped(const section::GType< 3 >& );
 
 SCENARIO("section::GType<3>") {
     
-    GIVEN("valid data for a section::GType<3>"){
+    GIVEN("valid data for a section::GType<3> without ratio quantities"){
         std::string sectionString = chunk() + validSEND();
 
         WHEN("the data is given as a string") {
@@ -48,6 +48,10 @@ SCENARIO("section::GType<3>") {
 
                 CHECK(buffer == sectionString);
             } // THEN
+
+            THEN("ratios are requested, it will error.") {
+                CHECK_THROWS( chunk.ratio(0,0) );
+            } // THEN
         } // WHEN
     } // GIVEN
 
@@ -69,19 +73,19 @@ SCENARIO("section::GType<3>") {
             std::vector< unsigned int > groups(30);
             std::iota(groups.begin(), groups.end(), 1);
 
-            std::vector < std::vector< std::vector<double> > > flux = 
+            std::vector < std::vector< std::vector< double > > > flux = 
             {{{1.270791e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 1.153966e6,
                 1.154819e6, 1.153684e6, 1.154784e6, 1.152800e6, 1.156920e6, 1.154341e6, 1.157786e6, 1.156371e6, 5.809202e5,
                 7.341455e5, 1.030736e6, 1.175655e6, 5.407961e5, 4.481701e5, 3.429532e5, 2.344895e5, 2.235493e5, 4.396216e4,
                 2.311833e4, 1.410474e4, 1.905167e4, 7.393531e4, 3.724272e3}}};
             
-            std::vector < std::vector< std::vector<double> > > ratio = 
+            std::vector < std::vector< std::vector< double > > > ratio = 
             {{{2.429850, 2.431545, 2.433314, 2.402490, 2.402713, 2.397356, 2.426825,
                 2.436916, 2.442703, 2.430792, 2.434855, 2.419640, 2.426568, 2.417260, 2.439160, 2.467889,
                 2.479153, 2.496982, 2.528400, 2.586487, 2.642705, 2.716914, 2.800571, 2.988991, 3.409679,
                 3.663458, 3.968481, 4.260765, 4.415797, 4.651492}}};
 
-            std::vector < std::vector< std::vector<double> > > sigma = 
+            std::vector < std::vector< std::vector< double > > > sigma = 
             {{{5.232180e2, 1.754828e2, 7.256555e1, 2.118119e1, 2.022788e1, 6.453574e1, 4.674539e1,
                 2.265849e1, 1.763465e1, 1.090636e1, 5.999898, 3.849512, 2.560637, 1.929781, 1.536979, 1.298960,
                 1.193878, 1.123199, 1.185698, 1.244700, 1.280184, 1.259628, 1.197753, 1.108814, 1.438964,
@@ -100,6 +104,39 @@ SCENARIO("section::GType<3>") {
                 chunkRatios.print(output, 9228, 3, 452);
 
                 CHECK(buffer == sectionString);
+            } // THEN
+        } // WHEN
+    } // GIVEN
+
+    GIVEN("valid data for a GType<3> section that's been clipped") {
+
+        std::string sectionString = chunkClipped() + validSEND();
+
+        WHEN("when the data is given as a string") {
+
+            std::string line = chunkClipped() + validSEND();
+            auto begin = line.begin();
+            auto end = line.end();
+            long lineNumber = 0;
+            auto head = StructureDivision(begin, end, lineNumber);
+
+            section::GType<3> chunkClipped(asHead(head), begin, end, lineNumber);
+
+                THEN("a section::GType<3> can be constructed and its " 
+                    "members can be constructed and tested") {
+                    
+                    verifyChunkClipped(chunkClipped);
+
+                } // THEN
+
+                THEN("it can be printed") {
+
+                    std::string buffer;
+                    auto output = std::back_inserter(buffer);
+                    chunkClipped.print(output, 9228, 3, 16);
+
+                    CHECK(buffer == sectionString);
+
             } // THEN
         } // WHEN
     } // GIVEN
@@ -205,7 +242,7 @@ std::string validSEND() {
     "                                                                  9228 3  0     \n";
 }
 
-void verifyChunk(const section::GType<3>& chunk) {
+void verifyChunk(const section::GType< 3 >& chunk) {
     CHECK(92235 == chunk.ZA());
     CHECK(2 == chunk.NL());
     CHECK(2 == chunk.numberMoments());
@@ -324,7 +361,7 @@ std::string chunkRatios() {
     " 3.724272+3 4.651492+0 2.135172+0                                 9228 3452     \n";
 }
 
-void verifyChunkRatios(const section::GType<3>& chunkRatios) {
+void verifyChunkRatios(const section::GType< 3 >& chunkRatios) {
     CHECK(92235 == chunkRatios.ZA());
     CHECK(1 == chunkRatios.NL());
     CHECK(1 == chunkRatios.numberMoments());
@@ -339,34 +376,89 @@ void verifyChunkRatios(const section::GType<3>& chunkRatios) {
     CHECK_THAT( 293.6, WithinRel( chunkRatios.temperature() ) );
     std::vector<unsigned int> expected_groups(30);
     std::iota(expected_groups.begin(), expected_groups.end(), 1);
-    for (size_t i = 0; i < chunk.NGN(); ++i) {
-        CHECK(expected_groups[i] == chunk.groups()[i]);
+    for (size_t i = 0; i < chunkRatios.NGN(); ++i) {
+        CHECK(expected_groups[i] == chunkRatios.groups()[i]);
     }
-    std::vector < std::vector< std::vector<double> > > flux = 
+    std::vector < std::vector< std::vector< double> > > flux = 
         {{{1.270791e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 1.153966e6,
             1.154819e6, 1.153684e6, 1.154784e6, 1.152800e6, 1.156920e6, 1.154341e6, 1.157786e6, 1.156371e6, 5.809202e5,
             7.341455e5, 1.030736e6, 1.175655e6, 5.407961e5, 4.481701e5, 3.429532e5, 2.344895e5, 2.235493e5, 4.396216e4,
             2.311833e4, 1.410474e4, 1.905167e4, 7.393531e4, 3.724272e3}}};
-    for (size_t i = 0; i < chunk.NGN(); ++i) {
-        CHECK_THAT(flux[i], WithinRel(chunk.flux(0, 0)[i]));
+    for (size_t i = 0; i < chunkRatios.NGN(); ++i) {
+        CHECK_THAT(flux[0][0][i], WithinRel(chunkRatios.flux(0, 0)[i]));
     }
             
-    std::vector < std::vector< std::vector<double> > > ratio = 
+    std::vector < std::vector< std::vector< double> > > ratio = 
         {{{2.429850, 2.431545, 2.433314, 2.402490, 2.402713, 2.397356, 2.426825,
             2.436916, 2.442703, 2.430792, 2.434855, 2.419640, 2.426568, 2.417260, 2.439160, 2.467889,
             2.479153, 2.496982, 2.528400, 2.586487, 2.642705, 2.716914, 2.800571, 2.988991, 3.409679,
             3.663458, 3.968481, 4.260765, 4.415797, 4.651492}}};
-    for (size_t i = 0; i < chunk.NGN(); ++i) {
-        CHECK_THAT(ratio[i], WithinRel(chunk.ratio(0, 0)[i]));
+    for (size_t i = 0; i < chunkRatios.NGN(); ++i) {
+        CHECK_THAT(ratio[0][0][i], WithinRel(chunkRatios.ratio(0, 0)[i]));
     }
 
-    std::vector < std::vector< std::vector<double> > > sigma = 
+    std::vector < std::vector< std::vector< double> > > sigma = 
         {{{5.232180e2, 1.754828e2, 7.256555e1, 2.118119e1, 2.022788e1, 6.453574e1, 4.674539e1,
             2.265849e1, 1.763465e1, 1.090636e1, 5.999898, 3.849512, 2.560637, 1.929781, 1.536979, 1.298960,
             1.193878, 1.123199, 1.185698, 1.244700, 1.280184, 1.259628, 1.197753, 1.108814, 1.438964,
             1.778379, 1.730948, 1.873645, 2.067954, 2.135172}}};
-    for (size_t i = 0; i < chunk.NGN(); ++i) {
-        CHECK_THAT(sigma[i], WithinRel(chunk.flux(0, 0)[i]));
+    for (size_t i = 0; i < chunkRatios.NGN(); ++i) {
+        CHECK_THAT(sigma[0][0][i], WithinRel(chunkRatios.crossSection(0, 0)[i]));
     }
 
+}
+
+std::string chunkClipped() {
+    return
+    " 9.223500+4 0.000000+0          1          1          0         309228 3 16     \n"
+    " 2.936000+2 0.000000+0          2          1          2         249228 3 16     \n"
+    " 2.235493+5 1.047471-2                                            9228 3 16     \n"
+    " 2.936000+2 0.000000+0          2          1          2         259228 3 16     \n"
+    " 4.396216+4 3.690336-1                                            9228 3 16     \n"
+    " 2.936000+2 0.000000+0          2          1          2         269228 3 16     \n"
+    " 2.311833+4 6.475546-1                                            9228 3 16     \n"
+    " 2.936000+2 0.000000+0          2          1          2         279228 3 16     \n"
+    " 1.410474+4 8.511604-1                                            9228 3 16     \n"
+    " 2.936000+2 0.000000+0          2          1          2         289228 3 16     \n"
+    " 1.905167+4 7.647669-1                                            9228 3 16     \n"
+    " 2.936000+2 0.000000+0          2          1          2         299228 3 16     \n"
+    " 7.393531+4 5.483544-1                                            9228 3 16     \n"
+    " 2.936000+2 0.000000+0          2          1          2         309228 3 16     \n"
+    " 3.724272+3 3.717841-1                                            9228 3 16     \n";
+}
+
+void verifyChunkClipped(const section::GType<3>& chunkClipped) {
+    CHECK(92235 == chunkClipped.ZA());
+    CHECK(1 == chunkClipped.NL());
+    CHECK(1 == chunkClipped.numberMoments());
+    CHECK(1 == chunkClipped.NZ());
+    CHECK(1 == chunkClipped.numberDilutions());
+    CHECK(30 == chunkClipped.NGN());
+    CHECK(30 == chunkClipped.numberNeutronGroups());
+    CHECK(1 == chunkClipped.NZ());
+    CHECK(1 == chunkClipped.numberDilutions());
+    CHECK(0 == chunkClipped.LRFLAG());
+    CHECK(0 == chunkClipped.breakUpID());
+    CHECK_THAT( 293.6, WithinRel( chunkClipped.temperature() ) );
+    std::vector<unsigned int> expected_groups(30);
+    std::iota(expected_groups.begin(), expected_groups.end(), 1);
+    for (size_t i = 0; i < chunkClipped.NGN(); ++i) {
+        CHECK(expected_groups[i] == chunkClipped.groups()[i]);
+    }
+    std::vector < std::vector< std::vector< double> > > flux = {{{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+         0.0, 0.0, 2.235493e5, 4.396216e4, 2.311833e4, 1.410474e4, 1.905167e4,
+         7.393531e4, 3.724272e3
+        }}};
+    for (size_t i = 0; i < chunkClipped.NGN(); ++i) {
+        CHECK_THAT(flux[0][0][i], WithinRel(chunkClipped.flux(0, 0)[i]));
+    }
+    std::vector < std::vector< std::vector< double> > > sigma = {{{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+         0.0, 0.0, 1.047471e-2, 3.690336e-1, 6.475546e-1, 8.511604e-1, 7.647669e-1,
+         5.483544e-1, 3.717841e-1
+        }}};
+    for (size_t i = 0; i < chunkClipped.NGN(); ++i) {
+        CHECK_THAT(flux[0][0][i], WithinRel(chunkClipped.flux(0, 0)[i]));
+    }
 }

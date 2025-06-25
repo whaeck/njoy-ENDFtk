@@ -10,9 +10,8 @@
 #include "ENDFtk/DataRecord.hpp"
 #include "ENDFtk/ControlRecord.hpp"
 #include "ENDFtk/section.hpp"
-#include "ENDFtk/readSequence.hpp"
+#include "tools/Log.hpp"
 #include <numeric>
-#include <iostream>
 
 namespace njoy {
 namespace ENDFtk {
@@ -36,7 +35,7 @@ namespace section {
         /* auxiliary functions */
         #include "ENDFtk/gsection/3/src/makeVectors.hpp"
         #include "ENDFtk/gsection/3/src/makeRecords.hpp"
-        #include "ENDFtk/gsection/3/src/vectorToRecords.hpp"
+        #include "ENDFtk/gsection/3/src/readRecords.hpp"
 
     public:
 
