@@ -111,7 +111,7 @@ void wrapParticlePairs( python::module& module, python::module& ) {
     "charge_particle_A",
     [] ( const Component& self ) -> DoubleRange
        { return self.chargeParticleA(); },
-    "The mass of the first particle in each particle pair"
+    "The charge of the first particle in each particle pair"
   )
   .def_property_readonly(
 
