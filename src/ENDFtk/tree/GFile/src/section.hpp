@@ -12,7 +12,7 @@ const GSection& section( int mt ) const {
   }
 
   Log::error( "The requested section (MF{} MT{}) is not present "
-              "in the ENDF file tree",
+              "in the GENDF file tree",
               this->fileNumber(), mt );
   throw std::exception();
 }
@@ -24,6 +24,6 @@ const GSection& section( int mt ) const {
  */
 GSection& section( int mt ) {
 
-  return const_cast< Section& >
-         ( const_cast< const File& >( *this ).section( mt ) );
+  return const_cast< GSection& >
+         ( const_cast< const GFile& >( *this ).section( mt ) );
 }

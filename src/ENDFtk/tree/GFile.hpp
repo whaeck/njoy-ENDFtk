@@ -1,5 +1,5 @@
-#ifndef NJOY_ENDFTK_TREE_FILE
-#define NJOY_ENDFTK_TREE_FILE
+#ifndef NJOY_ENDFTK_TREE_GFILE
+#define NJOY_ENDFTK_TREE_GFILE
 
 // system includes
 #include <list>
@@ -20,7 +20,7 @@ namespace tree {
    *  indexed GENDF sections from that file. It is created by the GENDF tree
    *  Material class and should not be directly constructed by a user.
    */
-  class File {
+  class GFile {
 
     /* fields */
     int mat_;
@@ -77,14 +77,14 @@ namespace tree {
      *
      *  @param[in]   mt   the MT number of the section to be returned
      */
-    const Section& MT( int mt ) const { return this->section( mt ); }
+    const GSection& MT( int mt ) const { return this->section( mt ); }
 
     /**
      *  @brief Return the section with the requested MT number
      *
      *  @param[in]   mt   the MT number of the section to be returned
      */
-    Section& MT( int mt ) { return this->section( mt ); }
+    GSection& MT( int mt ) { return this->section( mt ); }
 
     /**
      *  @brief Return whether or not the file has a section with the given MT
