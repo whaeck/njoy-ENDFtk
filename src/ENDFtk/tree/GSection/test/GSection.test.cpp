@@ -10,6 +10,7 @@
 using namespace njoy::ENDFtk;
 
 std::string chunk();
+std::string chunkDirty();
 std::string validEND();
 std::string invalidEND();
 
@@ -77,6 +78,26 @@ SCENARIO( "tree::Section" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "a dirty buffer for a tree::GSection" ) {
+
+    int mat = 9228;
+    int mf = 3;
+    int mt = 16;
+    std::string sectionString = chunkDirty() + validEND();
+
+    tree::GSection section( mat, mf, mt, std::string( sectionString ) );
+
+    WHEN( "the section is cleaned" ) {
+
+      section.clean();
+
+      THEN( "the sequence numbers will be removed" ) {
+
+        CHECK( chunk() + validEND() == section.content() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data for a tree::Section" ) {
 
     WHEN( "the data is read from a string/stream with an invalid END" ) {
@@ -129,6 +150,26 @@ std::string chunk() {
     " 7.393531+4 5.483544-1                                            9228 3 16     \n"
     " 2.936000+2 0.000000+0          2          1          2         309228 3 16     \n"
     " 3.724272+3 3.717841-1                                            9228 3 16     \n";
+}
+
+std::string chunkDirty() {
+
+  return
+    " 9.223500+4 0.000000+0          1          1          0         309228 3 16    1\n"
+    " 2.936000+2 0.000000+0          2          1          2         249228 3 16    2\n"
+    " 2.235493+5 1.047471-2                                            9228 3 16    3\n"
+    " 2.936000+2 0.000000+0          2          1          2         259228 3 16    4\n"
+    " 4.396216+4 3.690336-1                                            9228 3 16    5\n"
+    " 2.936000+2 0.000000+0          2          1          2         269228 3 16    6\n"
+    " 2.311833+4 6.475546-1                                            9228 3 16    7\n"
+    " 2.936000+2 0.000000+0          2          1          2         279228 3 16    8\n"
+    " 1.410474+4 8.511604-1                                            9228 3 16    9\n"
+    " 2.936000+2 0.000000+0          2          1          2         289228 3 16   10\n"
+    " 1.905167+4 7.647669-1                                            9228 3 16   11\n"
+    " 2.936000+2 0.000000+0          2          1          2         299228 3 16   12\n"
+    " 7.393531+4 5.483544-1                                            9228 3 16   13\n"
+    " 2.936000+2 0.000000+0          2          1          2         309228 3 16   14\n"
+    " 3.724272+3 3.717841-1                                            9228 3 16   15\n";
 }
 
 std::string validEND(){

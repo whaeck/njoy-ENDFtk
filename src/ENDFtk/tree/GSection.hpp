@@ -28,7 +28,9 @@ namespace tree {
     std::string content_;
 
     /* auxiliary function */
-    #include "ENDFtk/tree/GSection/src/findEnd.hpp"
+
+    // blatantly copied from the tree Section
+    #include "ENDFtk/tree/Section/src/findEnd.hpp"
 
   public:
 
@@ -80,6 +82,9 @@ namespace tree {
       // count all newline characters, subtract 1 for the SEND record
       return std::count( this->content_.begin(), this->content_.end(), '\n' ) - 1;
     }
+
+    // blatantly copied from the tree Section
+    #include "ENDFtk/tree/Section/src/clean.hpp"
   };
 
 } // tree namespace
