@@ -3,8 +3,6 @@
 
 
 // other includes (TODO: remove uneccessary headers)
-#include "tools/std20/views.hpp"
-#include "ENDFtk/section/Base.hpp"
 #include "ENDFtk/macros.hpp"
 #include "ENDFtk/HeadRecord.hpp"
 #include "ENDFtk/DataRecord.hpp"
@@ -17,8 +15,8 @@ namespace njoy {
 namespace ENDFtk {
 namespace section {
 
-    template<>
-    class ENDFTK_PYTHON_EXPORT GType<3> :
+    template < >
+    class ENDFTK_PYTHON_EXPORT GType< 3 > :
         protected Base {
 
         /* fields */
@@ -124,6 +122,7 @@ namespace section {
         using Base::MT;
         using Base::sectionNumber;
         using Base::ZA;
+        using Base::targetIdentifier;
         using Base::AWR;
         using Base::atomicWeightRatio;
 

@@ -93,13 +93,14 @@ public:
     GType(const HEAD& head,
           Iterator& begin,
           const Iterator& end,
-          long& lineNumber)
+          long& lineNumber,
+          int MAT)
         try:
             GType(head.MT(), head.ZA(), head.AWR(), head.L1(),
              head.L2(), head.N1(), head.N2(),
             readRecords(begin, end, lineNumber, head.MAT(), head.MF(),
                         head.MT(), head.N2())) {
-            this->readSEND(begin, end, lineNumber, head.MAT(), head.MF());
+            this->readSEND(begin, end, lineNumber, MAT, head.MF());
         }
         catch(std::exception& e) {
             Log::info("Encountered error while reading section {} of file {} fo material {}"
