@@ -10,17 +10,10 @@ public:
  *  @brief Constructor
  *  @param[in] zaid     the ZA value of the material
  *  @param[in] awr      the atomic weight ratio
- *  @param[in] zero1    empty allocation (spacer)
  *  @param[in] nz       the number of sig_0 (dil. values)
- *  @param[in] gid      the GENDF identifier (-1)
- *  @param[in] ntw      the number of words in title
  *  @param[in] temp     the temperature evaluated
- *  @param[in] zero2    empty allocation
  *  @param[in] ngn      number of neutron groups
  *  @param[in] ngg      number of photon groups
- *  @param[in] nw       number of words in list
- *  @param[in] zero3    empty allocation
- *  @param[in] zero4    empty allocation (used to be TITLE)
  *  @param[in] sigz     dilution values (size(nz))
  *  @param[in] egn      neutron group edges (size(ngn))
  *  @param[in] egg      photon group edges (size(ngg))

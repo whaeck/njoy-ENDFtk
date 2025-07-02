@@ -88,6 +88,7 @@ add_python_test( MF2.MT151.UnresolvedEnergyIndependentLValue            MF2/MT15
 add_python_test( MF2.MT152.Section                                      MF2/Test_ENDFtk_MF2_MT152_Section.py )
 
 add_python_test( MF3.Section MF3/Test_ENDFtk_MF3_Section.py )
+add_python_test( MF3.GSection MF3/Test_ENDFtk_MF3_GSection.py )
 add_python_test( MF3.File    MF3/Test_ENDFtk_MF3_File.py )
 
 add_python_test( MF4.Section                MF4/Test_ENDFtk_MF4_Section.py )

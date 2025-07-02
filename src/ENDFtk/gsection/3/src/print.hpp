@@ -1,5 +1,6 @@
 template <typename OutputIterator >
-void print(OutputIterator& it, int MAT, int MF, int MT) const {
+void print(OutputIterator& it, int MAT, int MF) const {
+    int MT = this->MT();
     ControlRecord(this->ZA(), this->AWR(), this->NL(), this->NZ(),
                   this->LRFLAG(), this->NGN()).print(it, MAT, MF, MT);
     if ( this->ratio_.size() != 0  ) {
