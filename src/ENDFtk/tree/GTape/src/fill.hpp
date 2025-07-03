@@ -2,7 +2,7 @@ template < typename BufferIterator >
 static auto
 fill( BufferIterator position, const BufferIterator& end, long& lineNumber ) {
 
-  std::list< Material > materials;
+  std::list< GMaterial > materials;
 
   auto compare = [] ( auto&& left, auto&& right )
                     { return left < right.materialNumber(); };
@@ -14,9 +14,7 @@ fill( BufferIterator position, const BufferIterator& end, long& lineNumber ) {
 
     auto iter = std::upper_bound( materials.begin(), materials.end(), division.tail.MAT(), compare );
 
-    materials.emplace(
-      iter,
-      Material( asHead( division ), begin, position, end, lineNumber ) );
+    materials.emplace( iter, asHead( division ), begin, position, end, lineNumber );
 
     begin = position;
     division = StructureDivision( position, end, lineNumber );

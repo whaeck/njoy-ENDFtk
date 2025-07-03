@@ -2,241 +2,74 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "ENDFtk/tree/GMaterial.hpp"
+#include "ENDFtk/tree/GTape.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::ENDFtk;
+using namespace njoy::tools;
 
-void verifyChunk( const tree::GMaterial& );
-std::string chunkMF1();
-std::string chunkMF3MT16();
-std::string chunkMF3MT17();
-std::string chunkMF3();
-std::string chunkMF6MT17();
-std::string chunkMF6MT89();
-std::string chunkMF6();
 std::string chunk();
-std::string chunkUnordered();
-std::string chunkUnorderedWithDuplicates();
-std::string validMEND();
+std::string validTEND();
+std::string invalidTEND();
 
-SCENARIO( "tree::GMaterial" ) {
+SCENARIO( "tree::GFile" ) {
 
-  GIVEN( "an empty tree::GMaterial" ) {
+  GIVEN( "an empty tree::GFile" ) {
 
     WHEN( "it is created" ) {
 
-      tree::GMaterial material( 9228 );
+      tree::GTape tape( TapeIdentification( "this is my tape identification" ) );
 
-      THEN( "it is empty except for the MAT and MF" ) {
+      THEN( "it is empty except for the tape ID" ) {
 
-        CHECK( 9228 == material.MAT() );
-        CHECK( 9228 == material.materialNumber() );
+        auto numbers = tape.materialNumbers();
+        CHECK( 0 == tape.size() );
+        CHECK( 0 == numbers.size() );
 
-        auto fileNumbers = material.fileNumbers();
-        CHECK( 0 == material.size() );
-        CHECK( 0 == fileNumbers.size() );
-
-        CHECK( "" == material.content() );
-      }
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "valid data for a tree::GMaterial with data in order and unique" ) {
-
-    std::string materialString = chunk() + validMEND();
-
-    WHEN( "the data is read from a string/stream with a valid MEND" ) {
-
-      auto position = materialString.begin();
-      auto start = materialString.begin();
-      auto end = materialString.end();
-      long lineNumber = 0;
-
-      HeadRecord head( position, end, lineNumber );
-      tree::GMaterial material( head, start, position, end, lineNumber );
-
-      THEN( "the Material is populated correctly" ) {
-
-        verifyChunk( material );
-      } // THEN
-
-      THEN( "the iterators advanced correctly" ) {
-
-        CHECK( materialString.end() == position );
-        CHECK( materialString.begin() == start );
-        CHECK( materialString.end() == end );
-        CHECK( 147 == lineNumber ); // last line read is the MEND record
+        CHECK( "this is my tape identification                                       0 0  0     \n"
+               "                                                                    -1 0  0     \n" == tape.content() );
       } // THEN
     } // WHEN
   } // GIVEN
 
-  GIVEN( "valid data for a tree::GMaterial with data not in order and with duplicates" ) {
+  GIVEN( "valid data for a tree::GTape" ) {
 
-    std::string materialString = chunkUnordered() + validMEND();
-    std::string finalString = chunk() + validMEND();
+    std::string tapeString = chunk() + validTEND();
 
-    WHEN( "the data is read from a string/stream with a valid MEND" ) {
+    WHEN( "the data is read from a string/stream with a valid TEND" ) {
 
-      auto position = materialString.begin();
-      auto start = materialString.begin();
-      auto end = materialString.end();
-      long lineNumber = 0;
+      tree::GTape tape( tapeString );
 
-      HeadRecord head( position, end, lineNumber );
-      tree::GMaterial material( head, start, position, end, lineNumber );
+      THEN( "the tape is populated correctly" ) {
 
-      THEN( "the Material is populated correctly" ) {
+        CHECK( true == tape.hasMaterial( 9228 ) );
+        CHECK( true == tape.hasMAT( 9228 ) );
+        CHECK( 1 == std20::distance( tape.MAT( 9228 ) ) );
+        CHECK( 1 == std20::distance( tape.MAT( 9228 ) ) );
 
-        verifyChunk( material );
-      } // THEN
+        CHECK( false == tape.hasMaterial( 128 ) );
+        CHECK( false == tape.hasMAT( 128 ) );
 
-      THEN( "the iterators advanced correctly" ) {
+        auto materialNumbers = tape.materialNumbers();
+        CHECK( 1 == tape.size() );
+        CHECK( 1 == materialNumbers.size() );
 
-        CHECK( materialString.end() == position );
-        CHECK( materialString.begin() == start );
-        CHECK( materialString.end() == end );
-        CHECK( 147 == lineNumber ); // last line read is the MEND record
-      } // THEN
-    } // WHEN
-  } // GIVEN
+        auto iter = std::begin( materialNumbers );
+        CHECK( 9228 == *iter ); ++iter;
 
-  GIVEN( "valid data for a tree::GMaterial with data not in order and with duplicates" ) {
-
-    std::string materialString = chunkUnorderedWithDuplicates() + validMEND();
-
-    WHEN( "the data is read from a string/stream with a valid MEND" ) {
-
-      auto position = materialString.begin();
-      auto start = materialString.begin();
-      auto end = materialString.end();
-      long lineNumber = 0;
-
-      HeadRecord head( position, end, lineNumber );
-      tree::GMaterial material( head, start, position, end, lineNumber );
-
-      THEN( "the Material is populated correctly" ) {
-
-        verifyChunk( material );
-      } // THEN
-
-      THEN( "the iterators advanced correctly" ) {
-
-        CHECK( materialString.end() == position );
-        CHECK( materialString.begin() == start );
-        CHECK( materialString.end() == end );
-        CHECK( 215 == lineNumber ); // last line read is the MEND record
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "invalid data for a tree::GMaterial" ) {
-
-    WHEN( "the data is read from a string/stream that abruptly ends (no END record)" ) {
-
-      std::string materialString = chunk();
-      auto position = materialString.begin();
-      auto start = materialString.begin();
-      auto end = materialString.end();
-      long lineNumber = 1;
-      HeadRecord head( position, end, lineNumber );
-
-      THEN( "an exception is thrown upon construction" ) {
-
-        CHECK_THROWS( tree::GMaterial( head, start, position, end, lineNumber ) );
+        CHECK( tapeString == tape.content() );
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const tree::GMaterial& material ) {
-
-  std::string finalString = chunk() + validMEND();
-
-  CHECK( 9228 == material.MAT() );
-  CHECK( 9228 == material.materialNumber() );
-
-  CHECK( true == material.hasFile( 1 ) );
-  CHECK( true == material.hasMF( 1 ) );
-  CHECK( true == material.file( 1 ).hasSection( 451 ) );
-  CHECK( true == material.MF( 1 ).hasMT( 451 ) );
-  CHECK( 1 == material.file( 1 ).size() );
-  CHECK( 1 == material.MF( 1 ).size() );
-  CHECK( chunkMF1() == material.file( 1 ).content() );
-  CHECK( chunkMF1() == material.MF( 1 ).content() );
-  CHECK( chunkMF1() == material.file( 1 ).section( 451 ).content() );
-  CHECK( chunkMF1() == material.MF( 1 ).section( 451 ).content() );
-
-  CHECK( false == material.hasFile( 2 ) );
-  CHECK( false == material.hasMF( 2 ) );
-
-  CHECK( true == material.hasFile( 3 ) );
-  CHECK( true == material.hasMF( 3 ) );
-  CHECK( true == material.file( 3 ).hasSection( 16 ) );
-  CHECK( true == material.MF( 3 ).hasMT( 16 ) );
-  CHECK( true == material.hasSection( 3, 16 ) );
-  CHECK( true == material.hasMFMT( 3, 16 ) );
-  CHECK( true == material.file( 3 ).hasSection( 17 ) );
-  CHECK( true == material.MF( 3 ).hasMT( 17 ) );
-  CHECK( true == material.hasSection( 3, 17 ) );
-  CHECK( true == material.hasMFMT( 3, 17 ) );
-  CHECK( false == material.file( 3 ).hasSection( 3 ) );
-  CHECK( false == material.MF( 3 ).hasMT( 3 ) );
-  CHECK( false == material.hasSection( 3, 3 ) );
-  CHECK( false == material.hasMFMT( 3, 3 ) );
-  CHECK( 2 == material.file( 3 ).size() );
-  CHECK( 2 == material.MF( 3 ).size() );
-  CHECK( chunkMF3() == material.file( 3 ).content() );
-  CHECK( chunkMF3() == material.MF( 3 ).content() );
-  CHECK( chunkMF3MT16() == material.file( 3 ).section( 16 ).content() );
-  CHECK( chunkMF3MT16() == material.MF( 3 ).section( 16 ).content() );
-  CHECK( chunkMF3MT17() == material.file( 3 ).section( 17 ).content() );
-  CHECK( chunkMF3MT17() == material.MF( 3 ).section( 17 ).content() );
-
-  CHECK( false == material.hasFile( 5 ) );
-  CHECK( false == material.hasMF( 5 ) );
-
-  CHECK( true == material.hasFile( 6 ) );
-  CHECK( true == material.hasMF( 6 ) );
-  CHECK( true == material.file( 6 ).hasSection( 17 ) );
-  CHECK( true == material.MF( 6 ).hasMT( 17 ) );
-  CHECK( true == material.hasSection( 6, 17 ) );
-  CHECK( true == material.hasMFMT( 6, 17 ) );
-  CHECK( true == material.file( 6 ).hasSection( 89 ) );
-  CHECK( true == material.MF( 6 ).hasMT( 89 ) );
-  CHECK( true == material.hasSection( 6, 89 ) );
-  CHECK( true == material.hasMFMT( 6, 89 ) );
-  CHECK( false == material.file( 6 ).hasSection( 3 ) );
-  CHECK( false == material.MF( 6 ).hasMT( 3 ) );
-  CHECK( false == material.hasSection( 6, 3 ) );
-  CHECK( false == material.hasMFMT( 6, 3 ) );
-  CHECK( 2 == material.file( 6 ).size() );
-  CHECK( 2 == material.MF( 6 ).size() );
-  CHECK( chunkMF6() == material.file( 6 ).content() );
-  CHECK( chunkMF6() == material.MF( 6 ).content() );
-  CHECK( chunkMF6MT17() == material.file( 6 ).section( 17 ).content() );
-  CHECK( chunkMF6MT17() == material.MF( 6 ).section( 17 ).content() );
-  CHECK( chunkMF6MT89() == material.file( 6 ).section( 89 ).content() );
-  CHECK( chunkMF6MT89() == material.MF( 6 ).section( 89 ).content() );
-
-  auto fileNumbers = material.fileNumbers();
-  CHECK( 3 == material.size() );
-  CHECK( 3 == fileNumbers.size() );
-
-  auto iter = std::begin( fileNumbers );
-  CHECK( 1 == *iter ); ++iter;
-  CHECK( 3 == *iter ); ++iter;
-  CHECK( 6 == *iter ); ++iter;
-
-  CHECK( finalString == material.content() ); // the data is now in order
-}
-
-std::string chunkMF1() {
+std::string chunk() {
 
   // this is a legal MF1
   return
+    "this is my tape identification                                       0 0  0     \n"
     " 9.223500+4 2.330248+2          0          3         -1          19228 1451     \n"
     " 2.936000+2 0.000000+0         30         12         48          09228 1451     \n"
     " 0.000000+0 1.00000+10 1.000000+4 1.000000+2 1.390000-4 1.520000-19228 1451     \n"
@@ -247,13 +80,7 @@ std::string chunkMF1() {
     " 1.000000+7 1.200000+7 1.350000+7 1.500000+7 1.700000+7 1.000000+49228 1451     \n"
     " 1.000000+5 5.000000+5 1.000000+6 2.000000+6 3.000000+6 4.000000+69228 1451     \n"
     " 5.000000+6 6.000000+6 7.000000+6 8.000000+6 9.000000+6 2.000000+79228 1451     \n"
-    "                                                                  9228 1  0     \n";
-}
-
-std::string chunkMF3MT16() {
-
-  // this is a legal MF3 MT16
-  return
+    "                                                                  9228 1  0     \n"
     " 9.223500+4 0.000000+0          1          1          0         309228 3 16     \n"
     " 2.936000+2 0.000000+0          2          1          2         249228 3 16     \n"
     " 2.235493+5 1.047471-2                                            9228 3 16     \n"
@@ -269,13 +96,7 @@ std::string chunkMF3MT16() {
     " 7.393531+4 5.483544-1                                            9228 3 16     \n"
     " 2.936000+2 0.000000+0          2          1          2         309228 3 16     \n"
     " 3.724272+3 3.717841-1                                            9228 3 16     \n"
-    "                                                                  9228 3  0     \n";
-}
-
-std::string chunkMF3MT17() {
-
-  // this is a legal MF3 MT17
-  return
+    "                                                                  9228 3  0     \n"
     " 9.223500+4 0.000000+0          1          1          0         309228 3 17     \n"
     " 2.936000+2 0.000000+0          2          1          2         289228 3 17     \n"
     " 1.905167+4 3.145908-3                                            9228 3 17     \n"
@@ -283,18 +104,7 @@ std::string chunkMF3MT17() {
     " 7.393531+4 3.879856-2                                            9228 3 17     \n"
     " 2.936000+2 0.000000+0          2          1          2         309228 3 17     \n"
     " 3.724272+3 1.593517-1                                            9228 3 17     \n"
-    "                                                                  9228 3  0     \n";
-}
-
-std::string chunkMF3() {
-
-  return chunkMF3MT16() + chunkMF3MT17();
-}
-
-std::string chunkMF6MT17() {
-
-  // this is a legal MF6 MT17
-  return
+    "                                                                  9228 3  0     \n"
     " 9.223500+4 0.000000+0          6          1          0         309228 6 17     \n"
     " 2.936000+2 0.000000+0         15          6         90         289228 6 17     \n"
     " 1.905167+4 1.905167+4 1.905167+4 1.905167+4 1.905167+4 1.905167+49228 6 17     \n"
@@ -354,12 +164,7 @@ std::string chunkMF6MT17() {
     " 1.071361-2 1.027324-3 7.237668-5 6.804056-8 2.501269-7 4.158869-89228 6 17     \n"
     " 2.110492-3 2.904715-4 2.968963-5 2.122901-7 5.429006-7 3.089222-79228 6 17     \n"
     " 9.946224-5 2.177884-5 3.304800-6 1.539063-7 3.308517-7 2.022797-79228 6 17     \n"
-    "                                                                  9228 6  0     \n";
-}
-
-std::string chunkMF6MT89() {
-
-  return
+    "                                                                  9228 6  0     \n"
     " 9.223500+4 0.000000+0          6          1          0         309228 6 89     \n"
     " 2.936000+2 0.000000+0         10          8         60         189228 6 89     \n"
     " 1.030736+6 1.030736+6 1.030736+6 1.030736+6 1.030736+6 1.030736+69228 6 89     \n"
@@ -410,32 +215,14 @@ std::string chunkMF6MT89() {
     " 2.936000+2 0.000000+0          2         30         12         309228 6 89     \n"
     " 3.724277+3 3.724277+3 3.724277+3 3.724277+3 3.724277+3 3.724277+39228 6 89     \n"
     " 1.82496-13 1.97258-14 1.36505-15 3.81831-17 7.79578-20 2.04016-189228 6 89     \n"
-    "                                                                  9228 6  0     \n";
-}
-
-std::string chunkMF6() {
-
-  return chunkMF6MT17() + chunkMF6MT89();
-}
-
-
-std::string chunk() {
-
-  return chunkMF1() + chunkMF3() + chunkMF6();
-}
-
-std::string chunkUnordered() {
-
-  return chunkMF1() + chunkMF6MT89() + chunkMF3MT17() + chunkMF6MT17() + chunkMF3MT16();
-}
-
-std::string chunkUnorderedWithDuplicates() {
-
-  return chunkMF1() + chunkMF3MT17() + chunkMF6MT17() + chunkMF6MT89() + chunkMF3MT17() + chunkMF6MT17() + chunkMF3MT16();
-}
-
-std::string validMEND(){
-
-  return
+    "                                                                  9228 6  0     \n"
     "                                                                     0 0  0     \n";
+}
+
+std::string validTEND(){
+  return "                                                                    -1 0  0     \n";
+}
+
+std::string invalidTEND(){
+  return "                                                                     2 0  0     \n";
 }

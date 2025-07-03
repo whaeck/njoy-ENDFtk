@@ -32,7 +32,7 @@ namespace tree {
 
     /* fields */
     std::optional< TapeIdentification > tpid_;
-    std::list< Material > materials_;
+    std::list< GMaterial > materials_;
 
     /* auxiliary function */
     #include "ENDFtk/tree/GTape/src/fill.hpp"

@@ -39,7 +39,7 @@ auto material( int mat ) {
 
   using namespace njoy::tools;
   return
-    static_cast< const Tape& >( *this ).material( mat )
+    static_cast< const GTape& >( *this ).material( mat )
     | std20::views::transform
       ( [] ( const auto& material ) -> GMaterial&
            { return const_cast< GMaterial& >( material ); } );
