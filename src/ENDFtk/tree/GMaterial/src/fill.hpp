@@ -46,6 +46,9 @@ fill
       Log::info( "Current position: MAT{} MF{} MT{} at line {}",
                  division.tail.MAT(), division.tail.MF(), division.tail.MT(),
                  lineNumber );
+
+      //just skip the section
+      GSection( asHead( division ), begin, position, end, lineNumber );
     }
     else {
 
@@ -75,7 +78,7 @@ fill
     files.emplace_back( iter->materialNumber(), iter->fileNumber(),
                         std::list( iter, upper ) );
 
-                        iter = upper;
+    iter = upper;
     upper = std::upper_bound( iter, sections.end(), iter->fileNumber(),
                               [] ( auto&& left, auto&& right )
                                  { return left < right.fileNumber(); } );

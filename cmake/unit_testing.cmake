@@ -281,4 +281,5 @@ add_subdirectory( src/ENDFtk/tree/Tape/test )
 add_subdirectory( src/ENDFtk/tree/test )
 
 add_subdirectory( src/ENDFtk/tree/GSection/test )
+add_subdirectory( src/ENDFtk/tree/GFile/test )
 add_subdirectory( src/ENDFtk/tree/GMaterial/test )

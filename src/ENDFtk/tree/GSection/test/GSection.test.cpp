@@ -14,9 +14,9 @@ std::string chunkDirty();
 std::string validEND();
 std::string invalidEND();
 
-SCENARIO( "tree::Section" ) {
+SCENARIO( "tree::GSection" ) {
 
-  GIVEN( "valid data for a tree::Section" ) {
+  GIVEN( "valid data for a tree::GSection" ) {
 
     std::string sectionString = chunk() + validEND();
 
@@ -98,7 +98,7 @@ SCENARIO( "tree::Section" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for a tree::Section" ) {
+  GIVEN( "invalid data for a tree::GSection" ) {
 
     WHEN( "the data is read from a string/stream with an invalid END" ) {
 
