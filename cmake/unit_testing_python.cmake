@@ -40,6 +40,7 @@ add_python_test( RectangularMatrix Test_ENDFtk_RectangularMatrix.py )
 add_python_test( SquareMatrix      Test_ENDFtk_SquareMatrix.py )
 
 add_python_test( MF1.MT451.Section                    MF1/Test_ENDFtk_MF1_MT451_Section.py )
+add_python_test( MF1.MT451.GSection                   MF1/Test_ENDFtk_MF1_MT451_GSection.py )
 add_python_test( MF1.MT452.Section                    MF1/Test_ENDFtk_MF1_MT452_Section.py )
 add_python_test( MF1.MT455.Section                    MF1/Test_ENDFtk_MF1_MT455_Section.py )
 add_python_test( MF1.MT455.DecayConstants             MF1/MT455/Test_ENDFtk_MF1_MT455_DecayConstants.py )

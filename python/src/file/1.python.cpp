@@ -19,6 +19,7 @@ void wrapSection_1_455( python::module&, python::module& );
 void wrapSection_1_456( python::module&, python::module& );
 void wrapSection_1_458( python::module&, python::module& );
 void wrapSection_1_460( python::module&, python::module& );
+void wrapGSection_1_451( python::module&, python::module& );
 
 void wrapFile_1( python::module& module, python::module& viewmodule ) {
 
@@ -29,6 +30,7 @@ void wrapFile_1( python::module& module, python::module& viewmodule ) {
   using MF1MT456 = njoy::ENDFtk::section::Type< 1, 456 >;
   using MF1MT458 = njoy::ENDFtk::section::Type< 1, 458 >;
   using MF1MT460 = njoy::ENDFtk::section::Type< 1, 460 >;
+  using GMF1MT451 = njoy::ENDFtk::section::GType< 1, 451 >;
   using File = njoy::ENDFtk::file::Type< 1 >;
   using Section = std::variant< MF1MT451, MF1MT452, MF1MT455,
                                 MF1MT456, MF1MT458, MF1MT460 >;
@@ -50,6 +52,7 @@ void wrapFile_1( python::module& module, python::module& viewmodule ) {
   wrapSection_1_456( submodule, viewmodule );
   wrapSection_1_458( submodule, viewmodule );
   wrapSection_1_460( submodule, viewmodule );
+  wrapGSection_1_451( submodule, viewmodule );
 
   // wrap views created by this file
   // none of these are supposed to be created directly by the user
