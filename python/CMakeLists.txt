@@ -234,6 +234,9 @@ if(ENDFtk.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/File.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/Material.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/Tape.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/GSection.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/GFile.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/GMaterial.python.cpp
     )
 
     target_link_libraries(ENDFtk.python PRIVATE njoy::ENDFtk)

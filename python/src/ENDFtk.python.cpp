@@ -53,6 +53,9 @@ void wrapTreeSection( python::module&, python::module& );
 void wrapTreeFile( python::module&, python::module& );
 void wrapTreeMaterial( python::module&, python::module& );
 void wrapTreeTape( python::module&, python::module& );
+void wrapTreeGSection( python::module&, python::module& );
+void wrapTreeGFile( python::module&, python::module& );
+void wrapTreeGMaterial( python::module&, python::module& );
 
 /**
  *  @brief ENDFtk python bindings
@@ -123,4 +126,7 @@ PYBIND11_MODULE( ENDFtk, module ) {
   wrapTreeFile( submodule, viewmodule );
   wrapTreeMaterial( submodule, viewmodule );
   wrapTreeTape( submodule, viewmodule );
+  wrapTreeGSection( submodule, viewmodule );
+  wrapTreeGFile( submodule, viewmodule );
+  wrapTreeGMaterial( submodule, viewmodule );
 }

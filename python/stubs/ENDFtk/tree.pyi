@@ -43,7 +43,7 @@ import ENDFtk.MF8.MT459
 import ENDFtk.MF9
 from __future__ import annotations
 import typing
-__all__ = ['File', 'Material', 'Section', 'Tape']
+__all__ = ['File', 'GFile', 'GMaterial', 'GSection', 'Material', 'Section', 'Tape']
 class File:
     """
     ENDF tree file
@@ -211,6 +211,271 @@ class File:
     def sections(self) -> ...:
         """
         All sections in the file
+        """
+class GFile:
+    """
+    GENDF tree file
+    """
+    def MT(self, mt: int) -> GSection:
+        """
+        Return the section with the requested MT number
+        
+        Arguments:
+            self    the ENDF tree file
+            mt      the MT number of the section to be returned
+        """
+    @typing.overload
+    def __init__(self, mat: int, mf: int) -> None:
+        """
+        Initialise an empty file with its MAT and MF number
+        
+        Arguments:
+            self    the file
+            mat     the MAT number of the file
+            mf      the MF number of the file
+        """
+    @typing.overload
+    def __init__(self, file: GFile) -> None:
+        """
+        Initialise the file with another file
+        
+        Arguments:
+            self    the file
+            file    the file to be copied
+        """
+    def clean(self) -> None:
+        """
+        Clean up the file
+        
+        This function removes the sequence numbers from the file.
+        """
+    def has_MT(self, arg0: int) -> bool:
+        """
+        Return whether or not the file has a section with the given MT number
+        
+        Arguments:
+            self    the file
+            mt      the MT number of the section
+        """
+    def has_section(self, arg0: int) -> bool:
+        """
+        Return whether or not the file has a section with the given MT number
+        
+        Arguments:
+            self    the file
+            mt      the MT number of the section
+        """
+    def section(self, mt: int) -> GSection:
+        """
+        Return the section with the requested MT number
+        
+        Arguments:
+            self    the ENDF tree file
+            mt      the MT number of the section to be returned
+        """
+    @property
+    def MAT(self) -> int:
+        """
+        The MAT number of the file
+        """
+    @property
+    def MF(self) -> int:
+        """
+        The MF number of the file
+        """
+    @property
+    def content(self) -> str:
+        """
+        The content of the file
+        """
+    @property
+    def file_number(self) -> int:
+        """
+        The MF number of the file
+        """
+    @property
+    def material_number(self) -> int:
+        """
+        The MAT number of the file
+        """
+    @property
+    def section_numbers(self) -> ...:
+        """
+        All section numbers in the file
+        """
+    @property
+    def sections(self) -> ...:
+        """
+        All sections in the file
+        """
+class GMaterial:
+    """
+    GENDF tree material
+    """
+    def MF(self, mf: int) -> GFile:
+        """
+        Return the file with the requested MF number
+        
+        Arguments:
+            self    the ENDF tree material
+            mf      the MF number of the file to be returned
+        """
+    def MFMT(self, mf: int, mt: int) -> GSection:
+        """
+            mt      the Mt number of the section to be returned
+        """
+    @typing.overload
+    def __init__(self, mat: int) -> None:
+        """
+        Initialise an empty material with its MAT number
+        
+        Arguments:
+            self    the file
+            mat     the MAT number of the material
+        """
+    @typing.overload
+    def __init__(self, material: GMaterial) -> None:
+        """
+        Initialise the material with another material
+        
+        Arguments:
+            self        the material
+            material    the material to be copied
+        """
+    def clean(self) -> None:
+        """
+        Clean up the material
+        
+        This function removes the sequence numbers from the material.
+        """
+    def file(self, mf: int) -> GFile:
+        """
+        Return the file with the requested MF number
+        
+        Arguments:
+            self    the ENDF tree material
+            mf      the MF number of the file to be returned
+        """
+    def has_MF(self, arg0: int) -> bool:
+        """
+        Return whether or not the material has a file with the given MF number
+        
+        Arguments:
+            self    the material
+            mf      the MF number of the file
+        """
+    def has_MF_MT(self, arg0: int, arg1: int) -> bool:
+        """
+        Return whether or not the material has a section with the given MF and MT number
+        
+        Arguments:
+            self    the material
+            mf      the MF number of the section
+            mt      the MT number of the section
+        """
+    def has_file(self, arg0: int) -> bool:
+        """
+        Return whether or not the material has a file with the given MF number
+        
+        Arguments:
+            self    the material
+            mf      the MF number of the file
+        """
+    def has_section(self, arg0: int, arg1: int) -> bool:
+        """
+        Return whether or not the material has a file with the given MF number
+        
+        Arguments:
+            self    the material
+            mf      the MF number of the section
+            mt      the MT number of the section
+        """
+    def section(self, mf: int, mt: int) -> GSection:
+        """
+            mt      the Mt number of the section to be returned
+        """
+    @property
+    def MAT(self) -> int:
+        """
+        The MAT number of the material
+        """
+    @property
+    def content(self) -> str:
+        """
+        The content of the material
+        """
+    @property
+    def file_numbers(self) -> ...:
+        """
+        All file numbers in the material
+        """
+    @property
+    def files(self) -> ...:
+        """
+        All files in the material
+        """
+    @property
+    def material_number(self) -> int:
+        """
+        The MAT number of the material
+        """
+class GSection:
+    """
+    GENDF tree section
+    """
+    def __init__(self, section: GSection) -> None:
+        """
+        Initialise the section with another section
+        
+        Arguments:
+            self       the section
+            section    the section to be copied
+        """
+    def clean(self) -> None:
+        """
+        Clean up the section
+        
+        This function removes the sequence numbers from the section.
+        """
+    @property
+    def MAT(self) -> int:
+        """
+        The MAT number of the section
+        """
+    @property
+    def MF(self) -> int:
+        """
+        The MF number of the section
+        """
+    @property
+    def MT(self) -> int:
+        """
+        The MT number of the section
+        """
+    @property
+    def NC(self) -> int:
+        """
+        The number of lines in this section
+        """
+    @property
+    def content(self) -> str:
+        """
+        The content of the section
+        """
+    @property
+    def file_number(self) -> int:
+        """
+        The MF number of the section
+        """
+    @property
+    def material_number(self) -> int:
+        """
+        The MAT number of the section
+        """
+    @property
+    def section_number(self) -> int:
+        """
+        The MT number of the section
         """
 class Material:
     """
