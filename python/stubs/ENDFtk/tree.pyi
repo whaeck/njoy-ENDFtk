@@ -43,7 +43,7 @@ import ENDFtk.MF8.MT459
 import ENDFtk.MF9
 from __future__ import annotations
 import typing
-__all__ = ['File', 'GFile', 'GMaterial', 'GSection', 'Material', 'Section', 'Tape']
+__all__ = ['File', 'GFile', 'GMaterial', 'GSection', 'GTape', 'Material', 'Section', 'Tape']
 class File:
     """
     ENDF tree file
@@ -476,6 +476,110 @@ class GSection:
     def section_number(self) -> int:
         """
         The MT number of the section
+        """
+class GTape:
+    """
+    GENDF tape
+    """
+    def MAT(self, mat: int) -> GMaterial | ... | ...:
+        """
+        Return the material(s) with the requested MAT number
+        
+        This function returns either a single material (if only a single material
+        is present) or a sequence of materials (if more than one material is
+        present) since a tape can contain multiple instances of the same material
+        (e.g. at different temperatures).
+        
+        Arguments:
+            self    the tape
+            mat     the MAT number of the material to be returned
+        """
+    @typing.overload
+    def __init__(self, id: ENDFtk.TapeIdentification) -> None:
+        """
+        Initialise the tape
+        
+        Arguments:
+            self   the tape
+            id     the tape identifier
+        """
+    @typing.overload
+    def __init__(self, content: str) -> None:
+        """
+        Initialise the tape
+        
+        Arguments:
+            self       the tape
+            content    the content of the tape
+        """
+    @typing.overload
+    def __init__(self, tape: GTape) -> None:
+        """
+        Initialise the tape
+        
+        Arguments:
+            self    the tape
+            tape    the tape to be copied
+        """
+    def clean(self) -> None:
+        """
+        Clean up the tape
+        
+        This function removes the sequence numbers from the tape.
+        """
+    def has_MAT(self, arg0: int) -> bool:
+        """
+        Return whether or not the tape has a material with the given MAT number
+        
+        Arguments:
+            self    the tape
+            mat     the MAT number of the material
+        """
+    def has_material(self, arg0: int) -> bool:
+        """
+        Return whether or not the tape has a material with the given MAT number
+        
+        Arguments:
+            self    the tape
+            mat     the MAT number of the material
+        """
+    def material(self, mat: int) -> GMaterial | ... | ...:
+        """
+        Return the material(s) with the requested MAT number
+        
+        This function returns either a single material (if only a single material
+        is present) or a sequence of materials (if more than one material is
+        present) since a tape can contain multiple instances of the same material
+        (e.g. at different temperatures).
+        
+        Arguments:
+            self    the tape
+            mat     the MAT number of the material to be returned
+        """
+    @property
+    def TPID(self) -> ENDFtk.TapeIdentification:
+        """
+        The tape identification (the first line in the file)
+        """
+    @property
+    def content(self) -> str:
+        """
+        The content of the tape
+        """
+    @property
+    def material_numbers(self) -> list[int]:
+        """
+        All unique material numbers in the tape
+        """
+    @property
+    def materials(self) -> ...:
+        """
+        All materials in the tape
+        """
+    @property
+    def tape_id(self) -> ENDFtk.TapeIdentification:
+        """
+        The tape identification (the first line in the file)
         """
 class Material:
     """
