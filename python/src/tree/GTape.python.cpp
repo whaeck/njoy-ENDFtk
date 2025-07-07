@@ -5,7 +5,7 @@
 // local includes
 #include "ENDFtk/TapeIdentification.hpp"
 #include "ENDFtk/tree/GTape.hpp"
-//#include "ENDFtk/tree/fromFile.hpp"
+#include "ENDFtk/tree/fromFile.hpp"
 #include "tools/views/views-python.hpp"
 
 // namespace aliases
@@ -159,5 +159,48 @@ void wrapTreeGTape( python::module& module, python::module& viewmodule ) {
     &Tape::clean,
     "Clean up the tape\n\n"
     "This function removes the sequence numbers from the tape."
+  )
+  .def_static(
+
+    "from_string",
+    [] ( const std::string& string ) -> Tape {
+
+      return Tape( string );
+    },
+    python::arg( "string" ),
+    "Read a tape from a string\n\n"
+    "An exception is raised if something goes wrong while reading the\n"
+    "tape\n\n"
+    "Arguments:\n"
+    "    string    the content of the tape"
+  )
+  .def_static(
+
+    "from_file",
+    [] ( const std::string& filename ) -> Tape {
+
+      return njoy::ENDFtk::tree::fromFile< Tape >( filename );
+    },
+    python::arg( "filename" ),
+    "Read a tape from a file\n\n"
+    "An exception is raised if something goes wrong while reading the\n"
+    "tape\n\n"
+    "Arguments:\n"
+    "    filename    the file name and path"
+  )
+  .def(
+
+    "to_file",
+    [] ( const Tape& self, const std::string& filename ) {
+
+      std::ofstream out( filename );
+      out << self.content();
+      out.close();
+    },
+    python::arg( "filename" ),
+    "Write the tape to a file\n\n"
+    "Arguments:\n"
+    "    self        the tape\n"
+    "    filename    the file name and path"
   );
 }

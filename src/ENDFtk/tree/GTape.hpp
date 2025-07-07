@@ -27,6 +27,13 @@ namespace tree {
    *
    *  A GENDF tape starts with a tape identification (a label, which sometimes
    *  can contain a tape number).
+   *
+   *  The GENDF tape follows slightly different rules compared to the normal
+   *  ENDF tape:
+   *  - sections can appear in any other (regardless of MF and MT), and duplicate
+   *    sections can occur (although they would contain the same data)
+   *  - because of the previous, only a single END record appears after each
+   *    section
    */
   class GTape {
 

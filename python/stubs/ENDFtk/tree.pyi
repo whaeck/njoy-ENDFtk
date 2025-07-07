@@ -481,6 +481,28 @@ class GTape:
     """
     GENDF tape
     """
+    @staticmethod
+    def from_file(filename: str) -> GTape:
+        """
+        Read a tape from a file
+        
+        An exception is raised if something goes wrong while reading the
+        tape
+        
+        Arguments:
+            filename    the file name and path
+        """
+    @staticmethod
+    def from_string(string: str) -> GTape:
+        """
+        Read a tape from a string
+        
+        An exception is raised if something goes wrong while reading the
+        tape
+        
+        Arguments:
+            string    the content of the tape
+        """
     def MAT(self, mat: int) -> GMaterial | ... | ...:
         """
         Return the material(s) with the requested MAT number
@@ -555,6 +577,14 @@ class GTape:
         Arguments:
             self    the tape
             mat     the MAT number of the material to be returned
+        """
+    def to_file(self, filename: str) -> None:
+        """
+        Write the tape to a file
+        
+        Arguments:
+            self        the tape
+            filename    the file name and path
         """
     @property
     def TPID(self) -> ENDFtk.TapeIdentification:
