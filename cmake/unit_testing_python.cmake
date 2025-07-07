@@ -256,4 +256,4 @@ add_python_test( tree.Tape     tree/Test_ENDFtk_Tree_Tape.py )
 
 add_python_test( tree.GFile     tree/Test_ENDFtk_Tree_GFile.py )
 add_python_test( tree.GMaterial tree/Test_ENDFtk_Tree_GMaterial.py )
-#add_python_test( tree.GTape     tree/Test_ENDFtk_Tree_GTape.py )
+add_python_test( tree.GTape     tree/Test_ENDFtk_Tree_GTape.py )
