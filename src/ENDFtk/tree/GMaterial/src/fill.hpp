@@ -76,7 +76,7 @@ fill
   while ( iter != sections.end() ) {
 
     files.emplace_back( iter->materialNumber(), iter->fileNumber(),
-                        std::list( iter, upper ) );
+                        std::list< GSection >( iter, upper ) );
 
     iter = upper;
     upper = std::upper_bound( iter, sections.end(), iter->fileNumber(),
