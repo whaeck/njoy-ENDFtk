@@ -4,7 +4,157 @@ MT451 - descriptive data and directory
 import ENDFtk
 from __future__ import annotations
 import typing
-__all__ = ['Section']
+__all__ = ['GSection', 'Section']
+class GSection:
+    """
+    MF1 MT451 gsection - descriptive data and directory
+    """
+    @staticmethod
+    def from_string(gsection: str) -> GSection:
+        """
+        Read the section from a string
+        
+        An exception is raised if something goes wrong while reading the
+        section
+        
+        Arguments:
+            section    the string representing the section
+        """
+    @typing.overload
+    def __init__(self, zaid: int, awr: float, nz: int, temp: float, ngn: int, ngg: int, sigz: list[float], egn: list[float], egg: list[float]) -> None:
+        """
+        Initialise the section
+        
+        Arguments:
+            self           the section
+            zaid           the ZA value of the material
+            awr            the atomic weight ratio
+            nz             the number of dilutions
+            temp           the temperature
+            ngn            the number of neutron energy groups
+            ngg            the number of photon energy groups
+            sigz           list of dilution values
+            egn            list of neutron group edges
+            egg            list of photon group edges
+        """
+    @typing.overload
+    def __init__(self, gsection: GSection) -> None:
+        """
+        Initialise the gsection with another gsection
+        
+        Arguments:
+            self       the gsection
+            section    the gsection to be copied
+        """
+    def to_string(self, mat: int, mf: int) -> str:
+        """
+        Return the string representation of the section
+        
+        Arguments:
+            self    the section
+            mat     the MAT number to be used
+            mf      the MF number to be used
+        """
+    @property
+    def AWR(self) -> float:
+        """
+        The atomic weight ratio for the section
+        """
+    @property
+    def EGG(self) -> ...:
+        """
+        The list of photon energy edges
+        """
+    @property
+    def EGN(self) -> ...:
+        """
+        The list of neutron energy edges
+        """
+    @property
+    def MT(self) -> int:
+        """
+        The MT number of the section
+        """
+    @property
+    def NGG(self) -> int:
+        """
+        The number of photon groups
+        """
+    @property
+    def NGN(self) -> int:
+        """
+        The number of neutron groups
+        """
+    @property
+    def NZ(self) -> int:
+        """
+        The number of dilutions
+        """
+    @property
+    def SIGZ(self) -> ...:
+        """
+        The list of the dilution values
+        """
+    @property
+    def TEMPIN(self) -> float:
+        """
+        The temperature
+        """
+    @property
+    def ZA(self) -> int:
+        """
+        The ZA identifier for the section
+        """
+    @property
+    def atomic_weight_ratio(self) -> float:
+        """
+        The atomic weight ratio for the section
+        """
+    @property
+    def dilution_values(self) -> ...:
+        """
+        The list of the dilution values
+        """
+    @property
+    def neutron_structure(self) -> ...:
+        """
+        The list of neutron energy edges
+        """
+    @property
+    def number_dilutions(self) -> int:
+        """
+        The number of dilutions
+        """
+    @property
+    def number_neutron_groups(self) -> int:
+        """
+        The number of neutron groups
+        """
+    @property
+    def number_photon_groups(self) -> int:
+        """
+        The number of photon groups
+        """
+    @property
+    def photon_structure(self) -> ...:
+        """
+        The list of photon energy edges
+        """
+    @property
+    def section_number(self) -> int:
+        """
+        The MT number of the section
+        """
+    @property
+    def target_identifier(self) -> int:
+        """
+        The ZA identifier for the section
+        """
+    @property
+    def temperature(self) -> float:
+        """
+        The temperature
+        """
 class Section:
     """
     MF1 MT451 section - descriptive data and directory

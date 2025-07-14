@@ -437,6 +437,10 @@ class GSection:
         
         This function removes the sequence numbers from the section.
         """
+    def parse(self) -> ENDFtk.MF1.MT451.GSection | ENDFtk.MF3.GSection:
+        """
+        Parse the section
+        """
     @property
     def MAT(self) -> int:
         """

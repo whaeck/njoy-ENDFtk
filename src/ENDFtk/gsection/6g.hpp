@@ -29,17 +29,17 @@ namespace section {
         std::vector< std::vector< std::vector< double > > > flux_;
         std::vector< std::vector< std::vector< std::vector< double > > > > sigma_;
         std::vector< std::vector< std::vector< double > > > probability_;
-        
+
         /* auxiliary functions */
         #include "ENDFtk/gsection/6/src/makeMatrices.hpp"
-        #include "ENDFtk/gsection/6/src/makeRecords.hpp"
+//        #include "ENDFtk/gsection/6/src/makeRecords.hpp"
         #include "ENDFtk/gsection/6/src/readRecords.hpp"
 
     public:
 
         /* constructor */
         #include "ENDFtk/gsection/6/src/ctor.hpp"
-        
+
         /* methods */
 
         /**
@@ -59,7 +59,7 @@ namespace section {
 
         /**
          *  @brief Return the number of dilution values.
-         */        
+         */
         int numberDilutions() const { return this->NZ(); }
 
         /**
@@ -86,7 +86,7 @@ namespace section {
          *  @brief Return the temperature
          */
         double TEMP() const { return this->temp_; }
-        
+
         /**
          *  @brief Return the temperature
          */
@@ -99,19 +99,19 @@ namespace section {
 
         /**
          *  @brief Return the matrix for a given moment and dilution
-         * 
+         *
          *  @param[in] moment   the legendre moment requested
          *  @param[in] diltuion the dilution index requested
          */
         auto matrix(int moment, int dilution) const {
             return this->sigma_[moment][dilution];
         }
-        
+
         /**
          *  @brief Return the flux
-         * 
+         *
          *  @param[in] moment   the legendre moment requested
-         *  @param[in] dilution the dilution index requested 
+         *  @param[in] dilution the dilution index requested
          */
         auto flux(int moment, int dilution) const {
             return this->flux_[moment][dilution];
@@ -119,9 +119,9 @@ namespace section {
 
         /**
          *  @brief Return the probabilities
-         * 
+         *
          *  @param[in] moment   the legendre moment requested
-         *  @param[in] dilution the dilution index requested 
+         *  @param[in] dilution the dilution index requested
          */
         auto probability(int moment, int dilution) const {
             if ( this->probability_.size() != 0 ) {
@@ -136,7 +136,7 @@ namespace section {
         using Base::sectionNumber;
         using Base::ZA;
         using Base::targetIdentifier;
-        using Base::AWR; 
+        using Base::AWR;
         using Base::atomicWeightRatio;
 
         };

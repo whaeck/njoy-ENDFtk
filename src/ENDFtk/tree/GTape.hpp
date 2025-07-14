@@ -9,6 +9,7 @@
 // other includes
 #include "tools/std20/views.hpp"
 #include "ENDFtk/TapeIdentification.hpp"
+#include "ENDFtk/GTape.hpp"
 #include "ENDFtk/tree/GMaterial.hpp"
 
 namespace njoy {
