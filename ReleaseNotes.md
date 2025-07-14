@@ -1,6 +1,10 @@
 # Release Notes&mdash;ENDFtk
 Given here are some release notes for ENDFtk.
 
+## ENDFtk v1.3.0
+
+This update adds GENDF capability.
+
 ## ENDFtk v1.2.0
 This update makes the following changes on interface functions:
   - The regions() and pairs() interface functions on the TAB1 record interface functions have been removed. The removal of these interface functions has no impact on the Python interface as these interface functions were not included on the Python side.
