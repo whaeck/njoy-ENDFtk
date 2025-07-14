@@ -52,6 +52,8 @@ void wrapFile_1( python::module& module, python::module& viewmodule ) {
   wrapSection_1_456( submodule, viewmodule );
   wrapSection_1_458( submodule, viewmodule );
   wrapSection_1_460( submodule, viewmodule );
+
+  // wrap multigroup sections
   wrapGSection_1_451( submodule, viewmodule );
 
   // wrap views created by this file

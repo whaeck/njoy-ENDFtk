@@ -30,6 +30,8 @@ void wrapFile_3( python::module& module, python::module& viewmodule ) {
 
   // wrap sections
   wrapSection_3( submodule, viewmodule );
+
+  // wrap multigroup sections
   wrapGSection_3( submodule, viewmodule );
 
   // wrap views created by this file
