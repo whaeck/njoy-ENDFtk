@@ -89,7 +89,6 @@ SCENARIO( "tree::Tape" ) {
         CHECK( true == tape.hasMaterial( 125 ) );
         CHECK( true == tape.hasMAT( 125 ) );
         CHECK( 2 == std20::distance( tape.MAT( 125 ) ) );
-        CHECK( 2 == std20::distance( tape.MAT( 125 ) ) );
 
         CHECK( false == tape.hasMaterial( 128 ) );
         CHECK( false == tape.hasMAT( 128 ) );

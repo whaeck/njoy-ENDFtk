@@ -279,6 +279,12 @@ add_subdirectory( src/ENDFtk/tree/Material/test )
 add_subdirectory( src/ENDFtk/tree/Section/test )
 add_subdirectory( src/ENDFtk/tree/Tape/test )
 add_subdirectory( src/ENDFtk/tree/test )
+
 add_subdirectory( src/ENDFtk/gsection/1/451/test )
 add_subdirectory( src/ENDFtk/gsection/3/test )
 add_subdirectory( src/ENDFtk/gsection/6/test )
+
+add_subdirectory( src/ENDFtk/tree/GSection/test )
+add_subdirectory( src/ENDFtk/tree/GFile/test )
+add_subdirectory( src/ENDFtk/tree/GMaterial/test )
+add_subdirectory( src/ENDFtk/tree/GTape/test )

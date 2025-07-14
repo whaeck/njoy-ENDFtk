@@ -1,5 +1,6 @@
 if(ENDFtk.python)
 
+    find_package( Python3 REQUIRED )
     pybind11_add_module( ENDFtk.python
         ${CMAKE_CURRENT_SOURCE_DIR}/src/ENDFtk.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/record/ControlRecord.python.cpp
@@ -235,6 +236,10 @@ if(ENDFtk.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/File.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/Material.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/Tape.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/GSection.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/GFile.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/GMaterial.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tree/GTape.python.cpp
     )
 
     target_link_libraries(ENDFtk.python PRIVATE njoy::ENDFtk)
