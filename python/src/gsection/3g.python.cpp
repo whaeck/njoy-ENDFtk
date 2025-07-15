@@ -72,7 +72,7 @@ void wrapGSection_3( python::module& module, python::module& ) {
     "    groups        array of the group indices\n"
     "    flux          3D array of the group-wise fluxes (nl, nz, ngn)\n"
     "    xs            3D array of the group-wise cross sections (nl, nz, ngn)\n"
-    "    ratio         3D array of the group-wise ratios (nl, nz, ngn)"   
+    "    ratio         3D array of the group-wise ratios (nl, nz, ngn)"
   )
   .def_property_readonly(
 
@@ -100,14 +100,14 @@ void wrapGSection_3( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
-    "LRFLAG",
-    &GSection::LRFLAG,
+    "LR",
+    &GSection::LR,
     "The complex break up flag"
   )
   .def_property_readonly(
 
-    "break_up_id",
-    &GSection::breakUpID,
+    "break_up",
+    &GSection::breakUp,
     "The complex break up flag"
   )
   .def_property_readonly(

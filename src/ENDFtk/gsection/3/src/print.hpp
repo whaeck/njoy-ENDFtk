@@ -2,7 +2,7 @@ template <typename OutputIterator >
 void print(OutputIterator& it, int MAT, int MF) const {
     int MT = this->MT();
     ControlRecord(this->ZA(), this->AWR(), this->NL(), this->NZ(),
-                  this->LRFLAG(), this->NGN()).print(it, MAT, MF, MT);
+                  this->LR(), this->NGN()).print(it, MAT, MF, MT);
     if ( this->ratio_.size() != 0  ) {
         auto records = makeRecords( this->temp_, this->flux_, this->sigma_, this->ratio_  );
         for (const auto record: records) {

@@ -419,8 +419,8 @@ void verifyChunk( const section::GType< 3 >& chunk ) {
   CHECK(30 == chunk.numberNeutronGroups());
   CHECK(3 == chunk.NZ());
   CHECK(3 == chunk.numberDilutions());
-  CHECK(0 == chunk.LRFLAG());
-  CHECK(0 == chunk.breakUpID());
+  CHECK(0 == chunk.LR());
+  CHECK(0 == chunk.breakUp());
   CHECK_THAT( 293.6, WithinRel( chunk.temperature() ) );
   std::vector<unsigned int> expected_groups(30);
   std::iota(expected_groups.begin(), expected_groups.end(), 1);
@@ -594,8 +594,8 @@ void verifyChunkRatios( const section::GType< 3 >& chunkRatios ) {
   CHECK(30 == chunkRatios.numberNeutronGroups());
   CHECK(1 == chunkRatios.NZ());
   CHECK(1 == chunkRatios.numberDilutions());
-  CHECK(0 == chunkRatios.LRFLAG());
-  CHECK(0 == chunkRatios.breakUpID());
+  CHECK(0 == chunkRatios.LR());
+  CHECK(0 == chunkRatios.breakUp());
   CHECK_THAT( 293.6, WithinRel( chunkRatios.temperature() ) );
   std::vector<unsigned int> expected_groups(30);
   std::iota(expected_groups.begin(), expected_groups.end(), 1);
@@ -664,8 +664,8 @@ void verifyChunkClipped( const section::GType<3>& chunkClipped ) {
     CHECK(30 == chunkClipped.numberNeutronGroups());
     CHECK(1 == chunkClipped.NZ());
     CHECK(1 == chunkClipped.numberDilutions());
-    CHECK(0 == chunkClipped.LRFLAG());
-    CHECK(0 == chunkClipped.breakUpID());
+    CHECK(0 == chunkClipped.LR());
+    CHECK(0 == chunkClipped.breakUp());
     CHECK_THAT( 293.6, WithinRel( chunkClipped.temperature() ) );
     std::vector<unsigned int> expected_groups(30);
     std::iota(expected_groups.begin(), expected_groups.end(), 1);

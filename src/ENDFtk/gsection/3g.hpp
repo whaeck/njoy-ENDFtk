@@ -43,42 +43,42 @@ namespace section {
     /* methods */
 
     /**
-     *  @brief Return the number of legendre moments.
+     *  @brief Return the number of legendre moments
      */
     int NL() const { return this->nl_; }
 
     /**
-     *  @brief Return the number of legendre moments.
+     *  @brief Return the number of legendre moments
      */
     int numberMoments() const { return this->NL(); }
 
     /**
-     *  @brief Return the number of dilution values.
+     *  @brief Return the number of dilution values
      */
     int NZ() const { return this->nz_; }
 
     /**
-     *  @brief Return the number of dilution values.
+     *  @brief Return the number of dilution values
      */
     int numberDilutions() const { return this->NZ(); }
 
     /**
-     *  @brief Return the break up identifier flag.
+     *  @brief Return the break up flag
      */
-    int LRFLAG() const { return this->lrflag_; }
+    int LR() const { return this->lrflag_; }
 
     /**
-     *  @brief Return the break up identifier flag.
+     *  @brief Return the break up identifier flag
      */
-    int breakUpID() const { return this->LRFLAG(); }
+    int breakUp() const { return this->LR(); }
 
     /**
-     *  @brief Return the number of neutron energy bins
+     *  @brief Return the number of neutron groups
      */
     int NGN() const { return this->ngn_; }
 
     /**
-     *  @brief Return the number of neutron energy bins
+     *  @brief Return the number of neutron groups
      */
     int numberNeutronGroups() const { return this->NGN(); }
 
@@ -90,20 +90,26 @@ namespace section {
     /**
      *  @brief Return the group indices
      */
-    auto groups() const { return this->groups_; }
+    const std::vector< unsigned int >& groups() const { return this->groups_; }
 
     /**
-     *  @brief Return the group cross-sections
+     *  @brief Return the multigroup cross section for a given moment and dilution
      *
      *  @param[in] moment   the legendre moment requested
-     *  @param[in] diltuion the dilution index requested
+     *  @param[in] dilution the dilution index requested
      */
-    auto crossSection( int moment, int dilution ) const {
+    const std::vector< double >& crossSection( int moment, int dilution ) const {
 
       return this->sigma_[moment][dilution];
     }
 
-    auto ratio( int moment, int dilution ) const {
+    /**
+     *  @brief Return the multigroup ratio data for a given moment and dilution
+     *
+     *  @param[in] moment   the legendre moment requested
+     *  @param[in] dilution the dilution index requested
+     */
+    const std::vector< double >& ratio( int moment, int dilution ) const {
 
       if (this->ratio_.size() != 0) {
 
@@ -118,7 +124,7 @@ namespace section {
     /**
      *  @brief Return the group fluxes
      */
-    auto flux( int moment, int dilution ) const {
+    const std::vector< double >& flux( int moment, int dilution ) const {
 
       return this->flux_[moment][dilution];
     }
