@@ -21,7 +21,7 @@ class GSection:
             section    the string representing the section
         """
     @typing.overload
-    def __init__(self, zaid: int, awr: float, nz: int, temp: float, ngn: int, ngg: int, sigz: list[float], egn: list[float], egg: list[float]) -> None:
+    def __init__(self, zaid: int, awr: float, temp: float, sigz: list[float], egn: list[float], egg: list[float]) -> None:
         """
         Initialise the section
         
@@ -29,13 +29,10 @@ class GSection:
             self           the section
             zaid           the ZA value of the material
             awr            the atomic weight ratio
-            nz             the number of dilutions
             temp           the temperature
-            ngn            the number of neutron energy groups
-            ngg            the number of photon energy groups
-            sigz           list of dilution values
-            egn            list of neutron group edges
-            egg            list of photon group edges
+            sigz           the dilution values
+            egn            the neutron group structure
+            egg            the photon group structure
         """
     @typing.overload
     def __init__(self, gsection: GSection) -> None:

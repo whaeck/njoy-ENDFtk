@@ -26,7 +26,6 @@ namespace section {
 
     /* auxiliary functions */
     #include "ENDFtk/gsection/1/451/src/makeParameters.hpp"
-    #include "ENDFtk/gsection/1/451/src/readParameters.hpp"
 
   public:
 

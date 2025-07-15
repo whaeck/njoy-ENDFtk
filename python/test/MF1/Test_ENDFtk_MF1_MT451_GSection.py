@@ -65,8 +65,8 @@ class Test_ENDFtk_MF1_MT451_GSection( unittest.TestCase ) :
         # TEST
 
         # the data is given explicitly
-        chunk = GSection( zaid = 92235, awr = 233.0248, nz = 3, temp = 293.6,
-                          ngn = 30, ngg = 12, sigz = [1e10, 1e4, 1e2],
+        chunk = GSection( zaid = 92235, awr = 233.0248, temp = 293.6,
+                          sigz = [1e10, 1e4, 1e2],
                           egn = [1.390000e-4, 1.520000e-1, 4.140000e-1, 1.130000,
                                  3.060000, 8.320000, 2.260000e1, 6.140000e1, 1.670000e2, 4.540000e2,
                                  1.235000e3, 3.350000e3, 9.120000e3, 2.480000e4, 6.760000e4, 1.840000e5,

@@ -29,10 +29,7 @@ SCENARIO( "section::GType< 1, 451 >" ) {
       // expected data for U235 (30G-n)
       int zaid = 92235;
       double awr = 233.0248;
-      int nz = 3;
       double temp = 293.6;
-      int ngn = 30;
-      int ngg = 12;
       std::vector<double> sigz = {1e10, 1e4, 1e2};
       std::vector<double> egn =
       {1.390000e-4, 1.520000e-1, 4.140000e-1, 1.130000,
@@ -46,8 +43,7 @@ SCENARIO( "section::GType< 1, 451 >" ) {
        4.000000e6, 5.000000e6, 6.000000e6, 7.000000e6, 8.000000e6, 9.000000e6,
        2.000000e7};
 
-      section::GType<1, 451> chunk( zaid, awr, nz, temp,
-                                    ngn, ngg, sigz, egn, egg );
+      section::GType<1, 451> chunk( zaid, awr, temp, sigz, egn, egg );
 
       THEN( "a section::GType<1,451> can be constructed and "
             "members can be tested") {
@@ -113,7 +109,7 @@ std::string validFEND() {
     "                                                                  9228 0  0     \n";
 }
 
-void verifyChunk(const section::GType<1,451>& chunk) {
+void verifyChunk( const section::GType< 1, 451 >& chunk ) {
 
   CHECK(451 == chunk.MT());
   CHECK(451 == chunk.sectionNumber());
@@ -130,10 +126,10 @@ void verifyChunk(const section::GType<1,451>& chunk) {
   CHECK(3 == chunk.NZ());
   CHECK(3 == chunk.numberDilutions());
 
-  std::vector<double> sigz = {1e10, 1e4, 1e2};
+  std::vector< double > sigz = { 1e10, 1e4, 1e2 };
   for ( std::size_t i = 0; i < chunk.SIGZ().size(); i++ ) {
 
-    CHECK_THAT(sigz[i], WithinRel(chunk.SIGZ()[i]));
+    CHECK_THAT( sigz[i], WithinRel( chunk.SIGZ()[i] ) );
   }
 
   for ( std::size_t i = 0; i < chunk.dilutionValues().size(); i++ ) {

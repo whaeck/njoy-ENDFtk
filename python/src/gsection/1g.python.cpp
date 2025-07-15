@@ -38,24 +38,20 @@ void wrapGSection_1_451( python::module& module, python::module& viewmodule ) {
   gsection
   .def(
 
-      python::init< int, double, int, double, int, int,
-                    std::vector< double >&&, std::vector< double >&&,
-                    std::vector< double >&& >(),
-      python::arg( "zaid" ), python::arg( "awr" ), python::arg( "nz" ),
-      python::arg( "temp" ), python::arg( "ngn" ), python::arg( "ngg" ),
+      python::init< int, double, double,
+                    std::vector< double >, std::vector< double >,
+                    std::vector< double > >(),
+      python::arg( "zaid" ), python::arg( "awr" ), python::arg( "temp" ),
       python::arg( "sigz" ), python::arg( "egn" ), python::arg( "egg" ),
       "Initialise the section\n\n"
       "Arguments:\n"
       "    self           the section\n"
       "    zaid           the ZA value of the material\n"
       "    awr            the atomic weight ratio\n"
-      "    nz             the number of dilutions\n"
       "    temp           the temperature\n"
-      "    ngn            the number of neutron energy groups\n"
-      "    ngg            the number of photon energy groups\n"
-      "    sigz           list of dilution values\n"
-      "    egn            list of neutron group edges\n"
-      "    egg            list of photon group edges"
+      "    sigz           the dilution values\n"
+      "    egn            the neutron group structure\n"
+      "    egg            the photon group structure"
   )
   .def_property_readonly(
       "NZ",
