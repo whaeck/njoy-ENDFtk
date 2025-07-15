@@ -33,8 +33,6 @@ SCENARIO( "section::GType< 3 >" ) {
       int zaid = 92235;
       double awr = 0.0;
       int mt = 1;
-      int nl = 2;
-      int nz = 3;
       int lrflag = 0;
       int ngn = 30;
       double temp = 293.6;
@@ -103,7 +101,7 @@ SCENARIO( "section::GType< 3 >" ) {
         }
       };
 
-      section::GType< 3 > chunk( mt, zaid, awr, nl, nz, lrflag, ngn, temp, groups, flux, sigma );
+      section::GType< 3 > chunk( mt, zaid, awr, lrflag, ngn, temp, groups, flux, sigma );
 
       THEN( "a section GType< 3 > can be constructed and members can be tested" ) {
 
@@ -160,8 +158,6 @@ SCENARIO( "section::GType< 3 >" ) {
       int zaid = 92235;
       double awr = 0.0;
       int mt = 452;
-      int nl = 1;
-      int nz = 1;
       int lrflag = 0;
       int ngn = 30;
       double temp = 293.6;
@@ -187,7 +183,7 @@ SCENARIO( "section::GType< 3 >" ) {
           1.193878, 1.123199, 1.185698, 1.244700, 1.280184, 1.259628, 1.197753, 1.108814, 1.438964,
           1.778379, 1.730948, 1.873645, 2.067954, 2.135172}}};
 
-      section::GType<3> chunkRatios(mt, zaid, awr, nl, nz, lrflag, ngn, temp, groups, flux, sigma, ratio );
+      section::GType<3> chunkRatios(mt, zaid, awr, lrflag, ngn, temp, groups, flux, sigma, ratio );
 
       THEN( "a section::GType<3> can be constructed and "
             "members can be tested.") {
@@ -240,8 +236,6 @@ SCENARIO( "section::GType< 3 >" ) {
       int zaid = 92235;
       double awr = 0.0;
       int mt = 16;
-      int nl = 1;
-      int nz = 1;
       int lrflag = 0;
       int ngn = 30;
       double temp = 293.6;
@@ -260,7 +254,7 @@ SCENARIO( "section::GType< 3 >" ) {
       5.483544e-1, 3.717841e-1
       }}};
 
-      section::GType< 3 > chunkClipped(mt, zaid, awr, nl, nz, lrflag, ngn, temp, groups, flux, sigma );
+      section::GType< 3 > chunkClipped(mt, zaid, awr, lrflag, ngn, temp, groups, flux, sigma );
 
       THEN( "a section GType<3> can be constructed and members can be tested" ) {
 

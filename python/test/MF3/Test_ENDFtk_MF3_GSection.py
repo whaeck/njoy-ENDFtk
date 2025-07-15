@@ -420,7 +420,7 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
             ]
         ]
         chunk = GSection(mt = 1, zaid = 92235, awr = 0.0,
-                         nl = 2, nz = 3, lrflag = 0, ngn = 30,
+                         lr = 0, ngn = 30,
                          temp = 293.6, groups = groups, flux = flux,
                          xs = xs)
 
@@ -450,7 +450,7 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
             1.778379, 1.730948, 1.873645, 2.067954, 2.135172]]]
 
         chunk = GSection(mt = 452, zaid = 92235, awr = 0.0,
-                        nl = 1, nz = 1, lrflag = 0, ngn = 30,
+                        lr = 0, ngn = 30,
                         temp = 293.6, groups = groups, flux = flux, ratio = ratio, xs = xs)
 
         # then the data can be verified
@@ -475,7 +475,7 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
             5.483544e-1, 3.717841e-1]]]
 
         chunk = GSection(mt = 16, zaid = 92235, awr = 0.0,
-                         nl = 1, nz = 1, lrflag = 0, ngn = 30,
+                         lr = 0, ngn = 30,
                          temp = 293.6, groups = groups, flux = flux, xs = xs)
 
         # then it can be verified
