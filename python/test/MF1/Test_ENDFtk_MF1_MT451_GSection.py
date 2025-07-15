@@ -32,7 +32,7 @@ class Test_ENDFtk_MF1_MT451_GSection( unittest.TestCase ) :
             self.assertAlmostEqual( 233.0248, chunk.atomic_weight_ratio )
             self.assertEqual( 3, chunk.NZ )
             self.assertEqual( 3, chunk.number_dilutions )
-            self.assertAlmostEqual( 293.6, chunk.TEMPIN )
+            self.assertAlmostEqual( 293.6, chunk.TEMP )
             self.assertAlmostEqual( 293.6, chunk.temperature )
             self.assertEqual( 30, chunk.NGN )
             self.assertEqual( 30, chunk.number_neutron_groups )
@@ -50,7 +50,7 @@ class Test_ENDFtk_MF1_MT451_GSection( unittest.TestCase ) :
              2.000000e7]
             for z in range( chunk.NZ ) :
                 self.assertAlmostEqual( dilutions[z], chunk.SIGZ[z] )
-                self.assertAlmostEqual( dilutions[z], chunk.dilution_values[z] )
+                self.assertAlmostEqual( dilutions[z], chunk.dilutions[z] )
             for g in range( chunk.NGN ) :
                 self.assertAlmostEqual( egn[g], chunk.neutron_structure[g] )
                 self.assertAlmostEqual( egn[g], chunk.EGN[g] )

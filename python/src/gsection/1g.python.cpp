@@ -64,8 +64,8 @@ void wrapGSection_1_451( python::module& module, python::module& viewmodule ) {
       "The number of dilutions"
   )
   .def_property_readonly(
-      "TEMPIN",
-      &GSection::TEMPIN,
+      "TEMP",
+      &GSection::TEMP,
       "The temperature"
   )
   .def_property_readonly(
@@ -97,37 +97,37 @@ void wrapGSection_1_451( python::module& module, python::module& viewmodule ) {
       "SIGZ",
       [] ( const GSection& self) -> DoubleRange
           { return self.SIGZ(); },
-      "The list of the dilution values"
+      "The dilution values"
   )
   .def_property_readonly(
-      "dilution_values",
+      "dilutions",
       [] ( const GSection& self ) -> DoubleRange
-          { return self.dilutionValues(); },
-      "The list of the dilution values"
+          { return self.dilutions(); },
+      "The dilution values"
   )
   .def_property_readonly(
       "EGN",
       [] ( const GSection& self ) -> DoubleRange
           { return self.EGN(); },
-      "The list of neutron energy edges"
+      "The neutron group structure"
   )
   .def_property_readonly(
       "neutron_structure",
       [] ( const GSection& self ) -> DoubleRange
           { return self.neutronStructure(); },
-      "The list of neutron energy edges"
+      "The neutron group structure"
   )
   .def_property_readonly(
       "EGG",
       [] ( const GSection& self) -> DoubleRange
           { return self.EGG(); },
-      "The list of photon energy edges"
+      "The photon group structure"
   )
   .def_property_readonly(
       "photon_structure",
       [] ( const GSection& self) -> DoubleRange
           { return self.photonStructure(); },
-      "The list of photon energy edges"
+      "The photon group structure"
   );
 
   // add standard section definitions

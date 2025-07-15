@@ -47,30 +47,30 @@ namespace section {
     /**
      *  @brief Return the temperature
      */
-    double TEMPIN() const { return this->parameters_.C1(); }
+    double TEMP() const { return this->parameters_.C1(); }
 
     /**
      *  @brief Return the temperature
      */
-    double temperature() const {return this->TEMPIN();}
+    double temperature() const {return this->TEMP();}
 
     /**
-     *  @brief Return the number of neutron energy groups
+     *  @brief Return the number of neutron groups
      */
     int NGN() const { return this->parameters_.L1(); }
 
     /**
-     *  @brief Return the number of neutron energy groups
+     *  @brief Return the number of neutron groups
      */
     int numberNeutronGroups() const { return this->NGN(); }
 
     /**
-     *  @brief Return the number of photon energy groups
+     *  @brief Return the number of photon groups
      */
     int NGG() const { return this->parameters_.L2(); }
 
     /**
-     *  @brief Return the number of photon energy groups
+     *  @brief Return the number of photon groups
      */
     int numberPhotonGroups() const { return this->NGG(); }
 
@@ -87,10 +87,10 @@ namespace section {
     /**
      *  @brief Return the dilution values
      */
-    auto dilutionValues() const { return this->SIGZ(); }
+    auto dilutions() const { return this->SIGZ(); }
 
     /**
-     *  @brief Return the neutron energy edges
+     *  @brief Return the neutron group structure
      */
     auto EGN() const {
 
@@ -100,12 +100,12 @@ namespace section {
     }
 
     /**
-     *  @brief Return the neutron energy edges
+     *  @brief Return the neutron group structure
      */
     auto neutronStructure() const { return this->EGN(); }
 
     /**
-     *  @brief Return the photon energy edges
+     *  @brief Return the photon group structure
      */
     auto EGG() const {
 
@@ -115,7 +115,7 @@ namespace section {
     }
 
     /**
-     *  @brief Return the photon energy edges
+     *  @brief Return the photon group structure
      */
     auto photonStructure() const { return this->EGG(); }
 

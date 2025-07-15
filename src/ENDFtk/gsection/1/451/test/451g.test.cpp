@@ -117,7 +117,7 @@ void verifyChunk( const section::GType< 1, 451 >& chunk ) {
   CHECK(92235 == chunk.targetIdentifier());
   CHECK_THAT(233.0248, WithinRel(chunk.AWR()));
   CHECK_THAT(233.0248, WithinRel(chunk.atomicWeightRatio()));
-  CHECK_THAT(293.6, WithinRel(chunk.TEMPIN()));
+  CHECK_THAT(293.6, WithinRel(chunk.TEMP()));
   CHECK_THAT(293.6, WithinRel(chunk.temperature()));
   CHECK(30 == chunk.NGN());
   CHECK(30 == chunk.numberNeutronGroups());
@@ -132,9 +132,9 @@ void verifyChunk( const section::GType< 1, 451 >& chunk ) {
     CHECK_THAT( sigz[i], WithinRel( chunk.SIGZ()[i] ) );
   }
 
-  for ( std::size_t i = 0; i < chunk.dilutionValues().size(); i++ ) {
+  for ( std::size_t i = 0; i < chunk.dilutions().size(); i++ ) {
 
-    CHECK_THAT(sigz[i], WithinRel(chunk.dilutionValues()[i]));
+    CHECK_THAT(sigz[i], WithinRel(chunk.dilutions()[i]));
   }
 
   std::vector<double> egn =

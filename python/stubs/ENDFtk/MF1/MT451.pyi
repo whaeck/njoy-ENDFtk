@@ -60,12 +60,12 @@ class GSection:
     @property
     def EGG(self) -> ...:
         """
-        The list of photon energy edges
+        The photon group structure
         """
     @property
     def EGN(self) -> ...:
         """
-        The list of neutron energy edges
+        The neutron group structure
         """
     @property
     def MT(self) -> int:
@@ -90,10 +90,10 @@ class GSection:
     @property
     def SIGZ(self) -> ...:
         """
-        The list of the dilution values
+        The dilution values
         """
     @property
-    def TEMPIN(self) -> float:
+    def TEMP(self) -> float:
         """
         The temperature
         """
@@ -108,14 +108,14 @@ class GSection:
         The atomic weight ratio for the section
         """
     @property
-    def dilution_values(self) -> ...:
+    def dilutions(self) -> ...:
         """
-        The list of the dilution values
+        The dilution values
         """
     @property
     def neutron_structure(self) -> ...:
         """
-        The list of neutron energy edges
+        The neutron group structure
         """
     @property
     def number_dilutions(self) -> int:
@@ -135,7 +135,7 @@ class GSection:
     @property
     def photon_structure(self) -> ...:
         """
-        The list of photon energy edges
+        The photon group structure
         """
     @property
     def section_number(self) -> int:
