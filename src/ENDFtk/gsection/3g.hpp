@@ -34,6 +34,7 @@ namespace section {
     #include "ENDFtk/gsection/3/src/makeVectors.hpp"
     #include "ENDFtk/gsection/3/src/makeRecords.hpp"
     #include "ENDFtk/gsection/3/src/readRecords.hpp"
+    #include "ENDFtk/gsection/3/src/verifySize.hpp"
 
   public:
 
