@@ -20,8 +20,6 @@ namespace section {
   class ENDFTK_PYTHON_EXPORT GType< 3 > : protected Base {
 
     /* fields */
-    int nl_;
-    int nz_;
     int lrflag_;
     int ngn_;
     double temp_;
@@ -45,7 +43,7 @@ namespace section {
     /**
      *  @brief Return the number of legendre moments
      */
-    int NL() const { return this->nl_; }
+    int NL() const { return this->sigma_.size(); }
 
     /**
      *  @brief Return the number of legendre moments
@@ -55,7 +53,7 @@ namespace section {
     /**
      *  @brief Return the number of dilution values
      */
-    int NZ() const { return this->nz_; }
+    int NZ() const { return this->sigma_.front().size(); }
 
     /**
      *  @brief Return the number of dilution values

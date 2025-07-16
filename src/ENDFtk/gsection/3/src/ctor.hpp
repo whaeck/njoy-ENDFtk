@@ -1,16 +1,23 @@
-private:
-
 /**
- *  @brief Private intermediate constructor
+ *  @brief Constructor from parameters with ratio quantities
+ *
+ *  @param[in] mt       the section number
+ *  @param[in] zaid     the ZAID identifier
+ *  @param[in] awr      the atomic weight ratio
+ *  @param[in] lr.      the break-up identifier flag
+ *  @param[in] ngn      the number of neutron energy groups
+ *  @param[in] temp     the temperature
+ *  @param[in] groups   the group index
+ *  @param[in] flux     the group-wise flux
+ *  @param[in] sigma    the group-wise cross section
+ *  @param[in] ratio    the group-wise ratios
  */
-GType( int mt, int zaid, double awr, int nl, int nz, int lrflag,
-       int ngn, double temp, std::vector<unsigned int > groups,
-       std::vector < std::vector< std::vector<double> > > flux,
-       std::vector < std::vector< std::vector<double> > > sigma,
-       std::vector < std::vector< std::vector<double> > > ratio ) :
+GType( int mt, int zaid, double awr, int lr,
+       int ngn, double temp, std::vector< unsigned int > groups,
+       std::vector < std::vector< std::vector< double > > > flux,
+       std::vector < std::vector< std::vector< double > > > sigma,
+       std::vector < std::vector< std::vector< double > > > ratio ) :
     Base( zaid, awr, mt ),
-    nl_( nl ),
-    nz_( nz ),
     lrflag_( lrflag ),
     ngn_( ngn ),
     temp_( temp ),
@@ -19,53 +26,23 @@ GType( int mt, int zaid, double awr, int nl, int nz, int lrflag,
     sigma_( std::move( sigma ) ),
     ratio_( std::move( ratio ) ) {}
 
-public:
-
-/**
- *  @brief Constructor from parameters with ratio quantities
- *
- *  @param[in] mt       the section number
- *  @param[in] zaid     the ZAID identifier
- *  @param[in] awr      the atomic weight ratio
- *  @param[in] lrflag   the break-up identifier flag
- *  @param[in] ngn      the number of neutron energy groups
- *  @param[in] temp     the temperature
- *  @param[in] groups   the group index
- *  @param[in] flux     the group-wise flux
- *  @param[in] sigma    the group-wise cross section
- *  @param[in] ratio    the group-wise ratios
- */
-GType(int mt, int zaid, double awr, int lrflag,
-    int ngn, double temp, std::vector<unsigned int > groups,
-    std::vector < std::vector< std::vector<double> > > flux,
-    std::vector < std::vector< std::vector<double> > > sigma,
-    std::vector < std::vector< std::vector<double> > > ratio) :
-  GType( mt, zaid, awr,
-         [] ( const auto& vector ) { return vector.size(); }( sigma ),
-         [] ( const auto& vector ) { return vector.size() > 0 ? vector.front().size() : 0; }( sigma ),
-         lrflag, ngn, temp,
-         std::move( groups ),
-         std::move( flux ),
-         std::move( sigma ),
-         std::move( ratio ) ) {}
-
 /**
  *  @brief Constructor from parameters without ratio quantities
  *
  *  @param[in] mt       the section number
  *  @param[in] zaid     the ZAID identifier
  *  @param[in] awr      the atomic weight ratio
- *  @param[in] lrflag   the break-up identifier flag
+ *  @param[in] lr.      the break-up identifier flag
  *  @param[in] ngn      the number of neutron energy groups
  *  @param[in] temp     the temperature
  *  @param[in] groups   the group index
  *  @param[in] flux     the group-wise flux
  *  @param[in] sigma    the group-wise cross section
  */
-GType(int mt, int zaid, double awr, int lrflag,
-    int ngn, double temp, std::vector<unsigned int> groups,
-    std::vector < std::vector< std::vector<double> > > flux,
-    std::vector < std::vector< std::vector<double> > > sigma)
+GType( int mt, int zaid, double awr, int lr,
+       int ngn, double temp, std::vector< unsigned int > groups,
+       std::vector < std::vector< std::vector< double > > > flux,
+       std::vector < std::vector< std::vector< double > > > sigma)
     :
 GType( mt, zaid, awr, lrflag, ngn, temp,
        std::move( groups ), std::move( flux ),
