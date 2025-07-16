@@ -24,6 +24,8 @@ namespace section {
     int ngn_;
     double temp_;
     std::vector< unsigned int > groups_;
+
+    // data is stored by moment and dilution
     std::vector< std::vector< std::vector< double > > > flux_;
     std::vector< std::vector< std::vector< double > > > sigma_;
     std::vector< std::vector< std::vector< double > > > ratio_;

@@ -54,17 +54,6 @@ GType( int mt, int zaid, double awr, int lr, int ngn,
        std::tuple< double,
                    std::vector< unsigned int >,
                    std::vector < std::vector< std::vector< double > > >,
-                   std::vector < std::vector< std::vector< double > > > >&& data ) :
-  GType(mt, zaid, awr, lr, ngn,
-        std::move( std::get<0>( data ) ),       // temp
-        std::move( std::get<1>( data ) ),       // groups
-        std::move( std::get<2>( data ) ),       // flux
-        std::move( std::get<3>( data ) )) {}    // sigma
-
-GType( int mt, int zaid, double awr, int lr, int ngn,
-       std::tuple< double,
-                   std::vector< unsigned int >,
-                   std::vector < std::vector< std::vector< double > > >,
                    std::vector < std::vector< std::vector< double > > >,
                    std::vector < std::vector< std::vector< double > > > >&& data ) :
   GType( mt, zaid, awr, lr, ngn,

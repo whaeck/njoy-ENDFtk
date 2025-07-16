@@ -1,5 +1,8 @@
 private:
 
+/**
+ *  @brief Intermediate private constructor
+ */
 GType( int zaid, double awr, int nz, ListRecord&& list ) :
     BaseWithoutMT(zaid, awr),
     nz_( nz ),
