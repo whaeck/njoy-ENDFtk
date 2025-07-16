@@ -42,7 +42,7 @@ GType(int mt, int zaid, double awr, int lrflag,
     std::vector < std::vector< std::vector<double> > > ratio) :
   GType( mt, zaid, awr,
          [] ( const auto& vector ) { return vector.size(); }( sigma ),
-         [] ( const auto& vector ) { return vector.size() > 0 ? : vector.front().size() : 0; }( sigma ),
+         [] ( const auto& vector ) { return vector.size() > 0 ? vector.front().size() : 0; }( sigma ),
          lrflag, ngn, temp,
          std::move( groups ),
          std::move( flux ),
