@@ -18,7 +18,7 @@ GType( int mt, int zaid, double awr, int lr,
        std::vector < std::vector< std::vector< double > > > sigma,
        std::vector < std::vector< std::vector< double > > > ratio ) :
     Base( zaid, awr, mt ),
-    lrflag_( lrflag ),
+    lr_( lr ),
     ngn_( ngn ),
     temp_( temp ),
     groups_( std::move( groups ) ),
@@ -44,39 +44,39 @@ GType( int mt, int zaid, double awr, int lr,
        std::vector < std::vector< std::vector< double > > > flux,
        std::vector < std::vector< std::vector< double > > > sigma)
     :
-GType( mt, zaid, awr, lrflag, ngn, temp,
+GType( mt, zaid, awr, lr, ngn, temp,
        std::move( groups ), std::move( flux ),
        std::move( sigma ), {} ) {}
 
 private:
 
-GType( int mt, int zaid, double awr, int lrflag, int ngn,
+GType( int mt, int zaid, double awr, int lr, int ngn,
        std::tuple< double,
                    std::vector< unsigned int >,
                    std::vector < std::vector< std::vector< double > > >,
                    std::vector < std::vector< std::vector< double > > > >&& data ) :
-  GType(mt, zaid, awr, lrflag, ngn,
+  GType(mt, zaid, awr, lr, ngn,
         std::move( std::get<0>( data ) ),       // temp
         std::move( std::get<1>( data ) ),       // groups
         std::move( std::get<2>( data ) ),       // flux
         std::move( std::get<3>( data ) )) {}    // sigma
 
-GType( int mt, int zaid, double awr, int lrflag, int ngn,
+GType( int mt, int zaid, double awr, int lr, int ngn,
        std::tuple< double,
                    std::vector< unsigned int >,
                    std::vector < std::vector< std::vector< double > > >,
                    std::vector < std::vector< std::vector< double > > >,
                    std::vector < std::vector< std::vector< double > > > >&& data ) :
-  GType( mt, zaid, awr, lrflag, ngn,
+  GType( mt, zaid, awr, lr, ngn,
         std::move( std::get<0>( data ) ),       // temp
         std::move( std::get<1>( data ) ),       // groups
         std::move( std::get<2>( data ) ),       // flux
         std::move( std::get<3>( data ) ),       // sigma
         std::move( std::get<4>( data ) ) ) {}   // ratio
 
-GType( int mt, int zaid, double awr, int nl, int nz, int lrflag, int ngn,
+GType( int mt, int zaid, double awr, int nl, int nz, int lr, int ngn,
        std::vector<DataRecord>&& records ) :
-  GType( mt, zaid, awr, lrflag, ngn,
+  GType( mt, zaid, awr, lr, ngn,
          makeVectors( records, nl, nz, ngn ) ) {}
 
 public:

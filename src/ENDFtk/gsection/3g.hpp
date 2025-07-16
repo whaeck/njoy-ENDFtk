@@ -20,7 +20,7 @@ namespace section {
   class ENDFTK_PYTHON_EXPORT GType< 3 > : protected Base {
 
     /* fields */
-    int lrflag_;
+    int lr_;
     int ngn_;
     double temp_;
     std::vector< unsigned int > groups_;
@@ -63,7 +63,7 @@ namespace section {
     /**
      *  @brief Return the break up flag
      */
-    int LR() const { return this->lrflag_; }
+    int LR() const { return this->lr_; }
 
     /**
      *  @brief Return the break up identifier flag
