@@ -5,7 +5,7 @@ makeRecords(double temp,
             const std::vector< std::vector < std::vector < double > > >& sigma, 
             const std::vector< std::vector < std::vector < double > > >& ratio) {
 
-    // ng2 is 3 for ratio quantities, and ig2lo appaers to be 1 for MF3
+    // ng2 is 3 for ratio quantities, and ig2lo appears to be 1 for MF3
     int ng2 = 3;
     int ig2lo = 1; 
     // get sizes

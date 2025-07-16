@@ -9,6 +9,7 @@
 #include "tools/Log.hpp"
 #include "ENDFtk/section.hpp"
 #include <numeric>
+#include <algorithm>
 #include <iostream>
 
 namespace njoy {
