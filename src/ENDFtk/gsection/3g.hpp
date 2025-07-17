@@ -76,7 +76,7 @@ namespace section {
     /**
      *  @brief Return the number of neutron groups
      */
-    int NGN() const { return this->ngn_; }
+    int NGN() const { return this->sigma_.front().front().size(); }
 
     /**
      *  @brief Return the number of neutron groups
@@ -87,11 +87,6 @@ namespace section {
      *  @brief Return the temperature
      */
     double temperature() const { return this->temp_; }
-
-    /**
-     *  @brief Return the group indices
-     */
-    const std::vector< unsigned int >& groups() const { return this->groups_; }
 
     /**
      *  @brief Return the multigroup cross section for a given moment and dilution

@@ -1,9 +1,9 @@
 // version for flux, sigma and ratios
 static auto
 makeRecords( double temp,
-             const std::vector< std::vector < std::vector < double > > >& flux,
-             const std::vector< std::vector < std::vector < double > > >& sigma,
-             const std::vector< std::vector < std::vector < double > > >& ratio ) {
+             const std::vector< std::vector< std::vector < double > > >& flux,
+             const std::vector< std::vector< std::vector < double > > >& sigma,
+             const std::vector< std::vector< std::vector < double > > >& ratio ) {
 
     // ng2 is 3 for ratio quantities, and ig2lo appears to be 1 for MF3
     bool has_ratio = ratio.size() > 0 ? true : false;
@@ -45,5 +45,4 @@ makeRecords( double temp,
     }
 
     return records;
-
 }

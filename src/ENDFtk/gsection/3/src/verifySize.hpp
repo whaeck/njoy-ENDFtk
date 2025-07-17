@@ -1,9 +1,11 @@
-static void verifySize( const std::vector< unsigned int >& groups,
-                        const std::vector< std::vector< std::vector< double > > >& flux,
+static void verifySize( const std::vector< std::vector< std::vector< double > > >& flux,
                         const std::vector< std::vector< std::vector< double > > >& sigma,
                         const std::vector< std::vector< std::vector< double > > >& ratio ) {
 
-  auto ngroups = groups.size();
+  auto ngroups = flux.size() > 0 ? flux.front().size() > 0
+                                       ? flux.front().front().size()
+                                       : 0
+                                 : 0;
   if ( ngroups == 0 ) {
 
     Log::error( "The number of groups cannot be zero" );

@@ -5,7 +5,7 @@ static auto readRecords( Iterator& it, const Iterator& end, long& lineNumber,
   std::vector< DataRecord > records;
   do {
 
-    records.emplace_back(it, end, lineNumber, MAT, MF, MT);
+    records.emplace_back( it, end, lineNumber, MAT, MF, MT );
   }
   while ( records.back().IG() < NGN );
 

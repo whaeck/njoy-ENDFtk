@@ -121,7 +121,7 @@ class GSection:
             section    the string representing the section
         """
     @typing.overload
-    def __init__(self, mt: int, zaid: int, awr: float, lr: int, ngn: int, temp: float, groups: list[int], flux: list[list[list[float]]], xs: list[list[list[float]]]) -> None:
+    def __init__(self, mt: int, zaid: int, awr: float, lr: int, temp: float, flux: list[list[list[float]]], xs: list[list[list[float]]]) -> None:
         """
         Initialise the section
         
@@ -131,14 +131,12 @@ class GSection:
             zaid     the ZA  identifier
             awr      the atomic mass ratio
             lr       the complex breakup flag
-            ngn      the number of neutron groups
             temp     the temperature
-            groups   array of the group indices
             flux     3D array of the group-wise fluxes (nl, nz, ngn)
             xs       3D array of the group-wise cross sections (nl, nz, ngn)
         """
     @typing.overload
-    def __init__(self, mt: int, zaid: int, awr: float, lr: int, ngn: int, temp: float, groups: list[int], flux: list[list[list[float]]], xs: list[list[list[float]]], ratio: list[list[list[float]]]) -> None:
+    def __init__(self, mt: int, zaid: int, awr: float, lr: int, temp: float, flux: list[list[list[float]]], xs: list[list[list[float]]], ratio: list[list[list[float]]]) -> None:
         """
         Initialise the section
         
@@ -148,9 +146,7 @@ class GSection:
             zaid     the ZA  identifier
             awr      the atomic mass ratio
             lr       the complex breakup flag (default 0)
-            ngn      the number of neutron groups
             temp     the temperature
-            groups   array of the group indices
             flux     3D array of the group-wise fluxes (nl, nz, ngn)
             xs       3D array of the group-wise cross sections (nl, nz, ngn)
             ratio    3D array of the group-wise ratios (nl, nz, ngn)
@@ -229,11 +225,6 @@ class GSection:
     def break_up(self) -> int:
         """
         The complex break up flag
-        """
-    @property
-    def groups(self) -> list[int]:
-        """
-        The neutron group indices
         """
     @property
     def number_dilutions(self) -> int:

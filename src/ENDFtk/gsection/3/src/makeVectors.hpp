@@ -1,9 +1,6 @@
 static auto
-makeVectors( const std::vector< DataRecord >& records, int nmoments,
-             int ndilutions, int ngroups ) {
-
-  std::vector< unsigned int > groups( ngroups );
-  std::iota( groups.begin(), groups.end(), 1 );
+makeVectors( const std::vector< DataRecord >& records,
+             int nmoments, int ndilutions, int ngroups ) {
 
   std::vector< std::vector< std::vector< double > > > flux;
   std::vector< std::vector< std::vector< double > > > sigma;
@@ -59,7 +56,5 @@ makeVectors( const std::vector< DataRecord >& records, int nmoments,
     }
   }
 
-  return std::make_tuple( temp, std::move( groups ), std::move( flux ),
-                          std::move( sigma ), std::move( ratio ) );
-
+  return std::make_tuple( temp, std::move( flux ), std::move( sigma ), std::move( ratio ) );
 }

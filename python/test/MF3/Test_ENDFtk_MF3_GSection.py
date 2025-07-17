@@ -200,7 +200,6 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
             self.assertAlmostEqual(0.0, chunk.AWR)
             self.assertAlmostEqual(0.0, chunk.atomic_weight_ratio)
             self.assertAlmostEqual(293.6, chunk.temperature)
-            expected_groups = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
 
             flux_0_0 = [1.270791e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 1.153966e6,
                     1.154819e6, 1.153684e6, 1.154784e6, 1.152800e6, 1.156920e6, 1.154341e6, 1.157786e6, 1.156371e6, 5.809202e5,
@@ -263,14 +262,13 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
                     5.751781, 5.814154, 5.994551]
 
             for g in range(chunk.NGN):
-                self.assertEqual(expected_groups[g], chunk.groups[g])
-                self.assertAlmostEqual(flux_0_0[g], chunk.flux(0,0)[g])
+                self.assertAlmostEqual(flux_0_0[g], chunk.flux(0, 0)[g])
                 self.assertAlmostEqual(flux_0_1[g], chunk.flux(0, 1)[g])
                 self.assertAlmostEqual(flux_0_2[g], chunk.flux(0, 2)[g])
                 self.assertAlmostEqual(flux_1_0[g], chunk.flux(1, 0)[g])
                 self.assertAlmostEqual(flux_1_1[g], chunk.flux(1, 1)[g])
                 self.assertAlmostEqual(flux_1_2[g], chunk.flux(1, 2)[g])
-                self.assertAlmostEqual(xs_0_0[g], chunk.cross_section(0,0)[g])
+                self.assertAlmostEqual(xs_0_0[g], chunk.cross_section(0, 0)[g])
                 self.assertAlmostEqual(xs_0_1[g], chunk.cross_section(0, 1)[g])
                 self.assertAlmostEqual(xs_0_2[g], chunk.cross_section(0, 2)[g])
                 self.assertAlmostEqual(xs_1_0[g], chunk.cross_section(1, 0)[g])
@@ -296,7 +294,6 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
             self.assertAlmostEqual(0.0, chunk.AWR)
             self.assertAlmostEqual(0.0, chunk.atomic_weight_ratio)
             self.assertAlmostEqual(293.6, chunk.temperature)
-            expected_groups = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
 
             flux = [1.270791e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 1.153966e6,
                     1.154819e6, 1.153684e6, 1.154784e6, 1.152800e6, 1.156920e6, 1.154341e6, 1.157786e6, 1.156371e6, 5.809202e5,
@@ -314,7 +311,6 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
                 1.778379, 1.730948, 1.873645, 2.067954, 2.135172]
 
             for g in range(chunk.NGN) :
-                self.assertEqual(expected_groups[g], chunk.groups[g])
                 self.assertAlmostEqual(flux[g], chunk.flux(0,0)[g])
                 self.assertAlmostEqual(xs[g], chunk.cross_section(0, 0)[g])
                 self.assertAlmostEqual(ratio[g], chunk.ratio(0, 0)[g])
@@ -338,7 +334,6 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
             self.assertAlmostEqual(0.0, chunk.AWR)
             self.assertAlmostEqual(0.0, chunk.atomic_weight_ratio)
             self.assertAlmostEqual(293.6, chunk.temperature)
-            expected_groups = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
             flux = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                     0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
                     0.0, 0.0, 2.235493e5, 4.396216e4, 2.311833e4, 1.410474e4, 1.905167e4,
@@ -348,7 +343,6 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
                     0.0, 0.0, 1.047471e-2, 3.690336e-1, 6.475546e-1, 8.511604e-1, 7.647669e-1,
                     5.483544e-1, 3.717841e-1]
             for g in range(chunk.NGN):
-                self.assertEqual(expected_groups[g], chunk.groups[g])
                 self.assertAlmostEqual(flux[g], chunk.flux(0,0)[g])
                 self.assertAlmostEqual(xs[g], chunk.cross_section(0, 0)[g])
 
@@ -357,7 +351,6 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
         # TESTS
 
         # When the data is given explicitly and contains no ratios.
-        groups = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
         flux = [
             [
                 [1.270791e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 1.153966e6,
@@ -420,8 +413,8 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
             ]
         ]
         chunk = GSection(mt = 1, zaid = 92235, awr = 0.0,
-                         lr = 0, ngn = 30,
-                         temp = 293.6, groups = groups, flux = flux,
+                         lr = 0,
+                         temp = 293.6, flux = flux,
                          xs = xs)
 
         # then it can be verifed
@@ -450,8 +443,8 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
             1.778379, 1.730948, 1.873645, 2.067954, 2.135172]]]
 
         chunk = GSection(mt = 452, zaid = 92235, awr = 0.0,
-                        lr = 0, ngn = 30,
-                        temp = 293.6, groups = groups, flux = flux, ratio = ratio, xs = xs)
+                        lr = 0,
+                        temp = 293.6, flux = flux, ratio = ratio, xs = xs)
 
         # then the data can be verified
         verify_chunk_ratios(self, chunk)
@@ -475,8 +468,8 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
             5.483544e-1, 3.717841e-1]]]
 
         chunk = GSection(mt = 16, zaid = 92235, awr = 0.0,
-                         lr = 0, ngn = 30,
-                         temp = 293.6, groups = groups, flux = flux, xs = xs)
+                         lr = 0,
+                         temp = 293.6, flux = flux, xs = xs)
 
         # then it can be verified
         verify_chunk_clipped(self, chunk)
@@ -486,9 +479,6 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
 
         # then it can be verified
         verify_chunk_clipped(self, chunk)
-
-
-
 
 if __name__ == "__main__":
     unittest.main()

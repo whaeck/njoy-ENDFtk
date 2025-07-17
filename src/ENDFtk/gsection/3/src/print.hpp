@@ -1,5 +1,5 @@
 template <typename OutputIterator >
-void print(OutputIterator& it, int MAT, int MF) const {
+void print( OutputIterator& it, int MAT, int MF ) const {
 
   int MT = this->MT();
   ControlRecord( this->ZA(), this->AWR(), this->NL(), this->NZ(),

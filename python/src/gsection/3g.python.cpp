@@ -26,13 +26,12 @@ void wrapGSection_3( python::module& module, python::module& ) {
   gsection
   .def(
 
-    python::init< int, int, double, int, int, double,
-                  std::vector< unsigned int >&&,
+    python::init< int, int, double, int, double,
                   std::vector< std::vector< std::vector< double > > >&&,
                   std::vector< std::vector< std::vector< double > > >&& >(),
     python::arg( "mt" ), python::arg( "zaid" ), python::arg( "awr" ),
-    python::arg( "lr" ), python::arg( "ngn" ), python::arg( "temp" ),
-    python::arg( "groups" ), python::arg( "flux" ), python::arg( "xs" ),
+    python::arg( "lr" ), python::arg( "temp" ), python::arg( "flux" ),
+    python::arg( "xs" ),
     "Initialise the section\n\n"
     "Arguments:\n"
     "    self     the section\n"
@@ -40,23 +39,19 @@ void wrapGSection_3( python::module& module, python::module& ) {
     "    zaid     the ZA  identifier\n"
     "    awr      the atomic mass ratio\n"
     "    lr       the complex breakup flag\n"
-    "    ngn      the number of neutron groups\n"
     "    temp     the temperature\n"
-    "    groups   array of the group indices\n"
     "    flux     3D array of the group-wise fluxes (nl, nz, ngn)\n"
     "    xs       3D array of the group-wise cross sections (nl, nz, ngn)"
   )
   .def(
 
-    python::init< int, int, double, int, int, double,
-                  std::vector< unsigned int >&&,
+    python::init< int, int, double, int, double,
                   std::vector< std::vector< std::vector< double > > >&&,
                   std::vector< std::vector< std::vector< double > > >&&,
                   std::vector< std::vector< std::vector< double > > >&& >(),
     python::arg( "mt" ), python::arg( "zaid" ), python::arg( "awr" ),
-    python::arg( "lr" ), python::arg( "ngn" ), python::arg( "temp" ),
-    python::arg( "groups" ), python::arg( "flux" ), python::arg( "xs" ),
-    python::arg( "ratio" ),
+    python::arg( "lr" ), python::arg( "temp" ), python::arg( "flux" ),
+    python::arg( "xs" ), python::arg( "ratio" ),
     "Initialise the section\n\n"
     "Arguments:\n"
     "    self     the section\n"
@@ -64,9 +59,7 @@ void wrapGSection_3( python::module& module, python::module& ) {
     "    zaid     the ZA  identifier\n"
     "    awr      the atomic mass ratio\n"
     "    lr       the complex breakup flag (default 0)\n"
-    "    ngn      the number of neutron groups\n"
     "    temp     the temperature\n"
-    "    groups   array of the group indices\n"
     "    flux     3D array of the group-wise fluxes (nl, nz, ngn)\n"
     "    xs       3D array of the group-wise cross sections (nl, nz, ngn)\n"
     "    ratio    3D array of the group-wise ratios (nl, nz, ngn)"
@@ -124,12 +117,6 @@ void wrapGSection_3( python::module& module, python::module& ) {
     "temperature",
     &GSection::temperature,
     "The temperature"
-  )
-  .def_property_readonly(
-
-    "groups",
-    &GSection::groups,
-    "The neutron group indices"
   )
   .def(
 
