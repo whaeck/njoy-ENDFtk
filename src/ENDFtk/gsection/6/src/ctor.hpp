@@ -1,5 +1,5 @@
 /**
- *  @brief Constructor from parameters with probabilities
+ *  @brief Constructor from parameters with probabilities (Note: IG = 0)
  * 
  *  @param[in]  mt              the section number
  *  @param[in]  zaid            the ZAID identifier
@@ -33,7 +33,7 @@ GType(int mt, int zaid, double awr, int nl, int nz, int lrflag,
 
 
 /**
- *  @brief Constructor from parameters with probabilities (Note: IG = 0)
+ *  @brief Constructor from parameters without probabilities.
  * 
  *  @param[in]  mt              the section number
  *  @param[in]  zaid            the ZAID identifier
