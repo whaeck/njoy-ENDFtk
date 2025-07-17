@@ -9,6 +9,7 @@
 #include "tools/Log.hpp"
 #include "ENDFtk/section.hpp"
 #include <numeric>
+#include <algorithm>
 #include <iostream>
 
 namespace njoy {
@@ -27,7 +28,7 @@ namespace section {
         double temp_;
         std::vector< unsigned int > groups_;
         std::vector< std::vector< std::vector< double > > > flux_;
-        std::vector< std::vector< std::vector< std::vector< double > > > > sigma_;
+        std::vector< std::vector< std::vector< std::vector< double > > > > matrix_;
         std::vector< std::vector< std::vector< double > > > probability_;
 
         /* auxiliary functions */
@@ -95,7 +96,7 @@ namespace section {
         /**
          *  @brief Return the group indices
          */
-        auto groups() const { return this->groups_; }
+        decltype(auto) groups() const { return this->groups_; }
 
         /**
          *  @brief Return the matrix for a given moment and dilution
@@ -103,8 +104,8 @@ namespace section {
          *  @param[in] moment   the legendre moment requested
          *  @param[in] diltuion the dilution index requested
          */
-        auto matrix(int moment, int dilution) const {
-            return this->sigma_[moment][dilution];
+        decltype(auto) matrix(int moment, int dilution) const {
+            return this->matrix_[moment][dilution];
         }
 
         /**
@@ -113,7 +114,7 @@ namespace section {
          *  @param[in] moment   the legendre moment requested
          *  @param[in] dilution the dilution index requested
          */
-        auto flux(int moment, int dilution) const {
+        decltype(auto) flux(int moment, int dilution) const {
             return this->flux_[moment][dilution];
         }
 
@@ -123,7 +124,7 @@ namespace section {
          *  @param[in] moment   the legendre moment requested
          *  @param[in] dilution the dilution index requested
          */
-        auto probability(int moment, int dilution) const {
+        decltype(auto) probability(int moment, int dilution) const {
             if ( this->probability_.size() != 0 ) {
                 return this->probability_[moment][dilution];
             } else {
