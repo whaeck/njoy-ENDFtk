@@ -115,6 +115,7 @@ add_python_test( MF5.TabulatedSpectrum          MF5/Test_ENDFtk_MF5_TabulatedSpe
 add_python_test( MF5.WattSpectrum               MF5/Test_ENDFtk_MF5_WattSpectrum.py )
 
 add_python_test( MF6.Section                          MF6/Test_ENDFtk_MF6_Section.py )
+add_python_test( MF6.GSection                         MF6/Test_ENDFtk_MF6_GSection.py )
 add_python_test( MF6.ChargedParticleElasticScattering MF6/Test_ENDFtk_MF6_ChargedParticleElasticScattering.py )
 add_python_test( MF6.ContinuumEnergyAngle             MF6/Test_ENDFtk_MF6_ContinuumEnergyAngle.py )
 add_python_test( MF6.DefinedElsewhere                 MF6/Test_ENDFtk_MF6_DefinedElsewhere.py )

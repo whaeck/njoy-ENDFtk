@@ -2,7 +2,7 @@ import unittest
 
 from ENDFtk.MF3 import GSection
 
-class Test_ENDFtk_MF3_Section( unittest.TestCase ):
+class Test_ENDFtk_MF3_Section( unittest.TestCase ) :
     """
     Unit test for the GSection class of MF3
     """
@@ -182,7 +182,6 @@ class Test_ENDFtk_MF3_Section( unittest.TestCase ):
     
 
     def test_section(self) :
-        self.maxDiff = None
 
         def verify_chunk(self, chunk) :
             self.assertEqual(1, chunk.MT)

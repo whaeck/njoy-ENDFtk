@@ -37,7 +37,7 @@ void wrapGSection_3( python::module& module, python::module& ) {
     "Arguments:\n"
     "    self          the section\n"
     "    mt            the MT number\n"
-    "    zaid          the ZA  identifier\n"
+    "    zaid          the ZA identifier\n"
     "    awr           the atomic mass ratio\n"
     "    nl            the number of legendre moments\n"
     "    nz            the number of dilutions\n"
@@ -84,7 +84,7 @@ void wrapGSection_3( python::module& module, python::module& ) {
 
     "number_moments",
     &GSection::numberMoments,
-    "The mass difference Q value"
+    "The number of legendre moments"
   )
   .def_property_readonly(
 
