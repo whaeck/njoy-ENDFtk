@@ -94,6 +94,7 @@ void wrapTreeGSection( python::module& module, python::module& ) {
           }
         }
         case 3 : return self.parse< 3 >();
+        case 6 : return self.parse< 6 >();
         default: throw std::runtime_error(
                        "GENDF section from file " +  std::to_string( mf ) +
                        " cannot be parsed yet" );

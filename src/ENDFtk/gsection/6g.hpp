@@ -33,7 +33,7 @@ namespace section {
 
         /* auxiliary functions */
         #include "ENDFtk/gsection/6/src/makeMatrices.hpp"
-//        #include "ENDFtk/gsection/6/src/makeRecords.hpp"
+        #include "ENDFtk/gsection/6/src/makeRecords.hpp"
         #include "ENDFtk/gsection/6/src/readRecords.hpp"
 
     public:
