@@ -11,13 +11,13 @@
  *  @param[in]  temp            the temperature
  *  @param[in]  groups          the group index
  *  @param[in]  flux            the group-wise flux
- *  @param[in]  sigma           the transfer matrices 
+ *  @param[in]  matrix           the transfer matrices 
  *  @param[in]  probability     the probabilities
  */
 GType(int mt, int zaid, double awr, int nl, int nz, int lrflag,
       int ngn, double temp, std::vector< unsigned int > groups,
       std::vector < std::vector< std::vector< double > > > flux,
-      std::vector < std::vector< std::vector< std::vector< double > > > > sigma,
+      std::vector < std::vector< std::vector< std::vector< double > > > > matrix,
       std::vector < std::vector< std::vector< double > > > probability )
       :
       Base(zaid, awr, mt),
@@ -28,7 +28,7 @@ GType(int mt, int zaid, double awr, int nl, int nz, int lrflag,
       temp_(temp),
       groups_(groups),
       flux_( std::move(flux) ),
-      sigma_( std::move(sigma ) ),
+      matrix_( std::move(matrix ) ),
       probability_( std::move( probability ) ) {}
 
 
@@ -45,12 +45,12 @@ GType(int mt, int zaid, double awr, int nl, int nz, int lrflag,
  *  @param[in]  temp            the temperature
  *  @param[in]  groups          the group index
  *  @param[in]  flux            the group-wise flux
- *  @param[in]  sigma           the transfer matrices 
+ *  @param[in]  matrix          the transfer matrices 
  */
 GType( int mt, int zaid, double awr, int nl, int nz, int lrflag,
         int ngn, double temp, std::vector< unsigned int > groups,
         std::vector < std::vector < std::vector < double > > > flux,
-        std::vector < std::vector< std::vector< std::vector< double > > > > sigma )
+        std::vector < std::vector< std::vector< std::vector< double > > > > matrix )
         :
         Base( zaid, awr, mt ),
         nl_( nl ),
@@ -60,7 +60,7 @@ GType( int mt, int zaid, double awr, int nl, int nz, int lrflag,
         temp_( temp ),
         groups_( groups ),
         flux_( std::move( flux ) ) ,
-        sigma_(std::move ( sigma ) )  {}
+        matrix_(std::move ( matrix ) )  {}
 
 private:
 
@@ -97,6 +97,17 @@ private:
                   makeMatrices(records, nl, nz, ngn)) {}
 
 public:
+   /**
+     *  @brief Constructor from buffer/string
+     * 
+     *  @tparam Iterator        buffer iterator
+     * 
+     *  @param[in] head         the head record of the section
+     *  @param[in] begin        the start for the iterator
+     *  @param[in] end          the end for the iterator
+     *  @param[in] lineNumber   the current line number
+     *  @param[in] MAT          the expected MAT number
+     */
     template< typename Iterator >
     GType( const HEAD& head,
            Iterator& begin,
