@@ -29,9 +29,7 @@ SCENARIO("section::GType<6>") {
             int zaid = 92235;
             double awr = 0.0;
             int mt = 2;
-            int nl = 2;
-            int nz = 3;
-            int lrflag = 0;
+            int lr = 0;
             int ngn = 30;
             double temp = 293.6;
 
@@ -442,7 +440,7 @@ SCENARIO("section::GType<6>") {
                 },
             };
 
-            section::GType< 6 > chunk(mt, zaid, awr, nl, nz, lrflag, ngn, temp, groups, flux, matrix );
+            section::GType< 6 > chunk(mt, zaid, awr, lr, ngn, temp, groups, flux, matrix );
 
             THEN("a section GType< 6 > can be constructed and its"
                  " members can be tested") {

@@ -21,9 +21,7 @@ namespace section {
         protected Base {
 
         /* fields */
-        int nl_;
-        int nz_;
-        int lrflag_;
+        int lr_;
         int ngn_;
         double temp_;
         std::vector< unsigned int > groups_;
@@ -35,6 +33,7 @@ namespace section {
         #include "ENDFtk/gsection/6/src/makeMatrices.hpp"
         #include "ENDFtk/gsection/6/src/makeRecords.hpp"
         #include "ENDFtk/gsection/6/src/readRecords.hpp"
+        #include "ENDFtk/gsection/6/src/verifySize.hpp"
 
     public:
 
@@ -46,7 +45,7 @@ namespace section {
         /**
          *  @brief Return the number of legendre moments.
          */
-        int NL() const { return this->nl_; }
+        int NL() const { return this->flux_.size(); }
 
         /**
          *  @brief Return the number of legendre moments.
@@ -56,7 +55,7 @@ namespace section {
         /**
          *  @brief Return the number of dilution values.
          */
-        int NZ() const { return this->nz_; }
+        int NZ() const { return this->flux_.front().size(); }
 
         /**
          *  @brief Return the number of dilution values.
@@ -66,7 +65,7 @@ namespace section {
         /**
          *  @brief Return the break up identifier flag.
          */
-        int LRFLAG() const { return this->lrflag_; }
+        int LRFLAG() const { return this->lr_; }
 
         /**
          *  @brief Return the break up identifier flag.

@@ -14,27 +14,6 @@ makeRecords( double temp,
         }
     }
 
-    if ( nmoments != matrix.size() ) {
-        // TODO: log error
-        throw std::exception();
-    }
-    
-    // check for correct dimensions
-    for ( unsigned int l = 0; l < nmoments; ++ l) {
-        if ( ndilutions != flux[l].size() &&
-             ndilutions != matrix[l].size() ) {
-                // TODO: log error
-                throw std::exception(); 
-        }
-        for ( unsigned int z = 0; z < ndilutions; ++z) {
-            if ( ngroups != flux[l][z].size() && 
-                 ngroups != matrix[l][z].size() ){
-                    // TODO: log error
-                    throw std::exception();
-            }
-        }
-    }
-
     // search and find what gets written
     std::vector< DataRecord > records;
     for ( size_t g_i = 0; g_i < ngroups; ++g_i ) {
