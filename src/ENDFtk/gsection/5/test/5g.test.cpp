@@ -27,6 +27,51 @@ SCENARIO( "section::GType< 5 >" ) {
 
         std::string sectionString = chunkDelayed() + validSEND();
 
+        WHEN( "the data is provided explicitly") {
+
+            int zaid = 92235;
+            double awr = 0.0;
+            int mt = 455;
+            int lr = 0;
+            double temp = 293.6;
+            int ng2 = 17;
+            std::vector< double > lambda = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+            std::vector< std::vector< double > > chi = {
+                { 6.40367e-13, 4.42529e-11, 1.21905e-10, 3.183440e-9, 1.757545e-7, 1.836960e-5, 5.094932e-4, 2.161763e-3,
+                1.310483e-3, 5.424201e-3, 8.262024e-3, 1.267926e-2, 2.417905e-3, 2.188727e-3, 3.514090e-5, 0.0, 0.0, 0.0, 0.0, 0.0 },
+                { 1.47010e-11, 1.015916e-9, 2.798589e-9, 7.308246e-8, 4.034810e-6, 4.217127e-4, 2.641997e-3, 7.052062e-3,
+                3.763665e-3, 2.381035e-2, 2.873840e-2, 8.443434e-2, 1.537137e-2, 1.412648e-2, 3.337214e-4, 0.0, 0.0, 0.0, 0.0, 0.0 },
+                { 9.82642e-12, 6.79059e-10, 1.870633e-9, 4.884978e-8, 2.696947e-6, 2.818813e-4, 2.111820e-3, 6.968125e-3, 3.736493e-3,
+                2.457903e-2, 3.509891e-2, 8.189346e-2, 9.411334e-3, 7.045920e-3, 1.365560e-3, 1.490632e-5, 0.0, 0.0, 0.0, 0.0 },
+                { 1.40367e-11, 9.70009e-10, 2.672127e-9, 6.978001e-8, 3.852484e-6, 4.026560e-4, 3.536946e-3, 1.225451e-2, 6.518136e-3,
+                4.440559e-2, 6.923502e-2, 1.647387e-1, 3.265034e-2, 4.166897e-2, 1.084771e-2, 5.196002e-4, 0.0, 0.0, 0.0, 0.0 },
+                { 3.84615e-12, 2.65790e-10, 7.32184e-10, 1.912027e-8, 1.055611e-6, 1.103310e-4, 1.847336e-3, 5.717616e-3, 3.382608e-3,
+                2.164622e-2, 3.247626e-2, 6.442444e-2, 1.007016e-2, 1.314721e-2, 5.164237e-3, 5.877135e-4, 0.0, 0.0, 0.0, 0.0 },
+                { 1.22217e-12, 8.44587e-11, 2.32662e-10, 6.075751e-9, 3.354359e-7, 3.505928e-5, 1.259095e-3, 2.981301e-3, 1.327339e-3,
+                8.832828e-3, 1.292705e-2, 2.614138e-2, 4.131419e-3, 5.489045e-3, 2.801146e-3, 5.005918e-4, 0.0, 0.0, 0.0, 0.0 }
+            };
+
+            section::GType< 5 > chunkDelayed( mt, zaid, awr, lr, temp, ng2, chi, lambda );
+
+
+
+            THEN( "a section GType< 5 > can be constructed and members can be tested" ) {
+
+                verifyChunkDelayed( chunkDelayed );
+
+            } // THEN
+
+            THEN( "it can be printed" ) {
+
+                std::string buffer;
+                auto output = std::back_inserter( buffer );
+                chunkDelayed.print( output, 9228, 5 );
+
+                CHECK( buffer == sectionString );
+            } // THEN
+
+        } // WHEN
+
         WHEN( "the data is given as a string" ) {
 
             std::string line = chunkDelayed() + validSEND();
@@ -37,11 +82,11 @@ SCENARIO( "section::GType< 5 >" ) {
 
             section::GType< 5 > chunkDelayed( head, begin, end, lineNumber, 9228 );
 
-            // THEN( "a section GType< 5 > can be constructed and members can be tested" ) {
+            THEN( "a section GType< 5 > can be constructed and members can be tested" ) {
 
-            //     verifyChunk(chunkDelayed);
+                verifyChunkDelayed( chunkDelayed );
 
-            // } // THEN
+            } // THEN
 
             THEN( "it can be printed" ) {
 
@@ -58,15 +103,22 @@ SCENARIO( "section::GType< 5 >" ) {
         
         std::string sectionString = chunkPrompt() + validSEND();
 
-        WHEN( "the data is given as a string" ) {
+        WHEN( "the data is provided explicitly" ){
 
-            std::string line = chunkPrompt() + validSEND();
-            auto begin = line.begin();
-            auto end = line.end();
-            long lineNumber = 0;
-            auto head = HeadRecord( begin, end, lineNumber );
+            int zaid = 92235;
+            double awr = 0.0;
+            int mt = 18;
+            int lr = 0;
+            double temp = 293.6;
+            int ng2 = 20;
+            std::vector< std::vector< double > > chi = {
+                { 1.96730e-14, 1.15287e-11, 7.10093e-11, 7.358034e-9, 9.678216e-7, 9.976067e-5, 
+                  8.080721e-4, 4.412081e-3, 3.119482e-3, 2.172044e-2, 4.250824e-2, 1.727228e-1,
+                  6.932789e-2, 1.778175e-1, 2.204227e-1, 2.772107e-1, 8.677879e-3, 1.124378e-3,
+                  1.884936e-5, 8.232639e-6 }
+            };
 
-            section::GType< 5 > chunkPrompt( head, begin, end, lineNumber, 9228 );
+            section::GType< 5 > chunkPrompt( mt, zaid, awr, lr, temp, ng2, chi );
 
             THEN( " a section GType< 5 > can be constructed and members can be tested" ) {
 
@@ -82,6 +134,46 @@ SCENARIO( "section::GType< 5 >" ) {
 
                 CHECK( buffer == sectionString );
             } // THEN
+
+            THEN( "lambdas are requested, it will error out" ) {
+
+                CHECK_THROWS( chunkPrompt.lambda() );
+
+            } // THEN
+            
+        } // WHEN
+
+        WHEN( "the data is given as a string" ) {
+
+            std::string line = chunkPrompt() + validSEND();
+            auto begin = line.begin();
+            auto end = line.end();
+            long lineNumber = 0;
+            auto head = HeadRecord( begin, end, lineNumber );
+
+            section::GType< 5 > chunkPrompt( head, begin, end, lineNumber, 9228 );
+
+            THEN( "a section GType< 5 > can be constructed and members can be tested" ) {
+
+                verifyChunkPrompt( chunkPrompt );
+
+            } // THEN
+
+            THEN( "it can be printed ") {
+
+                std::string buffer;
+                auto output = std::back_inserter( buffer );
+                chunkPrompt.print( output, 9228, 5 );
+
+                CHECK( buffer == sectionString );
+            } // THEN
+
+            THEN( "lambdas are requested, it will error out" ) {
+
+                CHECK_THROWS( chunkPrompt.lambda() );
+
+            } // THEN
+
         } // WHEN
     } // GIVEN
 } // SCENARIO
@@ -155,7 +247,7 @@ void verifyChunkDelayed( const section::GType< 5 >& chunk ) {
         { 3.84615e-12, 2.65790e-10, 7.32184e-10, 1.912027e-8, 1.055611e-6, 1.103310e-4, 1.847336e-3, 5.717616e-3, 3.382608e-3,
           2.164622e-2, 3.247626e-2, 6.442444e-2, 1.007016e-2, 1.314721e-2, 5.164237e-3, 5.877135e-4, 0.0, 0.0, 0.0, 0.0 },
         { 1.22217e-12, 8.44587e-11, 2.32662e-10, 6.075751e-9, 3.354359e-7, 3.505928e-5, 1.259095e-3, 2.981301e-3, 1.327339e-3,
-          8.832828e-3, 1.292705e-2, 2.614138e-2, 4.131419e-3, 5.489045e-3, 2.801146e-3, 5.005918e-4 }
+          8.832828e-3, 1.292705e-2, 2.614138e-2, 4.131419e-3, 5.489045e-3, 2.801146e-3, 5.005918e-4, 0.0, 0.0, 0.0, 0.0 }
     };
     for ( size_t t = 0; t < chunk.NT(); ++t ) {
         CHECK_THAT( expected_lambda[t], WithinRel( chunk.lambda()[t] ) );
@@ -184,7 +276,7 @@ void verifyChunkPrompt( const section::GType< 5 >& chunk ) {
     std::vector< double > expected_chi = { 1.96730e-14, 1.15287e-11, 7.10093e-11, 7.358034e-9, 9.678216e-7, 9.976067e-5, 
                                            8.080721e-4, 4.412081e-3, 3.119482e-3, 2.172044e-2, 4.250824e-2, 1.727228e-1,
                                            6.932789e-2, 1.778175e-1, 2.204227e-1, 2.772107e-1, 8.677879e-3, 1.124378e-3,
-                                           1.884936e-5, 8.232639e-6};
+                                           1.884936e-5, 8.232639e-6 };
     for ( size_t g = 0; g < chunk.NGN(); ++g ) {
         CHECK_THAT( expected_chi[g], WithinRel( chunk.chi(0)[g] ) );
     }
