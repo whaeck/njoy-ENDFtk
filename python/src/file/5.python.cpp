@@ -12,6 +12,7 @@ namespace python = pybind11;
 
 // declarations - sections
 void wrapSection_5( python::module&, python::module& );
+void wrapGSection_5( python::module&, python::module& );
 
 void wrapFile_5( python::module& module, python::module& viewmodule ) {
 
@@ -29,6 +30,7 @@ void wrapFile_5( python::module& module, python::module& viewmodule ) {
 
   // wrap sections
   wrapSection_5( submodule, viewmodule );
+  wrapGSection_5( submodule, viewmodule );
 
   // wrap views created by this file
   // none of these are supposed to be created directly by the user

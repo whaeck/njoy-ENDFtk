@@ -7,8 +7,8 @@
  *  @param[in]  lr          the break-up identifier flag
  *  @param[in]  temp        the temperature 
  *  @param[in]  ng2         number of secondary positions (needed for clipped records)
- *  @param[in]  lambda      the time constants
  *  @param[in]  chi         the delayed neutron spectrum  
+ *  @param[in]  lambda      the time constants
  */
 GType( int mt, int zaid, double awr, int lr, double temp, int ng2,
        std::vector< std::vector< double > > chi,
