@@ -282,6 +282,7 @@ add_subdirectory( src/ENDFtk/tree/test )
 
 add_subdirectory( src/ENDFtk/gsection/1/451/test )
 add_subdirectory( src/ENDFtk/gsection/3/test )
+add_subdirectory( src/ENDFtk/gsection/5/test )
 add_subdirectory( src/ENDFtk/gsection/6/test )
 
 add_subdirectory( src/ENDFtk/tree/GSection/test )

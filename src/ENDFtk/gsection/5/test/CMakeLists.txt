@@ -1,0 +1,1 @@
+add_cpp_test( gsection.5 5g.test.cpp )
