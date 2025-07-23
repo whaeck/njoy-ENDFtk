@@ -207,7 +207,8 @@ if(ENDFtk.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/section/40/LevelBlock.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/gsection/3g.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/gsection/1g.python.cpp
-        # ${CMAKE_CURRENT_SOURCE_DIR}/src/gsection/5g.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/gsection/5/18g.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/gsection/5/455g.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/gsection/6g.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/file/1.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/file/2.python.cpp

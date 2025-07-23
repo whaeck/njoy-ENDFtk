@@ -3,37 +3,45 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "ENDFtk/gsection/5g.hpp"
+#include "ENDFtk/gsection/5/455g.hpp"
 #include "definitions.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
-void wrapGSection_5( python::module& module, python::module& ) {
+void wrapGSection_5_455( python::module& module, python::module&  viewmodule ) {
 
     // type alias
-    using GSection = njoy::ENDFtk::section::GType< 5 >;
+    using GSection = njoy::ENDFtk::section::GType< 5, 455 >;
+
+    // create the submodule
+    python::module submodule = module.def_submodule(
+
+        "MT455",
+        "MT455 - delayed neutron spectra"
+    );
+
 
     // create the section
     python::class_< GSection > gsection(
-        module,
+        
+        submodule,
         "GSection",
-        "MF5 gsection - neutron spectra"
+        "MF5 MT455 gsection - delayed neutron spectra"
     );
 
     // wrap section
     gsection
     .def(
 
-        python::init< int, int, double, int, double, int,
+        python::init< double, double, int, double, int,
                       std::vector< std::vector< double > >&&,
                       std::vector< double >&& >(),
-        python::arg( "mt" ), python::arg( "zaid" ), python::arg( "awr" ), python::arg( "lr" ) = 0,
+        python::arg( "zaid" ), python::arg( "awr" ), python::arg( "lr" ) = 0,
         python::arg( "temp" ), python::arg( "ng2" ), python::arg( "chi" ), python::arg( "time_constants" ),
         "Initialise the section\n\n"
         "Arguments:\n"
         "   self            the section\n"
-        "   mt              the MT number\n"
         "   zaid            the ZA identifier\n"
         "   awr             the atomic weight ratio\n"
         "   lr              the complex breakup flag\n"
@@ -41,23 +49,6 @@ void wrapGSection_5( python::module& module, python::module& ) {
         "   ng2             number of secondary positions\n"
         "   time_constants  delayed neutron time constants (nt)\n"
         "   chi             delayed neutron spectra (nt, ngn)"
-    )
-    .def(
-
-        python::init< int, int, double, int, double, int,
-                      std::vector< std::vector< double > >&& >(),
-        python::arg( "mt" ), python::arg( "zaid" ), python::arg( "awr" ), python::arg( "lr" ) = 0,
-        python::arg( "temp" ), python::arg( "ng2" ), python::arg( "chi" ),
-        "Initialise the section\n\n"
-        "Arguments:\n"
-        "   self        the section\n"
-        "   mt          the MT number\n"
-        "   zaid        the ZA identifier\n"
-        "   awr         the atomic weight ratio\n"
-        "   lr          the complex breakup flag\n"
-        "   temp        the temperature\n"
-        "   ng2         number of secondary positions\n"
-        "   chi         prompt fission neutron spectra (1, ngn)"
     )
     .def_property_readonly(
 
@@ -130,7 +121,7 @@ void wrapGSection_5( python::module& module, python::module& ) {
         "chi",
         &GSection::chi,
         python::arg( "time_constant" ),
-        "The neutron spectra for a given time constant. For prompt, time constant is 0."
+        "The delayed neutron spectra for a given time constant"
     );
 
     addStandardGSectionDefinitions< GSection >( gsection );
