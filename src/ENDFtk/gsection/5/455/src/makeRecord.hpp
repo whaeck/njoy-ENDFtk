@@ -7,24 +7,17 @@ makeRecord( double temp,
     // int nz is always one for this section
     int nz = 1;
     int ig2lo = 1;
-    bool has_lambda = lambda.size() > 0 ? true : false;
     auto ntimes = lambda.size();
     unsigned int ngroups = chi.front().size();
 
     std::vector < double > list;
-    if ( has_lambda ) {
-        list = std::move( lambda );
-        for  ( unsigned int g = 0; g < ( ng2 - 1 ); ++g ) {
-            for ( unsigned int t = 0; t < ntimes; ++t ) {
-                list.emplace_back( chi[t][g] );
+    list = std::move( lambda );
+    for  ( unsigned int g = 0; g < ( ng2 - 1 ); ++g ) {
+        for ( unsigned int t = 0; t < ntimes; ++t ) {
+            list.emplace_back( chi[t][g] );
 
-            }
         }
     }
-    else {
-        list = std::move( chi[0] );
-    }
-
+    
     return DataRecord( temp, ng2, ig2lo, ngroups, std::move ( list ) );
-
 }
