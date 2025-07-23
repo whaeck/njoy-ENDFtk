@@ -10,13 +10,13 @@
  *  @param[in]  groups          the group index
  *  @param[in]  flux            the group-wise flux
  *  @param[in]  matrix          the transfer matrices 
- *  @param[in]  probability     the probabilities
+ *  @param[in]  chi             the fission spectrum
  */
 GType(int mt, int zaid, double awr, int lr,
       int ngn, double temp, std::vector< unsigned int > groups,
       std::vector < std::vector< std::vector< double > > > flux,
       std::vector < std::vector< std::vector< std::vector< double > > > > matrix,
-      std::vector < std::vector< std::vector< double > > > probability )
+      std::vector < std::vector< double > > chi )
       :
       Base(zaid, awr, mt),
       lr_(lr),
@@ -25,7 +25,9 @@ GType(int mt, int zaid, double awr, int lr,
       groups_(groups),
       flux_( std::move(flux) ),
       matrix_( std::move(matrix ) ),
-      probability_( std::move( probability ) ) {}
+      chi_( std::move( chi ) ) {
+       verifySize( this->flux_, this->matrix_, this->chi_ );
+      }
 
 
 /**
@@ -66,26 +68,26 @@ private:
                        std::vector< unsigned int >,
                        std::vector< std::vector< std::vector< double > > >,
                        std::vector< std::vector< std::vector< std::vector< double > > > >,
-                       std::vector< std::vector< std::vector< double > > > >&&data)
+                       std::vector< std::vector< double > > >&&data)
         :
         GType( mt, zaid, awr, lr, ngn,
                std::move( std::get<0>( data ) ),        // temp
                std::move( std::get<1>( data ) ),        // groups
                std::move( std::get<2>( data ) ),        // flux
                std::move( std::get<3>( data ) ),        // matrix
-               std::move( std::get<4>( data ) ) ) {}    // probability   
+               std::move( std::get<4>( data ) ) ) {}    // chi   
     
-    GType( int mt, int zaid, double awr, int lr, int ngn,
-           std::tuple< double,
-                       std::vector< unsigned int >,
-                       std::vector< std::vector< std::vector< double > > >,
-                       std::vector< std::vector< std::vector< std::vector< double > > > > > && data)
-        :
-        GType( mt, zaid, awr, lr, ngn,
-               std::move( std::get<0>( data ) ),        // temp
-               std::move( std::get<1>( data ) ),        // groups
-               std::move( std::get<2>( data ) ),        // flux
-               std::move( std::get<3>( data ) ) ) {}    // matrix
+//     GType( int mt, int zaid, double awr, int lr, int ngn,
+//            std::tuple< double,
+//                        std::vector< unsigned int >,
+//                        std::vector< std::vector< std::vector< double > > >,
+//                        std::vector< std::vector< std::vector< std::vector< double > > > > > && data)
+//         :
+//         GType( mt, zaid, awr, lr, ngn,
+//                std::move( std::get<0>( data ) ),        // temp
+//                std::move( std::get<1>( data ) ),        // groups
+//                std::move( std::get<2>( data ) ),        // flux
+//                std::move( std::get<3>( data ) ) ) {}    // matrix
 
     GType( int mt, int zaid, double awr, int nl, int nz,  int lr, int ngn,
            std::vector< DataRecord >&& records)

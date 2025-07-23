@@ -6,7 +6,7 @@ makeMatrices(const std::vector< DataRecord > records,
     std::vector< std::vector < std::vector< double > > > flux( nmoments );
     std::vector< std::vector< std::vector < std::vector< double > > > >
     matrix( nmoments );
-    std::vector< std::vector< std::vector < double > > > probability; 
+    std::vector< std::vector < double > > chi; 
     double temp;
     if ( records.size() != 0 ) {
         temp = records.front().TEMP();
@@ -15,36 +15,44 @@ makeMatrices(const std::vector< DataRecord > records,
         throw std::runtime_error("Vector of DataRecords is empty!");
     }
     for ( const auto& record : records) {
+        // prompt fission ( MT18 )
         if ( record.IG() == 0 ) {
-            std::cout << "I have encountered a record with probabilities" << std::endl;
-            probability.resize( nmoments );
-            for ( unsigned int l = 0; l < nmoments; ++l ) {
-                if (probability[l].size() == 0) {
-                    probability[l].resize( ndilutions );
+            std::cout << "I have encountered a record with chi" << std::endl;
+            chi.resize( ndilutions );
+            for ( size_t z = 0; z < ndilutions; ++z ) {
+                if ( chi[z].size() == 0 ) {
+                    chi[z] = std::vector< double > (ngroups, 0. );
                 } // endif
-
-                for ( unsigned int z = 0; z < ndilutions; ++z ) {
-                    if ( probability[l][z].size() == 0 ) {
-                        probability[l][z] = std::vector< double > (ngroups, 0. );
-                    } // endif
-                    for ( unsigned int g = 0; g < ngroups; ++g ) {
-                        probability[l][z][g] = record.list()[ g * ndilutions + z];
-                    } 
-                }
+                for ( size_t g = 0; g < ngroups; ++g ) {
+                    chi[z][g] = record.list()[ g * ndilutions + z];
+                } 
             }
         } // endif 
 
+        // entering compressed format 
+        if ( record.IG2LO() == 0 ) {
+            // nl is 1 for MT 18
+            flux[0].resize( ndilutions );
+            matrix[0].resize( ndilutions );
+            for ( size_t z = 0; z < ndilutions; ++z ) {
+                auto g_i = record.IG();
+                flux[0][z][g_i] = record.list()[ z ];
+                for ( size_t g_o = 0; g_o < ngroups; ++g_o ) {
+                    matrix[0][z][g_i][g_o] = record.list()[ ndilutions + z ] * chi[z][g_o]; 
+                } // outgoing erg
+            } // dilutions
+        }
+        // standard, uncompressed MF6 matrix
         else {
             auto g_i = record.IG() - 1; // g_i = incident_erg
-            // std::cout << "\ngroup :" << g_i << std::endl;
             int block = 1;
-            for ( unsigned int g_o = record.IG2LO() - 1; g_o <= g_i; ++g_o ) { // g_o = outgoing_erg
-                for ( unsigned int l = 0; l < nmoments; ++l ) {
+            for ( size_t g_o = record.IG2LO() - 1; g_o <= g_i; ++g_o ) { // g_o = outgoing_erg
+                for ( size_t l = 0; l < nmoments; ++l ) {
                     if ( flux[l].size() == 0 ) {
                         flux[l].resize( ndilutions );
                         matrix[l].resize( ndilutions );
                     } // endif
-                    for ( unsigned int z = 0; z < ndilutions; ++z ) {
+                    for ( size_t z = 0; z < ndilutions; ++z ) {
                         if ( flux[l][z].size() == 0 ) {
                             flux[l][z] = std::vector< double > (ngroups, 0. );
                             matrix[l][z] = std::vector< std::vector< double > >
@@ -53,12 +61,7 @@ makeMatrices(const std::vector< DataRecord > records,
                         if ( g_i == g_o ) {
                             flux[l][z][g_i] = record.list()[ z * nmoments + l];
                         }
-                        matrix[l][z][g_i][g_o] = record.list()[block  * ndilutions * nmoments + z * nmoments + l];
-                        // std::cout << "( l, z, g_i, g_o ) :" << "( " << l << ", " << z << ", " << g_i << ", " << g_o << " )" << std::endl;
-                        // std::cout << "Index: " << block * ndilutions * nmoments + z * nmoments + l << std::endl;
-                        // std::cout << "Entry: " << block << std::endl;
-                        // std::cout << record.list()[block * ndilutions * nmoments + z * nmoments + l ] << std::endl;
-                        // } // endif
+                        matrix[l][z][g_i][g_o] += record.list()[block  * ndilutions * nmoments + z * nmoments + l];
                     } // dilutions
                 } // moments
                 block += 1;
@@ -66,5 +69,5 @@ makeMatrices(const std::vector< DataRecord > records,
         } // endif
     } // records
 
-    return std::make_tuple(temp, groups, flux, matrix, probability);
+    return std::make_tuple(temp, groups, flux, matrix, chi);
 }

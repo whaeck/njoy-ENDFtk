@@ -1,6 +1,12 @@
 #ifndef NJOY_ENDFTK_GSECTION_6
 #define NJOY_ENDFTK_GSECTION_6
 
+// system includes
+#include <numeric>
+#include <algorithm>
+#include <iostream>
+
+// other includes
 #include "ENDFtk/macros.hpp"
 #include "tools/std20/views.hpp"
 #include "ENDFtk/HeadRecord.hpp"
@@ -8,9 +14,6 @@
 #include "ENDFtk/ControlRecord.hpp"
 #include "tools/Log.hpp"
 #include "ENDFtk/section.hpp"
-#include <numeric>
-#include <algorithm>
-#include <iostream>
 
 namespace njoy {
 namespace ENDFtk {
@@ -27,7 +30,7 @@ namespace section {
         std::vector< unsigned int > groups_;
         std::vector< std::vector< std::vector< double > > > flux_;
         std::vector< std::vector< std::vector< std::vector< double > > > > matrix_;
-        std::vector< std::vector< std::vector< double > > > probability_;
+        std::vector< std::vector< double > > chi_;
 
         /* auxiliary functions */
         #include "ENDFtk/gsection/6/src/makeMatrices.hpp"
@@ -103,8 +106,8 @@ namespace section {
          *  @param[in] moment   the legendre moment requested
          *  @param[in] diltuion the dilution index requested
          */
-        decltype(auto) matrix(int moment, int dilution) const {
-            return this->matrix_[moment][dilution];
+        decltype(auto) matrix( int moment, int dilution ) const {
+            return this->matrix_[ moment ][ dilution ];
         }
 
         /**
@@ -113,21 +116,20 @@ namespace section {
          *  @param[in] moment   the legendre moment requested
          *  @param[in] dilution the dilution index requested
          */
-        decltype(auto) flux(int moment, int dilution) const {
-            return this->flux_[moment][dilution];
+        decltype(auto) flux( int moment, int dilution ) const {
+            return this->flux_[ moment ][ dilution ];
         }
 
         /**
-         *  @brief Return the probabilities
+         *  @brief Return the fission spectrum
          *
-         *  @param[in] moment   the legendre moment requested
          *  @param[in] dilution the dilution index requested
          */
-        decltype(auto) probability(int moment, int dilution) const {
-            if ( this->probability_.size() != 0 ) {
-                return this->probability_[moment][dilution];
+        decltype(auto) chi( int dilution ) const {
+            if ( this->chi_.size() != 0 ) {
+                return this->chi_[ dilution ];
             } else {
-                throw std::runtime_error("Requested probabilities when they are not present!");
+                throw std::runtime_error("Requested chi when they are not present!");
             }
         }
         #include "ENDFtk/gsection/6/src/print.hpp"
