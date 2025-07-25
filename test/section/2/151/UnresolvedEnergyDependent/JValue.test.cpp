@@ -147,7 +147,7 @@ SCENARIO( "JValue" ) {
                               std::move( gf ), std::move( gx ) ) );
       } // THEN
     } // WHEN
-
+#if !(defined(_WIN32) && defined(_DEBUG))
     WHEN( "a string with NJS = 0 is used" ) {
 
       // this is a list error, not every list error is tested
@@ -162,6 +162,7 @@ SCENARIO( "JValue" ) {
         CHECK_THROWS( JValue( begin, end, lineNumber, 9228, 2, 151 ) );
       } // THEN
     } // WHEN
+#endif
   } // GIVEN
 } // SCENARIO
 

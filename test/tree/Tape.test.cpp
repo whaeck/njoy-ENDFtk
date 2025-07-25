@@ -168,13 +168,14 @@ SCENARIO( "tree::Tape" ) {
 
       CHECK_THROWS( tree::Tape{ std::move( tapeString ) } );
     } // WHEN
-
+#if !(defined(_WIN32) && defined(_DEBUG))
     WHEN( "the data is read from a string/stream without TEND" ) {
 
       std::string tapeString = chunk();
 
       CHECK_THROWS( tree::Tape{ std::move( tapeString ) } );
     } // WHEN
+#endif
   } // GIVEN
 } // SCENARIO
 

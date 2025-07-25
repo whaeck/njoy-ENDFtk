@@ -96,7 +96,9 @@ SCENARIO( "ControlRecord" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( ControlRecord( begin, end, lineNumber, 5, 1, 451 ) ); // MAT
+        begin = string.begin();
         CHECK_THROWS( ControlRecord( begin, end, lineNumber, 125, 2, 451 ) ); // MF
+        begin = string.begin();
         CHECK_THROWS( ControlRecord( begin, end, lineNumber, 125, 1, 452 ) ); // MT
       } // THEN
     } // WHEN

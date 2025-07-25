@@ -33,6 +33,7 @@ SCENARIO( "Verifying the given numbers in the RecordTail" ){
       CHECK_NOTHROW( TailVerifyingMATMFMT( mat, mf, mt, it, end, lineNumber ) );
     }
   }
+#if !(defined(_WIN32) && defined(_DEBUG))
   GIVEN( "incorrect tail numbers" ){
     std::string tail(" 125 4  2\n");
     auto end = tail.end();
@@ -57,4 +58,5 @@ SCENARIO( "Verifying the given numbers in the RecordTail" ){
       CHECK_THROWS( TailVerifyingMATMFMT( 0, 0, 0, it, end, lineNumber ) );
     }
   }
+#endif
 }

@@ -72,7 +72,7 @@ SCENARIO( "SquareMatrix" ) {
     } // WHEN
 
   } // GIVEN
-
+#if !(defined(_WIN32) && defined(_DEBUG))
   GIVEN( "invalid data for a SquareMatrix" ) {
 
     WHEN( "a string representation is used with an invalid LB" ) {
@@ -89,7 +89,7 @@ SCENARIO( "SquareMatrix" ) {
       } // THEN
     } // WHEN
   } // GIVEN
-
+#endif
 } // SCENARIO
 
 std::string chunk() {

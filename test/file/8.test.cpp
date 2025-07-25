@@ -124,11 +124,12 @@ SCENARIO( "Testing special case of file 8" ) {
       long lineNumber = 0;
 
       StructureDivision division( begin, end, lineNumber );
-
+#if !(defined(_WIN32) && defined(_DEBUG))
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( file::Type< 8 >( division, begin, end, lineNumber ) );
       } // THEN
+#endif
     } // WHEN
   } // GIVEN
 

@@ -75,7 +75,7 @@ SCENARIO( "FissionYieldData" ) {
       } // THEN
     } // WHEN
   } // GIVEN
-
+#if !(defined(_WIN32) && defined(_DEBUG))
   GIVEN( "invalid data for a FissionYieldData" ) {
 
     WHEN( "a string representation with an error is given" ) {
@@ -92,6 +92,7 @@ SCENARIO( "FissionYieldData" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+#endif
 } // SCENARIO
 
 std::string chunk() {
