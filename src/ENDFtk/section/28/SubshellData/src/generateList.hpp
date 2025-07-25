@@ -1,5 +1,12 @@
 static std::vector< double >
-generateList( double ebi, unsigned int eln,
+generateList( double ebi, double eln ) {
+
+  std::vector< double > list = { ebi, eln, 0., 0., 0., 0. };
+  return list;
+}
+
+static std::vector< double >
+generateList( double ebi, double eln,
               std::vector< unsigned int >&& secondary,
               std::vector< unsigned int >&& tertiary,
               std::vector< double >&& energies,
@@ -19,8 +26,7 @@ generateList( double ebi, unsigned int eln,
     throw std::exception();
   }
 
-  std::vector< double > list = { ebi, static_cast< double >( eln ), 0.,
-                                 0., 0., 0. };
+  std::vector< double > list = generateList( ebi, eln );
   for ( unsigned int i = 0; i < ntr; ++i ) {
 
     list.push_back( secondary[i] );
