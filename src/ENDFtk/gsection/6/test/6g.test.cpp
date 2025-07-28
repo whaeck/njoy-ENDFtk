@@ -486,17 +486,41 @@ SCENARIO( "section::GType< 6 >" ) {
 
     } // GIVEN
 
-    GIVEN( "valid data for a section::GType< 6 > with fission matrix" ) {
-        std::string sectionString = chunkFission() + validSEND();
+    // GIVEN( "valid data for a section::GType< 6 > with fission matrix" ) {
+    //     std::string sectionString = chunkFission() + validSEND();
 
-        WHEN( "the data is given explicitly" ) {
+    //     WHEN( "the data is given explicitly" ) {
 
-        } // WHEN
+    //     } // WHEN
 
-        WHEN( "the data is read from a string" ) {
+    //     WHEN( "the data is read from a string" ) {
 
-        } // WHEN
-    } // GIVEN
+    //         std::string line = chunkFission() + validSEND();
+    //         auto begin= line.begin();
+    //         auto end = line.end();
+    //         long lineNumber = 0;
+    //         auto head = HeadRecord( begin, end, lineNumber );
+
+    //         std::cout << "I have successfully parsed the string" << std::endl;
+    //         section::GType< 6 > chunk( head, begin, end, lineNumber, 9228 );
+    //         std::cout << "I have constructed the fission matrix" << std::endl;
+
+            // THEN( "a section::GType< 6 > can be constructed and its members can be tested" ) {
+
+
+
+            // }
+
+    //         THEN( "it can be printed" ) {
+    //             std::string buffer;
+    //             auto output = std::back_inserter( buffer );
+    //             chunk.print( output, 9228, 6 );
+
+    //             CHECK( buffer == sectionString );
+    //         }
+
+    //     } // WHEN
+    // } // GIVEN
 } // SCENARIO
 
 std::string chunk() {

@@ -28,10 +28,10 @@ void wrapGSection_6( python::module& module, python::module&  ) {
         python::init< int, int, double, int, int, double, std::vector< unsigned int >&&,
                       std::vector < std::vector< std::vector< double > > >&&,
                       std::vector < std::vector< std::vector< std::vector< double > > > >&&,
-                      std::vector< std::vector< double > >&& >(),
+                      int, std::vector< std::vector< double > >&& >(),
         python::arg( "mt" ), python::arg( "zaid" ), python::arg( "awr" ), python::arg( "lr" ) = 0,
-        python::arg( "ngn" ), python::arg( "temp" ),
-        python::arg( "groups" ), python::arg( "flux" ), python::arg( "matrix" ), python::arg( "chi" ),
+        python::arg( "ngn" ), python::arg( "temp" ), python::arg( "groups" ), python::arg( "flux" ),
+        python::arg( "matrix" ), python::arg( "cutoff_ig" ), python::arg( "chi" ),
         "Initialise the section\n\n"
         "Arguments:\n"
         "   self        the section\n"

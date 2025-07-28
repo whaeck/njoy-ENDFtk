@@ -8,42 +8,83 @@ makeMatrices(const std::vector< DataRecord > records,
     matrix( nmoments );
     std::vector< std::vector < double > > chi; 
     double temp;
+    int cutoff_ig;
+    bool is_fission = records.front().IG() == 0 ? true: false;
     if ( records.size() != 0 ) {
         temp = records.front().TEMP();
     }
     else {
         throw std::runtime_error("Vector of DataRecords is empty!");
     }
-    for ( const auto& record : records) {
-        // prompt fission ( MT18 )
-        if ( record.IG() == 0 ) {
-            std::cout << "I have encountered a record with chi" << std::endl;
-            chi.resize( ndilutions );
-            for ( size_t z = 0; z < ndilutions; ++z ) {
-                if ( chi[z].size() == 0 ) {
-                    chi[z] = std::vector< double > (ngroups, 0. );
-                } // endif
-                for ( size_t g = 0; g < ngroups; ++g ) {
-                    chi[z][g] = record.list()[ g * ndilutions + z];
-                } 
-            }
-        } // endif 
+    if ( is_fission ) {
+        for ( const auto& record : records) {
+            std::cout << record.IG() << std::endl;
+            // prompt fission ( MT18 )
+            if ( record.IG() == 0 ) {
+                chi.resize( ndilutions );
+                for ( size_t z = 0; z < ndilutions; ++z ) {
+                    if ( chi[z].size() == 0 ) {
+                        chi[z] = std::vector< double > (ngroups, 0. );
+                    } // endif
+                    for ( size_t g = 0; g < ngroups; ++g ) {
+                        chi[z][g] = record.list()[ g * ndilutions + z];
+                    } 
+                }
+                continue;
+            } // chi
 
-        // entering compressed format 
-        if ( record.IG2LO() == 0 ) {
-            // nl is 1 for MT 18
-            flux[0].resize( ndilutions );
-            matrix[0].resize( ndilutions );
-            for ( size_t z = 0; z < ndilutions; ++z ) {
+            // entering compressed format 
+            if ( record.IG2LO() == 0 ) {
+                // nl is 1 for MT 18
+                flux[0].resize( ndilutions );
+                matrix[0].resize( ndilutions );
                 auto g_i = record.IG();
-                flux[0][z][g_i] = record.list()[ z ];
-                for ( size_t g_o = 0; g_o < ngroups; ++g_o ) {
-                    matrix[0][z][g_i][g_o] = record.list()[ ndilutions + z ] * chi[z][g_o]; 
+                cutoff_ig = g_i;
+                for ( size_t z = 0; z < ndilutions; ++z ) {
+                    if ( flux[0][z].size() == 0) {
+                        flux[0][z] = std::vector< double >( ngroups, 0. );
+                        matrix[0][z] = std::vector< std::vector< double > >
+                                (ngroups, std::vector< double >(ngroups, 0.));
+                    }
+                    flux[0][z][g_i] = record.list()[ z ];
+                    for ( size_t g_o = 0; g_o < ngroups; ++g_o ) {
+                        matrix[0][z][g_i][g_o] = record.list()[ ndilutions + z ] * chi[z][g_o];
+                    } // outgoing erg
+                } // dilutions
+                continue;
+            } // compressed format
+
+            // uncompressed format of fission matrix
+            else {
+                auto g_i = record.IG() - 1; // g_i = incident_erg
+                int block = 1;
+                for ( size_t g_o = 0; g_o <= ngroups; ++g_o ) { // g_o = outgoing_erg
+                    for ( size_t l = 0; l < nmoments; ++l ) {
+                        if ( flux[l].size() == 0 ) {
+                            flux[l].resize( ndilutions );
+                            matrix[l].resize( ndilutions );
+                        } // endif
+                        for ( size_t z = 0; z < ndilutions; ++z ) {
+                            if ( flux[l][z].size() == 0 ) {
+                                flux[l][z] = std::vector< double > (ngroups, 0. );
+                                matrix[l][z] = std::vector< std::vector< double > >
+                                (ngroups, std::vector< double >(ngroups, 0.));
+                            } // endif
+                            if ( g_i == g_o ) {
+                                flux[l][z][g_i] = record.list()[ z * nmoments + l];
+                            }
+                            matrix[l][z][g_i][g_o] = record.list()[block  * ndilutions * nmoments + z * nmoments + l];
+                        } // dilutions
+                    } // moments
+                    block += 1;
                 } // outgoing erg
-            } // dilutions
-        }
-        // standard, uncompressed MF6 matrix
-        else {
+            } // uncompressed format
+        } // records
+    } // is_fission
+
+    // standard MF6 matrix
+    else {
+        for ( const auto& record : records) { 
             auto g_i = record.IG() - 1; // g_i = incident_erg
             int block = 1;
             for ( size_t g_o = record.IG2LO() - 1; g_o <= g_i; ++g_o ) { // g_o = outgoing_erg
@@ -61,13 +102,13 @@ makeMatrices(const std::vector< DataRecord > records,
                         if ( g_i == g_o ) {
                             flux[l][z][g_i] = record.list()[ z * nmoments + l];
                         }
-                        matrix[l][z][g_i][g_o] += record.list()[block  * ndilutions * nmoments + z * nmoments + l];
+                        matrix[l][z][g_i][g_o] = record.list()[block  * ndilutions * nmoments + z * nmoments + l];
                     } // dilutions
                 } // moments
                 block += 1;
             } // outgoing erg
-        } // endif
-    } // records
+        } // records
+    } // standard matrix
 
-    return std::make_tuple(temp, groups, flux, matrix, chi);
+    return std::make_tuple(temp, groups, flux, matrix, cutoff_ig, chi);
 }

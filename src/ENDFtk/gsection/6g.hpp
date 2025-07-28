@@ -27,6 +27,7 @@ namespace section {
         int lr_;
         int ngn_;
         double temp_;
+        int cutoff_ig_;
         std::vector< unsigned int > groups_;
         std::vector< std::vector< std::vector< double > > > flux_;
         std::vector< std::vector< std::vector< std::vector< double > > > > matrix_;
