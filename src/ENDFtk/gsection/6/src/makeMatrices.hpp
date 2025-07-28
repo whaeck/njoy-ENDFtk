@@ -18,7 +18,6 @@ makeMatrices(const std::vector< DataRecord > records,
     }
     if ( is_fission ) {
         for ( const auto& record : records) {
-            std::cout << record.IG() << std::endl;
             // prompt fission ( MT18 )
             if ( record.IG() == 0 ) {
                 chi.resize( ndilutions );
@@ -38,8 +37,8 @@ makeMatrices(const std::vector< DataRecord > records,
                 // nl is 1 for MT 18
                 flux[0].resize( ndilutions );
                 matrix[0].resize( ndilutions );
-                auto g_i = record.IG();
-                cutoff_ig = g_i;
+                auto g_i = record.IG() - 1;
+                cutoff_ig = record.IG();
                 for ( size_t z = 0; z < ndilutions; ++z ) {
                     if ( flux[0][z].size() == 0) {
                         flux[0][z] = std::vector< double >( ngroups, 0. );
@@ -57,26 +56,16 @@ makeMatrices(const std::vector< DataRecord > records,
             // uncompressed format of fission matrix
             else {
                 auto g_i = record.IG() - 1; // g_i = incident_erg
-                int block = 1;
-                for ( size_t g_o = 0; g_o <= ngroups; ++g_o ) { // g_o = outgoing_erg
-                    for ( size_t l = 0; l < nmoments; ++l ) {
-                        if ( flux[l].size() == 0 ) {
-                            flux[l].resize( ndilutions );
-                            matrix[l].resize( ndilutions );
-                        } // endif
-                        for ( size_t z = 0; z < ndilutions; ++z ) {
-                            if ( flux[l][z].size() == 0 ) {
-                                flux[l][z] = std::vector< double > (ngroups, 0. );
-                                matrix[l][z] = std::vector< std::vector< double > >
-                                (ngroups, std::vector< double >(ngroups, 0.));
-                            } // endif
-                            if ( g_i == g_o ) {
-                                flux[l][z][g_i] = record.list()[ z * nmoments + l];
-                            }
-                            matrix[l][z][g_i][g_o] = record.list()[block  * ndilutions * nmoments + z * nmoments + l];
-                        } // dilutions
-                    } // moments
-                    block += 1;
+                int group_block = 1;
+                for ( size_t g_o = 0; g_o < ngroups; ++g_o ) { // g_o = outgoing_erg
+                    for ( size_t z = 0; z < ndilutions; ++z ) {
+                        if ( g_i == g_o ) {
+                            flux[0][z][g_i] = record.list()[ z * nmoments];
+                        }
+                        
+                        matrix[0][z][g_i][g_o] = record.list()[group_block  * ndilutions * nmoments + z * nmoments ];
+                    } // dilutions
+                    group_block += 1;
                 } // outgoing erg
             } // uncompressed format
         } // records
@@ -86,7 +75,7 @@ makeMatrices(const std::vector< DataRecord > records,
     else {
         for ( const auto& record : records) { 
             auto g_i = record.IG() - 1; // g_i = incident_erg
-            int block = 1;
+            int group_block = 1;
             for ( size_t g_o = record.IG2LO() - 1; g_o <= g_i; ++g_o ) { // g_o = outgoing_erg
                 for ( size_t l = 0; l < nmoments; ++l ) {
                     if ( flux[l].size() == 0 ) {
@@ -102,13 +91,14 @@ makeMatrices(const std::vector< DataRecord > records,
                         if ( g_i == g_o ) {
                             flux[l][z][g_i] = record.list()[ z * nmoments + l];
                         }
-                        matrix[l][z][g_i][g_o] = record.list()[block  * ndilutions * nmoments + z * nmoments + l];
+                        matrix[l][z][g_i][g_o] = record.list()[group_block  * ndilutions * nmoments + z * nmoments + l];
                     } // dilutions
                 } // moments
-                block += 1;
+                group_block += 1;
             } // outgoing erg
         } // records
     } // standard matrix
+
 
     return std::make_tuple(temp, groups, flux, matrix, cutoff_ig, chi);
 }

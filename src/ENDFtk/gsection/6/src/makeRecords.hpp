@@ -8,7 +8,6 @@ makeRecords( double temp,
     size_t nmoments = flux.size();
     size_t ndilutions = 0;
     size_t ngroups = 0;
-
     if ( nmoments > 0 ) {
         ndilutions = flux.front().size();
         if ( flux.front().size() > 0 ) {
@@ -24,9 +23,8 @@ makeRecords( double temp,
         // write the chi record
         std::vector< double > list;
         list.reserve( ndilutions * ngroups );
-        for ( size_t z = 0; z < ndilutions; ++z ) {
-            for ( size_t g_o = 0; g_o < ngroups; ++ g_o ) {
-                std::cout << chi[z][g_o] << std::endl;
+        for ( size_t g_o = 0; g_o < ngroups; ++ g_o ) {
+            for ( size_t z = 0; z < ndilutions; ++z ) {
                 list.push_back( chi[z][g_o] );
             }
         }
@@ -37,8 +35,8 @@ makeRecords( double temp,
             std::vector< double > list(  ndilutions );
             std::vector< double > xs ( ndilutions );
             for ( size_t z = 0; z < ndilutions; ++z ) {
-                list.push_back( flux[0][z][g_i] );
-                xs.push_back( matrix[0][z][g_i][g_i] / chi[z][g_i] );
+                list[z] = ( flux[0][z][g_i] );
+                xs[z] = ( matrix[0][z][g_i][g_i] / chi[z][g_i] );
             }
             list.insert( list.end(), xs.begin(), xs.end() );
             if ( list.size() != 0 ) {
@@ -64,11 +62,16 @@ makeRecords( double temp,
                         if ( flux[l][z][g_i] != 0.0 && g_o == g_i ) {
                             list.emplace_back( flux[l][z][g_i] );
                         } // endif
-                        xs.emplace_back( matrix[l][z][g_i][g_o] );
+                        if ( matrix[l][z][g_i][g_o] != 0.0 ) {
+                            xs.emplace_back( matrix[l][z][g_i][g_o] );
+                            if ( z == 0 ) {
+                                ng2 += 1;
+                            }
+                        }
+
                     } // moments 
                 } // dilutions
             } // outgoing erg
-            ng2 += ( (g_i + 1) - ig2lo );
             ig2lo += 1; // need to correct from array index to GENDF index value.
             list.insert( list.end(), xs.begin(), xs.end() );
             if (list.size() != 0 ) {

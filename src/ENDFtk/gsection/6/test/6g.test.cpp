@@ -16,7 +16,6 @@ using namespace njoy::ENDFtk;
 std::string chunk();
 std::string chunkFission();
 std::string validSEND();
-// Note: MF6 MT18, the prob here are definitely chi
 
 void verifyChunk( const section::GType< 6 >& );
 void verifyChunkFission( const section::GType< 6 >& );
@@ -486,24 +485,24 @@ SCENARIO( "section::GType< 6 >" ) {
 
     } // GIVEN
 
-    // GIVEN( "valid data for a section::GType< 6 > with fission matrix" ) {
-    //     std::string sectionString = chunkFission() + validSEND();
+    GIVEN( "valid data for a section::GType< 6 > with fission matrix" ) {
+        std::string sectionString = chunkFission() + validSEND();
 
-    //     WHEN( "the data is given explicitly" ) {
+        WHEN( "the data is given explicitly" ) {
 
-    //     } // WHEN
+        } // WHEN
 
-    //     WHEN( "the data is read from a string" ) {
+        WHEN( "the data is read from a string" ) {
 
-    //         std::string line = chunkFission() + validSEND();
-    //         auto begin= line.begin();
-    //         auto end = line.end();
-    //         long lineNumber = 0;
-    //         auto head = HeadRecord( begin, end, lineNumber );
+            std::string line = chunkFission() + validSEND();
+            auto begin= line.begin();
+            auto end = line.end();
+            long lineNumber = 0;
+            auto head = HeadRecord( begin, end, lineNumber );
 
-    //         std::cout << "I have successfully parsed the string" << std::endl;
-    //         section::GType< 6 > chunk( head, begin, end, lineNumber, 9228 );
-    //         std::cout << "I have constructed the fission matrix" << std::endl;
+            std::cout << "I have successfully parsed the string" << std::endl;
+            section::GType< 6 > chunk( head, begin, end, lineNumber, 9228 );
+            std::cout << "I have constructed the fission matrix" << std::endl;
 
             // THEN( "a section::GType< 6 > can be constructed and its members can be tested" ) {
 
@@ -511,16 +510,16 @@ SCENARIO( "section::GType< 6 >" ) {
 
             // }
 
-    //         THEN( "it can be printed" ) {
-    //             std::string buffer;
-    //             auto output = std::back_inserter( buffer );
-    //             chunk.print( output, 9228, 6 );
+            THEN( "it can be printed" ) {
+                std::string buffer;
+                auto output = std::back_inserter( buffer );
+                chunk.print( output, 9228, 6 );
 
-    //             CHECK( buffer == sectionString );
-    //         }
+                CHECK( buffer == sectionString );
+            }
 
-    //     } // WHEN
-    // } // GIVEN
+        } // WHEN
+    } // GIVEN
 } // SCENARIO
 
 std::string chunk() {
@@ -960,6 +959,7 @@ void verifyChunk(const section::GType< 6 >& chunk) {
     std::vector< double > sig_0_0_30 = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.329641e-2, 2.936360 };
     std::vector< std::vector< double > > sig_0_0;
+    sig_0_0.reserve(30);
     sig_0_0.push_back(sig_0_0_1);
     sig_0_0.push_back(sig_0_0_2);
     sig_0_0.push_back(sig_0_0_3);
@@ -1054,6 +1054,7 @@ void verifyChunk(const section::GType< 6 >& chunk) {
     std::vector< double > sig_1_0_30 = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.633151e-2, 2.720475 };
     std::vector< std::vector< double > > sig_1_0;
+    sig_1_0.reserve(30);
     sig_1_0.push_back(sig_1_0_1);
     sig_1_0.push_back(sig_1_0_2);
     sig_1_0.push_back(sig_1_0_3);
@@ -1148,6 +1149,7 @@ void verifyChunk(const section::GType< 6 >& chunk) {
     std::vector< double > sig_0_1_30 = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.329669e-2, 2.936359 };
     std::vector< std::vector< double > > sig_0_1;
+    sig_0_1.reserve(30);
     sig_0_1.push_back(sig_0_1_1);
     sig_0_1.push_back(sig_0_1_2);
     sig_0_1.push_back(sig_0_1_3);
@@ -1242,6 +1244,7 @@ void verifyChunk(const section::GType< 6 >& chunk) {
     std::vector< double > sig_1_1_30 = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.633180e-2, 2.720474 };
     std::vector< std::vector< double > > sig_1_1;
+    sig_1_1.reserve(30);
     sig_1_1.push_back(sig_1_1_1);
     sig_1_1.push_back(sig_1_1_2);
     sig_1_1.push_back(sig_1_1_3);
@@ -1336,6 +1339,7 @@ void verifyChunk(const section::GType< 6 >& chunk) {
     std::vector< double > sig_0_2_30 = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.332314e-2, 2.936304 };
     std::vector< std::vector< double > > sig_0_2;
+    sig_0_2.reserve(30);
     sig_0_2.push_back(sig_0_2_1);
     sig_0_2.push_back(sig_0_2_2);
     sig_0_2.push_back(sig_0_2_3);
@@ -1430,6 +1434,7 @@ void verifyChunk(const section::GType< 6 >& chunk) {
     std::vector< double > sig_1_2_30 = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.635906e-2, 2.720377 };
     std::vector< std::vector< double > > sig_1_2;
+    sig_1_2.reserve(30);
     sig_1_2.push_back(sig_1_2_1);
     sig_1_2.push_back(sig_1_2_2);
     sig_1_2.push_back(sig_1_2_3);
@@ -1480,6 +1485,8 @@ void verifyChunk(const section::GType< 6 >& chunk) {
         }
     }
 
+}
 
+void verifyChunkFission( const section::GType< 6 >& chunk ) {
 
 }
