@@ -145,6 +145,13 @@ void wrapGSection_6( python::module& module, python::module&  ) {
         &GSection::matrix,
         python::arg( "moment" ), python::arg( "dilution" ),
         "The matrix for a given moment and dilution index"
+    )
+    .def(
+
+        "chi",
+        &GSection::chi,
+        python::arg( "dilution" ),
+        "The prompt fission spectrum for a given dilution"
     );
 
     addStandardGSectionDefinitions< GSection >( gsection );

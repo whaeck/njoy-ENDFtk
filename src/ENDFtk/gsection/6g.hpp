@@ -122,7 +122,7 @@ namespace section {
         }
 
         /**
-         *  @brief Return the fission spectrum
+         *  @brief Return the prompt fission spectrum
          *
          *  @param[in] dilution the dilution index requested
          */
