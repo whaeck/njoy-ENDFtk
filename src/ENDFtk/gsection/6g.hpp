@@ -4,7 +4,6 @@
 // system includes
 #include <numeric>
 #include <algorithm>
-#include <iostream>
 
 // other includes
 #include "ENDFtk/macros.hpp"
