@@ -1,6 +1,11 @@
 #ifndef NJOY_ENDFTK_GSECTION_6
 #define NJOY_ENDFTK_GSECTION_6
 
+// system includes
+#include <numeric>
+#include <algorithm>
+
+// other includes
 #include "ENDFtk/macros.hpp"
 #include "tools/std20/views.hpp"
 #include "ENDFtk/HeadRecord.hpp"
@@ -8,9 +13,6 @@
 #include "ENDFtk/ControlRecord.hpp"
 #include "tools/Log.hpp"
 #include "ENDFtk/section.hpp"
-#include <numeric>
-#include <algorithm>
-#include <iostream>
 
 namespace njoy {
 namespace ENDFtk {
