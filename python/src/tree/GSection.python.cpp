@@ -94,6 +94,18 @@ void wrapTreeGSection( python::module& module, python::module& ) {
           }
         }
         case 3 : return self.parse< 3 >();
+        case 5 : {
+
+          switch ( mt ) {
+
+            case  18 : return self.parse< 5, 18 >();
+            case 455 : return self.parse< 5, 455 >();
+            default: throw std::runtime_error(
+                           "Section " + std::to_string( mt ) + " from file " +
+                           std::to_string( mf ) +
+                           " is not an official GENDF section" );
+          }
+        }
         case 6 : return self.parse< 6 >();
         default: throw std::runtime_error(
                        "GENDF section from file " +  std::to_string( mf ) +

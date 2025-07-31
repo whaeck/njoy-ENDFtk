@@ -89,7 +89,9 @@ using FileVariant = std::variant< MF1, MF2, MF3, MF4, MF5, MF6,
 
 using GMF1MT451 = njoy::ENDFtk::section::GType< 1, 451 >;
 using GMF3MTxxx = njoy::ENDFtk::section::GType< 3 >;
+using GMF5MT18 = njoy::ENDFtk::section::GType< 5, 18 >;
+using GMF5MT455 = njoy::ENDFtk::section::GType< 5, 455 >;
 using GMF6MTxxx = njoy::ENDFtk::section::GType< 6 >;
-using GSectionVariant = std::variant< GMF1MT451, GMF3MTxxx, GMF6MTxxx >;
+using GSectionVariant = std::variant< GMF1MT451, GMF3MTxxx, GMF5MT18, GMF5MT455, GMF6MTxxx >;
 
 #endif
