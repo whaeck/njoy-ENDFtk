@@ -568,7 +568,7 @@ class File:
         """
 class GSection:
     """
-    MF6 gsection - matrices
+    MF6 gsection - scattering matrices and fission matrices
     """
     @staticmethod
     def from_string(gsection: str) -> GSection:
