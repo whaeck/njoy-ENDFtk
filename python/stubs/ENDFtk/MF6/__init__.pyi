@@ -582,6 +582,23 @@ class GSection:
             section    the string representing the section
         """
     @typing.overload
+    def __init__(self, mt: int, zaid: int, awr: float, lr: int = 0, ngn: int, temp: float, groups: list[int], flux: list[list[list[float]]], matrix: list[list[list[list[float]]]], cutoff_ig: int, chi: list[list[float]]) -> None:
+        """
+        Initialise the section
+        
+        Arguments:
+           self        the section
+           mt          the MT number
+           zaid        the ZA identifier
+           awr         the atomic mass ratio
+           lr          the complex breakup flag (default 0)
+           ngn         the number of neutron groups
+           temp        the temperature
+           groups      array of the group indices
+           flux        3D array of the group-wise fluxes (nl, nz, ngn)
+           matrix      4D array of cross-sections ( nl, nz, ngn, ngn )
+        """
+    @typing.overload
     def __init__(self, mt: int, zaid: int, awr: float, lr: int = 0, ngn: int, temp: float, groups: list[int], flux: list[list[list[float]]], matrix: list[list[list[list[float]]]]) -> None:
         """
         Initialise the section
@@ -606,6 +623,10 @@ class GSection:
         Arguments:
             self       the gsection
             section    the gsection to be copied
+        """
+    def chi(self, dilution: int) -> list[float]:
+        """
+        The prompt fission spectrum for a given dilution
         """
     def flux(self, moment: int, dilution: int) -> list[float]:
         """
