@@ -17,7 +17,7 @@ generateList( double ebi, double eln,
        ( probabilities.size() != ntr ) ) {
 
     Log::info( "The number of transitions and the transition data are not "
-               "are not consistent" );
+               "consistent" );
     Log::info( "NTR value: {}", ntr );
     Log::info( "secondary.size(): {}", secondary.size() );
     Log::info( "tertiary.size(): {}", tertiary.size() );
