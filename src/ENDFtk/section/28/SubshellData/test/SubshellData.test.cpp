@@ -13,10 +13,64 @@ using namespace njoy::ENDFtk;
 using SubshellData = section::Type< 28 >::SubshellData;
 
 std::string chunk();
+std::string chunkWithoutTransitions();
 void verifyChunk( const SubshellData& );
+void verifyChunkWithoutTransitions( const SubshellData& );
 std::string invalidChunk();
 
 SCENARIO( "SubshellData" ) {
+
+  GIVEN( "valid data for a SubshellData without transitions" ) {
+
+    std::string string = chunkWithoutTransitions();
+
+    WHEN( "the data is given explicitly" ) {
+
+      unsigned int subshell = 1;
+      double energy = 11561;
+      double eln = 1.33;
+
+      SubshellData chunk( subshell, energy, eln );
+
+      THEN( "an SubshellData can be constructed and members can be "
+            "tested" ) {
+
+        verifyChunkWithoutTransitions( chunk );
+      } // THEN
+
+      THEN( "it can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        chunk.print( output, 100, 28, 533 );
+
+        CHECK( buffer == string );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the data is read from a string/stream" ) {
+
+      auto begin = string.begin();
+      auto end = string.end();
+      long lineNumber = 1;
+
+      SubshellData chunk( begin, end, lineNumber, 100, 28, 533 );
+
+      THEN( "a SubshellData can be constructed and members can be tested" ) {
+
+        verifyChunkWithoutTransitions( chunk );
+      } // THEN
+
+      THEN( "it can be printed" ) {
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        chunk.print( output, 100, 28, 533 );
+
+        CHECK( buffer == string );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 
   GIVEN( "valid data for a SubshellData" ) {
 
@@ -26,7 +80,7 @@ SCENARIO( "SubshellData" ) {
 
       unsigned int subshell = 1;
       double energy = 11561;
-      unsigned int eln = 2;
+      double eln = 2;
       std::vector< unsigned int > secondary = { 3, 4 };
       std::vector< unsigned int > tertiary = { 2, 3 };
       std::vector< double > energies = { 9.5066e+4, 9.8928e+4 };
@@ -102,6 +156,12 @@ std::string chunk() {
     " 4.000000+0 3.000000+0 9.892800+4 2.500000-1 0.000000+0 0.000000+0 10028533     \n";
 }
 
+std::string chunkWithoutTransitions() {
+  return
+    " 1.000000+0 0.000000+0          0          0          6          0 10028533     \n"
+    " 1.156100+4 1.330000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 10028533     \n";
+}
+
 void verifyChunk( const SubshellData& chunk ) {
 
   CHECK( 1 == chunk.SUBI() );
@@ -155,6 +215,23 @@ void verifyChunk( const SubshellData& chunk ) {
   CHECK_THAT( .25, WithinRel( chunk.transitionProbabilities()[1] ) );
 
   CHECK( 4 == chunk.NC() );
+}
+
+void verifyChunkWithoutTransitions( const SubshellData& chunk ) {
+
+  CHECK( 1 == chunk.SUBI() );
+  CHECK( 1 == chunk.subshellDesignator() );
+  CHECK( 0 == chunk.NTR() );
+  CHECK( 0 == chunk.numberTransitions() );
+
+  CHECK_THAT( 1.156100e+4, WithinRel( chunk.EBI() ) );
+  CHECK_THAT( 1.156100e+4, WithinRel( chunk.subshellBindingEnergy() ) );
+  CHECK_THAT( 1.33, WithinRel( chunk.ELN() ) );
+  CHECK_THAT( 1.33, WithinRel( chunk.numberSubshellElectrons() ) );
+
+  CHECK( 0 == chunk.transitions().size() );
+
+  CHECK( 2 == chunk.NC() );
 }
 
 std::string invalidChunk() {
