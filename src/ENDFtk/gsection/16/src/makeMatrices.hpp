@@ -9,10 +9,6 @@ makeMatrices( const std::vector< DataRecord > records,
     matrix( nmoments );
 
     double temp;
-    std::cout << records.size() << std::endl;
-    for ( const auto& record: records) {
-        std::cout << record.IG() << std::endl;
-    }
     if ( records.size() != 0 ) {
         temp = records.front().TEMP();
         for ( const auto& record : records ) {
@@ -33,10 +29,15 @@ makeMatrices( const std::vector< DataRecord > records,
                         }
                         if ( g_o == record.IG2LO() - 1 ) {
                             flux[l][z][g_i] = record.list()[ z * nmoments + l ];
-                            std::cout << flux[l][z][g_i] << std::endl;
+                            std::cout << "idx: " << "( " << l << " " << z << " " << g_i << " " << g_o << " )" << std::endl; 
+                            std::cout << "flux: " << flux[l][z][g_i] << std::endl;
                         }
-                        matrix[l][z][g_i][g_o] = record.list()[ group_block * ndilutions * nmoments + z * nmoments + l ];
-                        std::cout << matrix[l][z][g_i][g_o] << std::endl;
+                        if ( g_o >= ( record.IG2LO() - 1 ) && g_o < ( record.IG2LO() + record.NG2() - 2 ) ) {
+                            std::cout << "idx: " << "( " << l << " " << z << " " << g_i << " " << g_o << " )" << std::endl; 
+                            matrix[l][z][g_i][g_o] = record.list()[ group_block * ndilutions * nmoments + z * nmoments + l ];
+                            std::cout << "yield val: " << matrix[l][z][g_i][g_o] << std::endl;
+                        }
+    
 
                     } // dilutions
                 } // moments

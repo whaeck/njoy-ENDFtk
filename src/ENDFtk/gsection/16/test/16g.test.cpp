@@ -22,7 +22,7 @@ void verifyChunkInelastic(const section::GType< 16>& );
 
 SCENARIO( "section::GType< 16 >" ) {
 
-    GIVEN( "valid data for a section::GType< 16 > for fission data" ) {
+    GIVEN( "valid data for a section::GType< 16 > for inelastic scattering data" ) {
 
         std::string sectionString = chunkInelastic() + validSEND();
 
@@ -30,7 +30,7 @@ SCENARIO( "section::GType< 16 >" ) {
 
             int zaid = 92235;
             double awr = 0.0;
-            int mt = 18;
+            int mt = 52;
             int lr = 0;
             int ngn = 20;
             double temp = 293.6;
@@ -38,23 +38,44 @@ SCENARIO( "section::GType< 16 >" ) {
             std::vector< unsigned int > groups(20);
             std::iota( groups.begin(), groups.end(), 1);
 
-            // std::vector< std::vector< std::vector< double > > > flux = {
+            std::vector< std::vector< std::vector< double > > > flux = {
+                {
+                    { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.696074e+6, 1.370348e+6, 3.611499e+5, 1.010491e+6, 7.295986e+5, 1.693616e+6, 5.107883e+5, 1.014623e+6,
+              8.255313e+5, 6.500049e+5, 3.338837e+4, 0.0, 0.0, 9.073605e+2  }
+                }
+            };
 
-            // };
+            std::vector< std::vector< std::vector< std::vector< double > > > > matrix = {
+                {
+                    {
+                        { 0.0, 0.0 }, 
+                        { 0.0, 0.0 }, 
+                        { 0.0, 0.0 }, 
+                        { 0.0, 0.0 },
+                        { 0.0, 0.0 },
+                        { 0.0, 0.0 },
+                        { 1.311037e-7, 0.0 },
+                        { 9.841964e-6, 0.0 },
+                        { 2.343987e-5, 0.0 },
+                        { 3.888503e-5, 0.0 },
+                        { 5.173100e-5, 0.0 },
+                        { 5.123670e-5, 0.0 },
+                        { 3.520423e-5, 0.0 },
+                        { 1.955523e-5, 0.0 },
+                        { 4.939553e-6, 0.0 },
+                        { 3.492097e-7, 0.0 },
+                        { 2.71668e-11, 0.0 },
+                        { 0.0, 0.0 },
+                        { 0.0, 0.0 },
+                        { 0.0, 0.0 }
 
-        } // WHEN
+                    }
+                }
+            };
 
-        WHEN( "the data is read from a buffer/string" ) {
+            section::GType< 16 > chunk( mt, zaid, awr, lr, ngn, temp, groups, flux, matrix );
 
-            std::string line = chunkInelastic() + validSEND();
-            auto begin = line.begin();
-            auto end = line.end();
-            long lineNumber = 0;
-            auto head = HeadRecord( begin, end, lineNumber );
-            
-            section::GType< 16 > chunk( head, begin, end, lineNumber, 9228 );
-
-            THEN( "a section::GType< 16 > can be constructed" ) {
+            THEN( "a section::GType< 16 > can be constructed and its members tested" ) {
 
                 verifyChunkInelastic( chunk );
 
@@ -70,16 +91,253 @@ SCENARIO( "section::GType< 16 >" ) {
             }
 
         } // WHEN
+
+        WHEN( "the data is read from a buffer/string" ) {
+
+            std::string line = chunkInelastic() + validSEND();
+            auto begin = line.begin();
+            auto end = line.end();
+            long lineNumber = 0;
+            auto head = HeadRecord( begin, end, lineNumber );
+            
+            section::GType< 16 > chunk( head, begin, end, lineNumber, 9228 );
+
+            THEN( "a section::GType< 16 > can be constructed and its members tested" ) {
+
+                verifyChunkInelastic( chunk );
+
+            } // THEN
+
+            THEN( "it can be printed" ) {
+                
+                std::string buffer;
+                auto output = std::back_inserter( buffer );
+                chunk.print( output, 9228, 16 );
+
+                CHECK( buffer == sectionString );
+            } // THEN
+
+        } // WHEN
     } // GIVEN
+
+    GIVEN( "valid data for a section::GType< 16 > for fission data" ) {
+        std::string sectionString = chunkFission() + validSEND();
+
+        WHEN( "the data is given explicitly " ) {
+            int zaid = 92235;
+            double awr = 0.0;
+            int mt = 18;
+            int lr = 0;
+            int ngn = 20;
+            double temp = 293.6;
+
+            std::vector< unsigned int > groups(20);
+            std::iota( groups.begin(), groups.end(), 1);
+
+            std::vector< std::vector< std::vector< double > > > flux = {
+                {
+                    { 1.611884e+4, 1.110213e+7, 2.451436e+6, 3.461286e+6, 3.753318e+6, 3.571209e+6, 1.696074e+6, 1.370348e+6, 3.611499e+5, 1.010491e+6,
+                      7.295986e+5, 1.693616e+6, 5.107883e+5, 1.014623e+6, 8.255313e+5, 6.500049e+5, 3.338837e+4, 1.067061e+5, 2.467532e+3, 9.073605e+2 }
+                }
+            };
+            std::vector< std::vector< std::vector< std::vector< double > > > > matrix = {
+                {
+                    {
+                        { 1.460238e+3, 1.289345e+4, 8.446402e+3, 6.376999e+3, 2.030839e+3, 6.685875e+2, 2.080737e+2, 6.171073e+1, 1.760082e+1, 4.767598, 1.270951, 5.256335e-1 },
+                        { 2.174016e+2, 1.919589e+3, 1.257508e+3, 9.494134e+2, 3.023532e+2, 9.953992e+1, 3.097821e+1, 9.187550, 2.620427, 7.098044e-1, 1.892203e-1, 7.825679e-2 },
+                        { 8.789085e+1, 7.760492e+2, 5.083839e+2, 3.838277e+2, 1.222350e+2, 4.024188e+1, 1.252383e+1, 3.714332, 1.059383, 2.869589e-1, 7.649776e-2, 3.163756e-2 },
+                        { 1.894271e+1, 1.672583e+2, 1.095696e+2, 8.272460e+1, 2.634474e+1, 8.673145, 2.699203, 8.005326e-1, 2.283239e-1, 6.184691e-2, 1.648720e-2, 6.818696e-3 },
+                        { 1.648537e+1, 1.455608e+2, 9.535576e+1, 7.199320e+1, 2.292718e+1, 7.548026, 2.349051, 6.966840e-1, 1.987047e-1, 5.382386e-2, 1.434841e-2, 5.934145e-3 },
+                        { 4.401633, 3.886507e+1, 2.546021e+1, 1.922235e+1, 6.121612, 2.015341, 6.272020e-1, 1.860163e-1, 5.305462e-2, 1.437109e-2, 3.831059e-3, 1.584431e-3 },
+                        { 1.318711, 1.164381e+1, 7.627771, 5.758935, 1.834009, 6.037875e-1, 1.879071e-1, 5.572968e-2, 1.589494e-2, 4.305519e-3, 1.147769e-3, 4.746887e-4 },
+                        { 8.168205e-1, 7.212274, 4.724705, 3.567133, 1.136001, 3.739911e-1, 1.163912e-1, 3.451943e-2, 9.845459e-3, 2.666875e-3, 7.109379e-4, 2.940262e-4 },
+                        { 7.021668e-1, 6.199916, 4.061518, 3.066429, 9.765448e-1, 3.214955e-1, 1.000539e-1, 2.967408e-2, 8.463492e-3, 2.292537e-3, 6.111464e-4, 2.527549e-4 },
+                        { 6.043935e-1, 5.336608, 3.495971, 2.639444, 8.405657e-1, 2.767288e-1, 8.612185e-2, 2.554211e-2, 7.284992e-3, 1.973312e-3, 5.260473e-4, 2.175600e-4 },
+                        { 5.187680e-1, 4.580562, 3.000691, 2.265509, 7.214813e-1, 2.375242e-1, 7.392082e-2, 2.192352e-2, 6.252915e-3, 1.693750e-3, 4.515213e-4, 1.867379e-4 },
+                        { 4.710067e-1, 4.158844, 2.724427, 2.056931, 6.550568e-1, 2.156561e-1, 6.711516e-2, 1.990509e-2, 5.677229e-3, 1.537811e-3, 4.099511e-4, 1.695456e-4 },
+                        { 4.911859e-1, 4.337020, 2.841149, 2.145055, 6.831212e-1, 2.248953e-1, 6.999055e-2, 2.075787e-2, 5.920456e-3, 1.603695e-3, 4.275145e-4, 1.768093e-4 },
+                        { 5.186212e-1, 4.579265, 2.999842, 2.264868, 7.212771e-1, 2.374569e-1, 7.389989e-2, 2.191731e-2, 6.251145e-3, 1.693270e-3, 4.513935e-4, 1.866851e-4 },
+                        { 5.472796e-1, 4.832310, 3.165610, 2.390022, 7.611341e-1, 2.505785e-1, 7.798352e-2, 2.312844e-2, 6.596576e-3, 1.786838e-3, 4.763370e-4, 1.970011e-4 },
+                        { 5.572574e-1, 4.920411, 3.223324, 2.433596, 7.750108e-1, 2.551470e-1, 7.940528e-2, 2.355011e-2, 6.716842e-3, 1.819415e-3, 4.850214e-4, 2.005927e-4 },
+                        { 8.910025e-1, 7.867278, 5.153793, 3.891093, 1.239170, 4.079562e-1, 1.269616e-1, 3.765442e-2, 1.073960e-2, 2.909075e-3, 7.755038e-4, 3.207290e-4 },
+                        { 1.091430, 9.636988, 6.313117, 4.766377, 1.517916, 4.997241e-1, 1.555211e-1, 4.612462e-2, 1.315543e-2, 3.563459e-3, 9.499500e-4, 3.928756e-4 },
+                        { 1.210152, 1.068527e+1, 6.999837, 5.284848, 1.683030, 5.540825e-1, 1.724382e-1, 5.114190e-2, 1.458644e-2, 3.951080e-3, 1.053282e-3, 4.356114e-4 },
+                        { 1.200252, 1.059786e+1, 6.942574, 5.241615, 1.669261, 5.495498e-1, 1.710275e-1, 5.072353e-2, 1.446711e-2, 3.918758e-3, 1.044666e-3, 4.320478e-4 }
+                    }
+                }
+
+            };
+
+            section::GType< 16 > chunk( mt, zaid, awr, lr, ngn, temp, groups, flux, matrix );
+
+            THEN( "a section::GType< 16 > can be constructed" ) {
+
+                verifyChunkFission( chunk );
+
+            } // THEN
+
+            THEN( "it can be printed" ) {
+                
+                std::string buffer;
+                auto output = std::back_inserter( buffer );
+                chunk.print( output, 9228, 16 );
+
+                CHECK( buffer == sectionString );
+            }
+        }
+
+        WHEN( "the data is read from a buffer/string" ) {
+
+            std::string line = chunkFission() + validSEND();
+            auto begin = line.begin();
+            auto end = line.end();
+            long lineNumber = 0;
+            auto head = HeadRecord( begin, end, lineNumber );
+            
+            section::GType< 16 > chunk( head, begin, end, lineNumber, 9228 );
+
+            THEN( "a section::GType< 16 > can be constructed" ) {
+
+                verifyChunkFission( chunk );
+
+            } // THEN
+
+            THEN( "it can be printed" ) {
+                
+                std::string buffer;
+                auto output = std::back_inserter( buffer );
+                chunk.print( output, 9228, 16 );
+
+                CHECK( buffer == sectionString );
+            } // THEN
+
+        } // WHEN
+    }
 
 } // SCENARIO
 
 
 void verifyChunkFission( const section::GType< 16 >& chunk ) {
+    CHECK(92235 == chunk.ZA());
+    CHECK(92235 == chunk.targetIdentifier());
+    CHECK(18 == chunk.MT());
+    CHECK(18 == chunk.sectionNumber());
+    CHECK(1 == chunk.NL());
+    CHECK(1 == chunk.numberMoments());
+    CHECK(1 == chunk.NZ());
+    CHECK(1 == chunk.numberDilutions());
+    CHECK(20 == chunk.NGN());
+    CHECK(20 == chunk.numberNeutronGroups());
+    CHECK(0 == chunk.LRFLAG());
+    CHECK(0 == chunk.breakUpID());
+    CHECK_THAT( 293.6, WithinRel( chunk.TEMP() ) );
+    CHECK_THAT( 293.6, WithinRel( chunk.temperature() ) );
+    std::vector< unsigned int > expected_groups(20);
+    std::iota( expected_groups.begin(), expected_groups.end(), 1);
+    std::vector< std::vector< std::vector< double > > > expected_flux = {
+        {
+            { 1.611884e+4, 1.110213e+7, 2.451436e+6, 3.461286e+6, 3.753318e+6, 3.571209e+6, 1.696074e+6, 1.370348e+6, 3.611499e+5, 1.010491e+6,
+                7.295986e+5, 1.693616e+6, 5.107883e+5, 1.014623e+6, 8.255313e+5, 6.500049e+5, 3.338837e+4, 1.067061e+5, 2.467532e+3, 9.073605e+2 }
+        }
+    };
+    std::vector< std::vector< std::vector< std::vector< double > > > > expected_matrix = {
+        {
+            {
+                { 1.460238e+3, 1.289345e+4, 8.446402e+3, 6.376999e+3, 2.030839e+3, 6.685875e+2, 2.080737e+2, 6.171073e+1, 1.760082e+1, 4.767598, 1.270951, 5.256335e-1 },
+                { 2.174016e+2, 1.919589e+3, 1.257508e+3, 9.494134e+2, 3.023532e+2, 9.953992e+1, 3.097821e+1, 9.187550, 2.620427, 7.098044e-1, 1.892203e-1, 7.825679e-2 },
+                { 8.789085e+1, 7.760492e+2, 5.083839e+2, 3.838277e+2, 1.222350e+2, 4.024188e+1, 1.252383e+1, 3.714332, 1.059383, 2.869589e-1, 7.649776e-2, 3.163756e-2 },
+                { 1.894271e+1, 1.672583e+2, 1.095696e+2, 8.272460e+1, 2.634474e+1, 8.673145, 2.699203, 8.005326e-1, 2.283239e-1, 6.184691e-2, 1.648720e-2, 6.818696e-3 },
+                { 1.648537e+1, 1.455608e+2, 9.535576e+1, 7.199320e+1, 2.292718e+1, 7.548026, 2.349051, 6.966840e-1, 1.987047e-1, 5.382386e-2, 1.434841e-2, 5.934145e-3 },
+                { 4.401633, 3.886507e+1, 2.546021e+1, 1.922235e+1, 6.121612, 2.015341, 6.272020e-1, 1.860163e-1, 5.305462e-2, 1.437109e-2, 3.831059e-3, 1.584431e-3 },
+                { 1.318711, 1.164381e+1, 7.627771, 5.758935, 1.834009, 6.037875e-1, 1.879071e-1, 5.572968e-2, 1.589494e-2, 4.305519e-3, 1.147769e-3, 4.746887e-4 },
+                { 8.168205e-1, 7.212274, 4.724705, 3.567133, 1.136001, 3.739911e-1, 1.163912e-1, 3.451943e-2, 9.845459e-3, 2.666875e-3, 7.109379e-4, 2.940262e-4 },
+                { 7.021668e-1, 6.199916, 4.061518, 3.066429, 9.765448e-1, 3.214955e-1, 1.000539e-1, 2.967408e-2, 8.463492e-3, 2.292537e-3, 6.111464e-4, 2.527549e-4 },
+                { 6.043935e-1, 5.336608, 3.495971, 2.639444, 8.405657e-1, 2.767288e-1, 8.612185e-2, 2.554211e-2, 7.284992e-3, 1.973312e-3, 5.260473e-4, 2.175600e-4 },
+                { 5.187680e-1, 4.580562, 3.000691, 2.265509, 7.214813e-1, 2.375242e-1, 7.392082e-2, 2.192352e-2, 6.252915e-3, 1.693750e-3, 4.515213e-4, 1.867379e-4 },
+                { 4.710067e-1, 4.158844, 2.724427, 2.056931, 6.550568e-1, 2.156561e-1, 6.711516e-2, 1.990509e-2, 5.677229e-3, 1.537811e-3, 4.099511e-4, 1.695456e-4 },
+                { 4.911859e-1, 4.337020, 2.841149, 2.145055, 6.831212e-1, 2.248953e-1, 6.999055e-2, 2.075787e-2, 5.920456e-3, 1.603695e-3, 4.275145e-4, 1.768093e-4 },
+                { 5.186212e-1, 4.579265, 2.999842, 2.264868, 7.212771e-1, 2.374569e-1, 7.389989e-2, 2.191731e-2, 6.251145e-3, 1.693270e-3, 4.513935e-4, 1.866851e-4 },
+                { 5.472796e-1, 4.832310, 3.165610, 2.390022, 7.611341e-1, 2.505785e-1, 7.798352e-2, 2.312844e-2, 6.596576e-3, 1.786838e-3, 4.763370e-4, 1.970011e-4 },
+                { 5.572574e-1, 4.920411, 3.223324, 2.433596, 7.750108e-1, 2.551470e-1, 7.940528e-2, 2.355011e-2, 6.716842e-3, 1.819415e-3, 4.850214e-4, 2.005927e-4 },
+                { 8.910025e-1, 7.867278, 5.153793, 3.891093, 1.239170, 4.079562e-1, 1.269616e-1, 3.765442e-2, 1.073960e-2, 2.909075e-3, 7.755038e-4, 3.207290e-4 },
+                { 1.091430, 9.636988, 6.313117, 4.766377, 1.517916, 4.997241e-1, 1.555211e-1, 4.612462e-2, 1.315543e-2, 3.563459e-3, 9.499500e-4, 3.928756e-4 },
+                { 1.210152, 1.068527e+1, 6.999837, 5.284848, 1.683030, 5.540825e-1, 1.724382e-1, 5.114190e-2, 1.458644e-2, 3.951080e-3, 1.053282e-3, 4.356114e-4 },
+                { 1.200252, 1.059786e+1, 6.942574, 5.241615, 1.669261, 5.495498e-1, 1.710275e-1, 5.072353e-2, 1.446711e-2, 3.918758e-3, 1.044666e-3, 4.320478e-4 }
+            }
+        }
+
+    };
+
+    for ( size_t g_i = 0; g_i < chunk.NGN(); ++g_i ) {
+        CHECK_THAT( expected_flux[0][0][g_i], WithinRel( chunk.flux( 0, 0 )[g_i] ) );
+        CHECK( expected_groups[g_i] == chunk.groups()[g_i] );
+        for ( size_t g_o = 0; g_o < 2; ++g_o ) {
+            CHECK_THAT( expected_matrix[0][0][g_i][g_o], WithinRel( chunk.matrix( 0, 0 )[g_i][g_o] ) );
+        }
+    }
 
 }
 
 void verifyChunkInelastic( const section::GType< 16 >& chunk ) {
+    CHECK(92235 == chunk.ZA());
+    CHECK(92235 == chunk.targetIdentifier());
+    CHECK(52 == chunk.MT());
+    CHECK(52 == chunk.sectionNumber());
+    CHECK(1 == chunk.NL());
+    CHECK(1 == chunk.numberMoments());
+    CHECK(1 == chunk.NZ());
+    CHECK(1 == chunk.numberDilutions());
+    CHECK(20 == chunk.NGN());
+    CHECK(20 == chunk.numberNeutronGroups());
+    CHECK(0 == chunk.LRFLAG());
+    CHECK(0 == chunk.breakUpID());
+    CHECK_THAT( 293.6, WithinRel( chunk.TEMP() ) );
+    CHECK_THAT( 293.6, WithinRel( chunk.temperature() ) );
+
+    std::vector< unsigned int > expected_groups(20);
+    std::iota( expected_groups.begin(), expected_groups.end(), 1);
+    std::vector< std::vector< std::vector< double > > > expected_flux = {
+        {
+            { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.696074e+6, 1.370348e+6, 3.611499e+5, 1.010491e+6, 7.295986e+5, 1.693616e+6, 5.107883e+5, 1.014623e+6,
+              8.255313e+5, 6.500049e+5, 3.338837e+4, 0.0, 0.0, 9.073605e+2  }
+        }
+    };
+
+    std::vector< std::vector< std::vector< std::vector< double > > > > expected_matrix = {
+        {
+            {
+                { 0.0, 0.0 }, 
+                { 0.0, 0.0 }, 
+                { 0.0, 0.0 }, 
+                { 0.0, 0.0 },
+                { 0.0, 0.0 },
+                { 0.0, 0.0 },
+                { 1.311037e-7, 0.0 },
+                { 9.841964e-6, 0.0 },
+                { 2.343987e-5, 0.0 },
+                { 3.888503e-5, 0.0 },
+                { 5.173100e-5, 0.0 },
+                { 5.123670e-5, 0.0 },
+                { 3.520423e-5, 0.0 },
+                { 1.955523e-5, 0.0 },
+                { 4.939553e-6, 0.0 },
+                { 3.492097e-7, 0.0 },
+                { 2.71668e-11, 0.0 },
+                { 0.0, 0.0 },
+                { 0.0, 0.0 },
+                { 0.0, 0.0 }
+
+            }
+        }
+    };
+    for ( size_t g_i = 0; g_i < chunk.NGN(); ++g_i ) {
+        CHECK_THAT( expected_flux[0][0][g_i], WithinRel( chunk.flux( 0, 0 )[g_i] ) );
+        CHECK( expected_groups[g_i] == chunk.groups()[g_i] );
+        for ( size_t g_o = 0; g_o < 2; ++g_o ) {
+            CHECK_THAT( expected_matrix[0][0][g_i][g_o], WithinRel( chunk.matrix( 0, 0 )[g_i][g_o] ) );
+        }
+    }
+
 
 }
 

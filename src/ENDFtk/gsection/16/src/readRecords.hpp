@@ -5,8 +5,8 @@ static auto readRecords(Iterator& it, const Iterator& end, long& lineNumber, int
     int max_gg = 0;
     do {
         records.emplace_back(it, end, lineNumber, MAT, MF, MT);
-        if ( max_gg < ( (records.back().NG2() - 1 ) - records.back().IG2LO() ) ) {
-            max_gg = (records.back().NG2() - 1 ) - records.back().IG2LO();
+        if ( max_gg < ( (records.back().NG2() - 1 ) + records.back().IG2LO() ) ) {
+            max_gg = (records.back().NG2() - 1 ) + records.back().IG2LO();
         }
     }
     while ( records.back().IG() < NGN);
