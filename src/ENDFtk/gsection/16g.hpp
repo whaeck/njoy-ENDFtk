@@ -117,6 +117,7 @@ namespace section {
         decltype(auto) flux( int moment, int dilution ) const {
             return this->flux_[ moment ][ dilution ];
         }
+
         #include "ENDFtk/gsection/16/src/print.hpp"
 
         using Base::MT;

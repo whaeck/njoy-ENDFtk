@@ -271,7 +271,7 @@ void verifyChunkFission( const section::GType< 16 >& chunk ) {
     for ( size_t g_i = 0; g_i < chunk.NGN(); ++g_i ) {
         CHECK_THAT( expected_flux[0][0][g_i], WithinRel( chunk.flux( 0, 0 )[g_i] ) );
         CHECK( expected_groups[g_i] == chunk.groups()[g_i] );
-        for ( size_t g_o = 0; g_o < 2; ++g_o ) {
+        for ( size_t g_o = 0; g_o < 12; ++g_o ) {
             CHECK_THAT( expected_matrix[0][0][g_i][g_o], WithinRel( chunk.matrix( 0, 0 )[g_i][g_o] ) );
         }
     }

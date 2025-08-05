@@ -7,5 +7,6 @@
 #include "ENDFtk/gfile/1.hpp"
 #include "ENDFtk/gfile/3.hpp"
 #include "ENDFtk/gfile/6.hpp"
+#include "ENDFtk/gfile/16.hpp"
 
 #endif
