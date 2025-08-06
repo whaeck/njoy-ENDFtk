@@ -225,6 +225,7 @@ if(ENDFtk.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/file/13.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/file/14.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/file/15.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/file/16.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/file/23.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/file/26.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/file/27.python.cpp

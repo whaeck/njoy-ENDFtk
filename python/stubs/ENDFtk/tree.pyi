@@ -14,6 +14,7 @@ import ENDFtk.MF12
 import ENDFtk.MF13
 import ENDFtk.MF14
 import ENDFtk.MF15
+import ENDFtk.MF16
 import ENDFtk.MF2
 import ENDFtk.MF2.MT151
 import ENDFtk.MF2.MT152
@@ -439,7 +440,7 @@ class GSection:
         
         This function removes the sequence numbers from the section.
         """
-    def parse(self) -> ENDFtk.MF1.MT451.GSection | ENDFtk.MF3.GSection | ENDFtk.MF5.MT18.GSection | ENDFtk.MF5.MT455.GSection | ENDFtk.MF6.GSection:
+    def parse(self) -> ENDFtk.MF1.MT451.GSection | ENDFtk.MF3.GSection | ENDFtk.MF5.MT18.GSection | ENDFtk.MF5.MT455.GSection | ENDFtk.MF6.GSection | ENDFtk.MF16.GSection:
         """
         Parse the section
         """
