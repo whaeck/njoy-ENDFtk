@@ -124,10 +124,10 @@ class Test_ENDFtk_MF7_MT2_CoherentElastic( unittest.TestCase ) :
             self.assertAlmostEqual( 3.718355e-3, chunk.energies[1] )
             self.assertAlmostEqual( 4.237708e-3, chunk.energies[2] )
 
-            #self.assertEqual( 1, len( chunk.LI ) )
-            #self.assertEqual( 2, chunk.LI[0] )
-            #self.assertEqual( 1, len( chunk.temperature_interpolants ) )
-            #self.assertEqual( 2, chunk.temperature_interpolants[0] )
+            self.assertEqual( 1, len( chunk.LI ) )
+            self.assertEqual( 2, chunk.LI[0] )
+            self.assertEqual( 1, len( chunk.temperature_interpolants ) )
+            self.assertEqual( 2, chunk.temperature_interpolants[0] )
 
             self.assertEqual( 2, len( chunk.S ) )
             self.assertEqual( 3, len( chunk.S[0] ) )
