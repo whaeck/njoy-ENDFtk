@@ -568,7 +568,7 @@ class File:
         """
 class GSection:
     """
-    MF6 gsection - matrices
+    MF6 gsection - scattering matrices and fission matrices
     """
     @staticmethod
     def from_string(gsection: str) -> GSection:
@@ -670,7 +670,7 @@ class GSection:
         The atomic weight ratio for the section
         """
     @property
-    def break_up_id(self) -> int:
+    def break_up(self) -> int:
         """
         The break up identifier flag
         """
