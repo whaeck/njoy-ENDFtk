@@ -1769,7 +1769,7 @@ class GeneralReichMoore:
     @property
     def spin(self) -> float:
         """
-        The scattering radius
+        The target spin
         """
     @property
     def type(self) -> int:
@@ -2715,7 +2715,7 @@ class ReichMooreScatteringRadiusUncertainties:
     @property
     def DAP(self) -> float:
         """
-        The atomic weight ratio of the current isotope
+        The default scattering radius uncertainty
         """
     @property
     def DAPL(self) -> ...:
@@ -2730,7 +2730,7 @@ class ReichMooreScatteringRadiusUncertainties:
     @property
     def default_uncertainty(self) -> float:
         """
-        The atomic weight ratio of the current isotope
+        The default scattering radius uncertainty
         """
     @property
     def uncertainties(self) -> ...:

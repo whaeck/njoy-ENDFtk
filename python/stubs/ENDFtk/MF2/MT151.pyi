@@ -562,7 +562,7 @@ class MultiLevelBreitWigner:
     @property
     def spin(self) -> float:
         """
-        The scattering radius
+        The target spin
         """
     @property
     def type(self) -> int:
@@ -666,17 +666,17 @@ class ParticlePairs:
         Arguments:
             self    the component
             ma      the mass of the first particle in each particle pair
-            mb      the mass of the first particle in each particle pair
+            mb      the mass of the second particle in each particle pair
             za      the charge of the first particle in each particle pair
-            zb      the charge of the first particle in each particle pair
+            zb      the charge of the second particle in each particle pair
             ia      the spin of the first particle in each particle pair
-            ib      the spin of the first particle in each particle pair
+            ib      the spin of the second particle in each particle pair
             pa      the parity of the first particle in each particle pair
-            pb      the parity of the first particle in each particle pair
-            q       the mass of the first particle in each particle pair
-            pnt     the mass of the first particle in each particle pair
-            shf     the charge of the first particle in each particle pair
-            mt      the charge of the first particle in each particle pair
+            pb      the parity of the second particle in each particle pair
+            q       the Q value for each particle pair
+            pnt     the penetrability flag for each particle pair
+            shf     the shift factor flag for each particle pair
+            mt      the MT value for each particle pair
         """
     @typing.overload
     def __init__(self, component: ParticlePairs) -> None:
@@ -770,7 +770,7 @@ class ParticlePairs:
     @property
     def charge_particle_A(self) -> ...:
         """
-        The mass of the first particle in each particle pair
+        The charge of the first particle in each particle pair
         """
     @property
     def charge_particle_B(self) -> ...:
@@ -875,7 +875,7 @@ class RMatrixLimited:
     @property
     def AP(self) -> float:
         """
-        The target spin
+        The scattering radius
         """
     @property
     def IFG(self) -> bool:
@@ -960,12 +960,12 @@ class RMatrixLimited:
     @property
     def scattering_radius(self) -> float:
         """
-        The target spin
+        The scattering radius
         """
     @property
     def spin(self) -> float:
         """
-        The scattering radius
+        The target spin
         """
     @property
     def spin_groups(self) -> ...:
@@ -1398,7 +1398,7 @@ class ResonanceChannels:
     @property
     def PJ(self) -> float:
         """
-        The parity of the spin J
+        The parity of the spin group
         """
     @property
     def PPI(self) -> ...:
@@ -1443,7 +1443,7 @@ class ResonanceChannels:
     @property
     def parity(self) -> float:
         """
-        The parity of the spin J
+        The parity of the spin group
         """
     @property
     def particle_pair_numbers(self) -> ...:
@@ -1828,7 +1828,7 @@ class ScatteringRadius:
     @property
     def AP(self) -> ...:
         """
-        The scatterin radius values
+        The scattering radius values
         """
     @property
     def E(self) -> ...:
@@ -1888,7 +1888,7 @@ class ScatteringRadius:
     @property
     def radii(self) -> ...:
         """
-        The scatterin radius values
+        The scattering radius values
         """
 class Section:
     """
@@ -2130,7 +2130,7 @@ class SingleLevelBreitWigner:
     @property
     def spin(self) -> float:
         """
-        The scattering radius
+        The target spin
         """
     @property
     def type(self) -> int:
@@ -2187,7 +2187,7 @@ class SpecialCase:
     @property
     def AP(self) -> float:
         """
-        The target spin
+        The scattering radius
         """
     @property
     def LFW(self) -> bool:
@@ -2227,12 +2227,12 @@ class SpecialCase:
     @property
     def scattering_radius(self) -> float:
         """
-        The target spin
+        The scattering radius
         """
     @property
     def spin(self) -> float:
         """
-        The scattering radius
+        The target spin
         """
     @property
     def type(self) -> int:
@@ -2325,7 +2325,7 @@ class SpinGroup:
     @property
     def PJ(self) -> float:
         """
-        The parity of the spin J
+        The parity of the spin group
         """
     @property
     def background(self) -> BackgroundChannels:
@@ -2360,7 +2360,7 @@ class SpinGroup:
     @property
     def parity(self) -> float:
         """
-        The parity of the spin J
+        The parity of the spin group
         """
     @property
     def spin(self) -> float:
@@ -2590,7 +2590,7 @@ class UnresolvedEnergyDependent:
     @property
     def AP(self) -> float:
         """
-        The target spin
+        The scattering radius
         """
     @property
     def LFW(self) -> bool:
@@ -2628,7 +2628,7 @@ class UnresolvedEnergyDependent:
         The target spin
         """
     @property
-    def average_fission_width_flag(self) -> int:
+    def average_fission_width_flag(self) -> bool:
         """
         The average fission flag
         """
@@ -2650,7 +2650,7 @@ class UnresolvedEnergyDependent:
     @property
     def scattering_radius(self) -> float:
         """
-        The target spin
+        The scattering radius
         """
     @property
     def self_shielding_only(self) -> bool:
@@ -2660,7 +2660,7 @@ class UnresolvedEnergyDependent:
     @property
     def spin(self) -> float:
         """
-        The scattering radius
+        The target spin
         """
     @property
     def type(self) -> int:
@@ -2721,7 +2721,7 @@ class UnresolvedEnergyDependentFissionWidths:
     @property
     def AP(self) -> float:
         """
-        The target spin
+        The scattering radius
         """
     @property
     def ES(self) -> ...:
@@ -2796,7 +2796,7 @@ class UnresolvedEnergyDependentFissionWidths:
     @property
     def scattering_radius(self) -> float:
         """
-        The target spin
+        The scattering radius
         """
     @property
     def self_shielding_only(self) -> bool:
@@ -2806,7 +2806,7 @@ class UnresolvedEnergyDependentFissionWidths:
     @property
     def spin(self) -> float:
         """
-        The scattering radius
+        The target spin
         """
     @property
     def type(self) -> int:
@@ -2975,7 +2975,7 @@ class UnresolvedEnergyDependentFissionWidthsJValue:
     @property
     def fission_width_degrees_freedom(self) -> int:
         """
-        The degrees of freedom for the gamma width
+        The degrees of freedom for the fission width
         """
     @property
     def gamma_width_degrees_freedom(self) -> int:
@@ -3269,7 +3269,7 @@ class UnresolvedEnergyDependentJValue:
     @property
     def fission_width_degrees_freedom(self) -> int:
         """
-        The degrees of freedom for the gamma width
+        The degrees of freedom for the fission width
         """
     @property
     def gamma_width_degrees_freedom(self) -> int:
@@ -3434,7 +3434,7 @@ class UnresolvedEnergyIndependent:
     @property
     def AP(self) -> float:
         """
-        The target spin
+        The scattering radius
         """
     @property
     def LFW(self) -> bool:
@@ -3494,7 +3494,7 @@ class UnresolvedEnergyIndependent:
     @property
     def scattering_radius(self) -> float:
         """
-        The target spin
+        The scattering radius
         """
     @property
     def self_shielding_only(self) -> bool:
@@ -3504,7 +3504,7 @@ class UnresolvedEnergyIndependent:
     @property
     def spin(self) -> float:
         """
-        The scattering radius
+        The target spin
         """
     @property
     def type(self) -> int:
