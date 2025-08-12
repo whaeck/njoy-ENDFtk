@@ -6,6 +6,7 @@
 // other includes
 #include "ENDFtk/gfile/1.hpp"
 #include "ENDFtk/gfile/3.hpp"
+#include "ENDFtk/gfile/5.hpp"
 #include "ENDFtk/gfile/6.hpp"
 
 #endif
