@@ -23,10 +23,12 @@ trigger_ci_downstream:
 
   variables:
     MERGE_TYPE: $CI_PIPELINE_SOURCE
+    PARENT_MR_ID: "$CI_MERGE_REQUEST_IID"
     PROJECT_ROOT_NAME: "ENDFtk"
 
 check:
   stage: check_ok
   script:
+    - printenv
     - echo "Looks good..."
 
