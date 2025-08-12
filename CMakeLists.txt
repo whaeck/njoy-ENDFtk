@@ -82,12 +82,12 @@ if (ENDFtk.python AND NOT TARGET njoy::tools.python)
   set(ENDFtk.python OFF)
 endif()
 
-if (ENDFtk.python)
-  add_subdirectory(python)
+if ( ENDFtk.python )
+  add_subdirectory( python )
 endif()
 
 if( ${ENDFtk.tests} )
-  include( cmake/unit_testing.cmake )
+  add_subdirectory( test )
 endif()
 
 #######################################################################
@@ -150,4 +150,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(${PROJECT_NAME}  INTERFACE "/ZI")
     target_link_options(${PROJECT_NAME} INTERFACE "/INCREMENTAL")
   endif()
+endif()
+
+if (MSVC)
+    target_compile_options(${PROJECT_NAME} INTERFACE "/bigobj")
 endif()

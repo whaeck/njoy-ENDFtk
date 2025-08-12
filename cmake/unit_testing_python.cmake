@@ -254,6 +254,8 @@ add_python_test( MF40.LevelBlock MF40/Test_ENDFtk_MF40_LevelBlock.py )
 
 add_python_test( tree.File     tree/Test_ENDFtk_Tree_File.py )
 add_python_test( tree.Material tree/Test_ENDFtk_Tree_Material.py )
+
+## TODO create task to look into reenabling this. Failures observed in MSVC debug mode which we want to reevaluate on vetcorization of Tree data
 add_python_test( tree.Tape     tree/Test_ENDFtk_Tree_Tape.py )
 
 add_python_test( tree.GFile     tree/Test_ENDFtk_Tree_GFile.py )
