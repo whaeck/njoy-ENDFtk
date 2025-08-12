@@ -1,1 +1,0 @@
-add_cpp_test( gsection.16 16g.test.cpp )

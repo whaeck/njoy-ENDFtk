@@ -99,8 +99,8 @@ void wrapGSection_6( python::module& module, python::module&  ) {
   )
   .def_property_readonly(
 
-    "break_up_id",
-    &GSection::breakUpID,
+    "break_up",
+    &GSection::breakUp,
     "The break up identifier flag"
   )
   .def_property_readonly(

@@ -691,7 +691,7 @@ class GSection:
         The atomic weight ratio for the section
         """
     @property
-    def break_up_id(self) -> int:
+    def break_up(self) -> int:
         """
         The break up identifier flag
         """
