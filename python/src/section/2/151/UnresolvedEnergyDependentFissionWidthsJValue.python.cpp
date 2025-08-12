@@ -109,7 +109,7 @@ void wrapUnresolvedEnergyDependentFissionWidthsJValue( python::module& module, p
 
     "fission_width_degrees_freedom",
     &Component::fissionWidthDegreesFreedom,
-    "The degrees of freedom for the gamma width"
+    "The degrees of freedom for the fission width"
   )
   .def_property_readonly(
 
