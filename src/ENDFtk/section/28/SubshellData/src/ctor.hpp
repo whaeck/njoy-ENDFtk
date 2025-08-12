@@ -12,6 +12,23 @@ SubshellData( ListRecord&& list ) :
 public:
 
 /**
+ *  @brief Constructor without transitions
+ *
+ *  @param[in] subshell        the subshell designator
+ *  @param[in] energy          the binding energy of the subshell
+ *  @param[in] eln             the number of electrons in the subshell
+ */
+SubshellData( unsigned int subshell, double energy, double eln )
+  try : SubshellData(
+            ListRecord( subshell, 0.0, 0, 0, 0,
+                        generateList( energy, eln ) ) ) {}
+  catch ( std::exception& e ) {
+
+    Log::info( "Encountered error while constructing subshell data" );
+    throw;
+  }
+
+/**
  *  @brief Constructor
  *
  *  @param[in] subshell        the subshell designator
@@ -22,7 +39,7 @@ public:
  *  @param[in] energies        the transition energies (NTR values)
  *  @param[in] probabilities   the transition probabilities (NTR values)
  */
-SubshellData( unsigned int subshell, double energy, unsigned int eln,
+SubshellData( unsigned int subshell, double energy, double eln,
               std::vector< unsigned int >&& secondary,
               std::vector< unsigned int >&& tertiary,
               std::vector< double >&& energies,
