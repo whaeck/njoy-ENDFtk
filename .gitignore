@@ -42,3 +42,6 @@ dependencies
 __pycache__
 *.pyc
 .ipynb*
+
+# vim
+*.swp
