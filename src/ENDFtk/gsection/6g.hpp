@@ -21,14 +21,15 @@ namespace section {
   template < >
   class ENDFTK_PYTHON_EXPORT GType< 6 > : protected Base {
 
-    /* fields */
-    int lr_;
-    int ngn_;
-    double temp_;
-    std::vector< unsigned int > groups_;
-    std::vector< std::vector< std::vector< double > > > flux_;
-    std::vector< std::vector< std::vector< std::vector< double > > > > matrix_;
-    std::vector< std::vector< std::vector< double > > > probability_;
+        /* fields */
+        int lr_;
+        int ngn_;
+        double temp_;
+        int cutoff_ig_;
+        std::vector< unsigned int > groups_;
+        std::vector< std::vector< std::vector< double > > > flux_;
+        std::vector< std::vector< std::vector< std::vector< double > > > > matrix_;
+        std::vector< std::vector< double > > chi_;
 
     /* auxiliary functions */
     #include "ENDFtk/gsection/6/src/makeMatrices.hpp"
@@ -124,21 +125,19 @@ namespace section {
     }
 
     /**
-     *  @brief Return the probabilities
+     *  @brief Return the prompt fission spectrum
      *
-     *  @param[in] moment     the legendre moment requested
      *  @param[in] dilution   the dilution index requested
      */
-    decltype(auto) probability( std::size_t moment, std::size_t dilution ) const {
+    decltype(auto) chi( std::size_t dilution ) const {
 
-      if ( this->probability_.size() != 0 ) {
+      if ( this->chi_.size() != 0 ) {
 
-        this->verifyIndex( moment, dilution );
-        return this->probability_[moment][dilution];
+        return this->chi_[dilution];
       }
       else {
 
-        throw std::runtime_error( "There are no probabilities present" );
+        throw std::runtime_error( "Requested chi when they are not present" );
       }
     }
     #include "ENDFtk/gsection/6/src/print.hpp"
