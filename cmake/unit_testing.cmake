@@ -261,6 +261,10 @@ add_cpp_test( TapeIdentification		TapeIdentification.test.cpp )
 add_cpp_test( InterpolationSequenceRecord		InterpolationSequenceRecord.test.cpp )
 add_cpp_test( DirectoryRecord		DirectoryRecord.test.cpp )
 
+add_cpp_test( gsection.1.451  section/1/451.test.cpp )
+add_cpp_test( gsection.3      section/3.test.cpp )
+add_cpp_test( gsection.6      section/6.test.cpp )
+
 add_cpp_test( tree.GSection  tree/GSection.test.cpp )
 add_cpp_test( tree.GFile     tree/GFile.test.cpp )
 add_cpp_test( tree.GMaterial tree/GMaterial.test.cpp )

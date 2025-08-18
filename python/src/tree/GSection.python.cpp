@@ -73,6 +73,34 @@ void wrapTreeGSection( python::module& module, python::module& ) {
     &Section::sectionNumber,
     "The MT number of the section"
   )
+  .def(
+
+    "parse",
+    [] ( const Section& self ) -> GSectionVariant {
+
+      int mf = self.fileNumber();
+      int mt = self.sectionNumber();
+      switch ( mf ) {
+
+        case 1 : {
+
+          switch ( mt ) {
+
+            case 451 : return self.parse< 1, 451 >();
+            default: throw std::runtime_error(
+                           "Section " + std::to_string( mt ) + " from file " +
+                           std::to_string( mf ) +
+                           " is not an official GENDF section" );
+          }
+        }
+        case 3 : return self.parse< 3 >();
+        default: throw std::runtime_error(
+                       "GENDF section from file " +  std::to_string( mf ) +
+                       " cannot be parsed yet" );
+      }
+    },
+    "Parse the section"
+  )
   .def_property_readonly(
 
     "content",

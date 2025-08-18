@@ -1,0 +1,142 @@
+#ifndef NJOY_ENDFTK_GSECTION_3
+#define NJOY_ENDFTK_GSECTION_3
+
+// system includes
+#include <numeric>
+
+// other includes
+#include "ENDFtk/macros.hpp"
+#include "ENDFtk/HeadRecord.hpp"
+#include "ENDFtk/ControlRecord.hpp"
+#include "ENDFtk/DataRecord.hpp"
+#include "ENDFtk/section.hpp"
+#include "tools/Log.hpp"
+
+namespace njoy {
+namespace ENDFtk {
+namespace section {
+
+  template <>
+  class ENDFTK_PYTHON_EXPORT GType< 3 > : protected Base {
+
+    /* fields */
+    int lr_;
+    int ngn_;
+    double temp_;
+    std::vector< unsigned int > groups_;
+
+    // data is stored by moment and dilution
+    std::vector< std::vector< std::vector< double > > > flux_;
+    std::vector< std::vector< std::vector< double > > > sigma_;
+    std::vector< std::vector< std::vector< double > > > ratio_;
+
+    /* auxiliary functions */
+    #include "ENDFtk/gsection/3/src/makeVectors.hpp"
+    #include "ENDFtk/gsection/3/src/makeRecords.hpp"
+    #include "ENDFtk/gsection/3/src/readRecords.hpp"
+    #include "ENDFtk/gsection/3/src/verifySize.hpp"
+
+  public:
+
+    /* constructor */
+    #include "ENDFtk/gsection/3/src/ctor.hpp"
+
+    /* methods */
+
+    /**
+     *  @brief Return the number of legendre moments
+     */
+    int NL() const { return this->sigma_.size(); }
+
+    /**
+     *  @brief Return the number of legendre moments
+     */
+    int numberMoments() const { return this->NL(); }
+
+    /**
+     *  @brief Return the number of dilution values
+     */
+    int NZ() const { return this->sigma_.front().size(); }
+
+    /**
+     *  @brief Return the number of dilution values
+     */
+    int numberDilutions() const { return this->NZ(); }
+
+    /**
+     *  @brief Return the break up flag
+     */
+    int LR() const { return this->lr_; }
+
+    /**
+     *  @brief Return the break up identifier flag
+     */
+    int breakUp() const { return this->LR(); }
+
+    /**
+     *  @brief Return the number of neutron groups
+     */
+    int NGN() const { return this->sigma_.front().front().size(); }
+
+    /**
+     *  @brief Return the number of neutron groups
+     */
+    int numberNeutronGroups() const { return this->NGN(); }
+
+    /**
+     *  @brief Return the temperature
+     */
+    double temperature() const { return this->temp_; }
+
+    /**
+     *  @brief Return the multigroup cross section for a given moment and dilution
+     *
+     *  @param[in] moment   the legendre moment requested
+     *  @param[in] dilution the dilution index requested
+     */
+    const std::vector< double >& crossSection( int moment, int dilution ) const {
+
+      return this->sigma_[moment][dilution];
+    }
+
+    /**
+     *  @brief Return the multigroup ratio data for a given moment and dilution
+     *
+     *  @param[in] moment   the legendre moment requested
+     *  @param[in] dilution the dilution index requested
+     */
+    const std::vector< double >& ratio( int moment, int dilution ) const {
+
+      if (this->ratio_.size() != 0) {
+
+        return this->ratio_[moment][dilution];
+      }
+      else {
+
+        throw std::runtime_error( "Requested ratio when ratios are not present!" );
+      }
+    }
+
+    /**
+     *  @brief Return the group fluxes
+     */
+    const std::vector< double >& flux( int moment, int dilution ) const {
+
+      return this->flux_[moment][dilution];
+    }
+
+    #include "ENDFtk/gsection/3/src/print.hpp"
+
+    using Base::MT;
+    using Base::sectionNumber;
+    using Base::ZA;
+    using Base::targetIdentifier;
+    using Base::AWR;
+    using Base::atomicWeightRatio;
+  };
+
+} // section
+} // ENDFtk
+} // njoy
+
+#endif

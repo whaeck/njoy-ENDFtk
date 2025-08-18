@@ -4,6 +4,7 @@
 // system includes
 
 // other includes
+#include "ENDFtk/tree/GTape.hpp"
 #include "ENDFtk/tree/Tape.hpp"
 
 /**
@@ -85,5 +86,9 @@ using FileVariant = std::variant< MF1, MF2, MF3, MF4, MF5, MF6,
                                   MF7, MF8, MF9, MF10, MF12, MF13,
                                   MF14, MF15, MF23, MF26, MF27, MF28,
                                   MF31, MF32, MF33, MF34, MF35, MF40 >;
+
+using GMF1MT451 = njoy::ENDFtk::section::GType< 1, 451 >;
+using GMF3MTxxx = njoy::ENDFtk::section::GType< 3 >;
+using GSectionVariant = std::variant< GMF1MT451, GMF3MTxxx >;
 
 #endif

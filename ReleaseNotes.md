@@ -6,6 +6,8 @@ Given here are some release notes for ENDFtk.
 This update makes the following changes on interface functions:
   - A contructor without transitions has been added to the MF28 SubshellData. The type of the number of electrons in a subshell in the constructor was changed to a double.
 
+This update adds GENDF capability.
+
 shacl-cmake was updated to the latest version.
 
 ## ENDFtk v1.2.0

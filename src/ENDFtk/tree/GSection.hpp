@@ -38,7 +38,7 @@ namespace tree {
     #include "ENDFtk/tree/GSection/src/ctor.hpp"
 
     /* methods */
-//    #include "ENDFtk/tree/Section/src/parse.hpp"
+    #include "ENDFtk/tree/GSection/src/parse.hpp"
 
     /**
      *  @brief Return MAT number of the section
