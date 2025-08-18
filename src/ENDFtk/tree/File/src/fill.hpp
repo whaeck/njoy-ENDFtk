@@ -34,9 +34,7 @@ fill
     }
 
     // add the section
-    sections.emplace( iter,
-                      Section( asHead( division ),
-                               begin, position, end, lineNumber ) );
+    sections.emplace( iter, asHead( division ), begin, position, end, lineNumber );
 
     // check for end of stream
     if ( position >= end ) {

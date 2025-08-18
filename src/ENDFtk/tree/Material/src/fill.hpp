@@ -34,9 +34,7 @@ fill
     }
 
     // add the file
-    files.emplace( iter,
-                   File( asHead( division ),
-                         begin, position, end, lineNumber ) );
+    files.emplace( iter, asHead( division ), begin, position, end, lineNumber );
 
     // check for end of stream
     if ( position >= end ) {
