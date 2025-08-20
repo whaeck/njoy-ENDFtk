@@ -133,6 +133,7 @@ namespace section {
 
       if ( this->chi_.size() != 0 ) {
 
+        this->verifyIndex( dilution );
         return this->chi_[dilution];
       }
       else {

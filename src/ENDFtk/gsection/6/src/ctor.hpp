@@ -13,24 +13,24 @@
  *  @param[in]  cutoff_ig       the cuttoff group index for compressed fission matrix
  *  @param[in]  chi             the fission spectrum
  */
-GType(int mt, int zaid, double awr, int lr, int ngn,
-      double temp, std::vector< unsigned int > groups,
-      std::vector < std::vector< std::vector< double > > > flux,
-      std::vector < std::vector< std::vector< std::vector< double > > > > matrix,
-      int cutoff_ig,
-      std::vector < std::vector< double > > chi )
-      :
-      Base(zaid, awr, mt),
-      lr_(lr),
-      ngn_(ngn),
-      temp_(temp),
-      cutoff_ig_(cutoff_ig),
-      groups_(groups),
-      flux_( std::move(flux) ),
-      matrix_( std::move(matrix ) ),
-      chi_( std::move( chi ) ) {
-       verifySize( this->flux_, this->matrix_, this->chi_ );
-      }
+GType( int mt, int zaid, double awr, int lr, int ngn,
+       double temp, std::vector< unsigned int > groups,
+       std::vector < std::vector< std::vector< double > > > flux,
+       std::vector < std::vector< std::vector< std::vector< double > > > > matrix,
+       int cutoff_ig,
+       std::vector < std::vector< double > > chi ) :
+    Base(zaid, awr, mt),
+    lr_(lr),
+    ngn_(ngn),
+    temp_(temp),
+    cutoff_ig_(cutoff_ig),
+    groups_(groups),
+    flux_( std::move(flux) ),
+    matrix_( std::move(matrix ) ),
+    chi_( std::move( chi ) ) {
+
+   verifySize( this->flux_, this->matrix_, this->chi_ );
+ }
 
 //! @todo check sizes for this last one, and use delegation with the next one?
 
@@ -53,34 +53,33 @@ GType( int mt, int zaid, double awr, int lr,
        int ngn, double temp, std::vector< unsigned int > groups,
        std::vector < std::vector < std::vector < double > > > flux,
        std::vector < std::vector< std::vector< std::vector< double > > > > matrix ) :
-  Base( zaid, awr, mt ),
-  lr_( lr ),
-  ngn_( ngn ),
-  temp_( temp ),
-  groups_( groups ),
-  flux_( std::move( flux ) ) ,
-  matrix_(std::move ( matrix ) )  {
+    Base( zaid, awr, mt ),
+    lr_( lr ),
+    ngn_( ngn ),
+    temp_( temp ),
+    groups_( groups ),
+    flux_( std::move( flux ) ) ,
+    matrix_(std::move ( matrix ) )  {
 
   verifySize( this->flux_, this->matrix_ );
 }
 
 private:
 
-    GType( int mt, int zaid, double awr, int lr, int ngn,
-           std::tuple< double,
-                       std::vector< unsigned int >,
-                       std::vector< std::vector< std::vector< double > > >,
-                       std::vector< std::vector< std::vector< std::vector< double > > > >,
-                       int,
-                       std::vector< std::vector< double > > >&&data)
-        :
-        GType( mt, zaid, awr, lr, ngn,
-               std::move( std::get<0>( data ) ),        // temp
-               std::move( std::get<1>( data ) ),        // groups
-               std::move( std::get<2>( data ) ),        // flux
-               std::move( std::get<3>( data ) ),        // matrix
-               std::move( std::get<4>( data ) ),        // cutoff_ig
-               std::move( std::get<5>( data ) ) ) {}    // chi
+GType( int mt, int zaid, double awr, int lr, int ngn,
+       std::tuple< double,
+                   std::vector< unsigned int >,
+                   std::vector< std::vector< std::vector< double > > >,
+                   std::vector< std::vector< std::vector< std::vector< double > > > >,
+                   int,
+                   std::vector< std::vector< double > > >&& data ) :
+    GType( mt, zaid, awr, lr, ngn,
+           std::move( std::get<0>( data ) ),        // temp
+           std::move( std::get<1>( data ) ),        // groups
+           std::move( std::get<2>( data ) ),        // flux
+           std::move( std::get<3>( data ) ),        // matrix
+           std::move( std::get<4>( data ) ),        // cutoff_ig
+           std::move( std::get<5>( data ) ) ) {}    // chi
 
 GType( int mt, int zaid, double awr, int nl, int nz,  int lr, int ngn,
        std::vector< DataRecord >&& records ) :
