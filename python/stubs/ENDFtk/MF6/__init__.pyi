@@ -582,7 +582,7 @@ class GSection:
             section    the string representing the section
         """
     @typing.overload
-    def __init__(self, mt: int, zaid: int, awr: float, lr: int = 0, ngn: int, temp: float, groups: list[int], flux: list[list[list[float]]], matrix: list[list[list[list[float]]]], cutoff_ig: int, chi: list[list[float]]) -> None:
+    def __init__(self, mt: int, zaid: int, awr: float, lr: int = 0, ngn: int, temp: float, flux: list[list[list[float]]], matrix: list[list[list[list[float]]]], cutoff_ig: int, chi: list[list[float]]) -> None:
         """
         Initialise the section
         
@@ -594,12 +594,11 @@ class GSection:
            lr          the complex breakup flag (default 0)
            ngn         the number of neutron groups
            temp        the temperature
-           groups      array of the group indices
            flux        3D array of the group-wise fluxes (nl, nz, ngn)
            matrix      4D array of cross-sections ( nl, nz, ngn, ngn )
         """
     @typing.overload
-    def __init__(self, mt: int, zaid: int, awr: float, lr: int = 0, ngn: int, temp: float, groups: list[int], flux: list[list[list[float]]], matrix: list[list[list[list[float]]]]) -> None:
+    def __init__(self, mt: int, zaid: int, awr: float, lr: int = 0, ngn: int, temp: float, flux: list[list[list[float]]], matrix: list[list[list[list[float]]]]) -> None:
         """
         Initialise the section
         
@@ -611,7 +610,6 @@ class GSection:
            lr          the complex breakup flag (default 0)
            ngn         the number of neutron groups
            temp        the temperature
-           groups      array of the group indices
            flux        3D array of the group-wise fluxes (nl, nz, ngn)
            matrix      4D array of cross-sections ( nl, nz, ngn, ngn )
         """
@@ -694,11 +692,6 @@ class GSection:
     def break_up(self) -> int:
         """
         The break up identifier flag
-        """
-    @property
-    def groups(self) -> list[int]:
-        """
-        The neutron group indices
         """
     @property
     def number_dilutions(self) -> int:

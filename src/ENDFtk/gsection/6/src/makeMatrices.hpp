@@ -2,8 +2,6 @@ static auto
 makeMatrices( const std::vector< DataRecord > records,
               int nmoments, int ndilutions, int ngroups ) {
 
-    std::vector< unsigned int > groups( ngroups );
-    std::iota(groups.begin(), groups.end(), 1);
     std::vector< std::vector < std::vector< double > > > flux( nmoments );
     std::vector< std::vector< std::vector < std::vector< double > > > > matrix( nmoments );
     std::vector< std::vector < double > > chi;
@@ -103,5 +101,5 @@ makeMatrices( const std::vector< DataRecord > records,
     } // standard matrix
 
 
-    return std::make_tuple(temp, groups, flux, matrix, cutoff_ig, chi);
+    return std::make_tuple(temp, flux, matrix, cutoff_ig, chi);
 }

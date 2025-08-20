@@ -34,9 +34,6 @@ SCENARIO( "section::GType< 6 >" ) {
             int ngn = 30;
             double temp = 293.6;
 
-            std::vector< unsigned int > groups(30);
-            std::iota(groups.begin(), groups.end(), 1);
-
             std::vector< std::vector< std::vector< double > > > flux = {
                 {
                     { 1.270791e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 1.153966e6, 1.154819e6,
@@ -441,7 +438,7 @@ SCENARIO( "section::GType< 6 >" ) {
                 },
             };
 
-            section::GType< 6 > chunk(mt, zaid, awr, lr, ngn, temp, groups, flux, matrix );
+            section::GType< 6 > chunk(mt, zaid, awr, lr, ngn, temp, flux, matrix );
 
             THEN("a section GType< 6 > can be constructed and its"
                  " members can be tested") {
@@ -497,9 +494,6 @@ SCENARIO( "section::GType< 6 >" ) {
             int ngn = 20;
             double temp = 293.6;
             int cutoff_ig = 5;
-
-            std::vector< unsigned int > groups(20);
-            std::iota( groups.begin(), groups.end(), 1);
 
             std::vector< std::vector< double > > chi = {
                 { 1.96730e-14, 1.15287e-11, 7.10093e-11, 7.358034e-9, 9.678216e-7, 9.976067e-5, 8.080721e-4, 4.412081e-3, 3.119482e-3, 2.172044e-2,
@@ -725,7 +719,7 @@ SCENARIO( "section::GType< 6 >" ) {
             };
 
 
-            section::GType< 6 > chunk( mt, zaid, awr, lr, ngn, temp, groups, flux, matrix, cutoff_ig, chi );
+            section::GType< 6 > chunk( mt, zaid, awr, lr, ngn, temp, flux, matrix, cutoff_ig, chi );
 
 
 
@@ -1124,11 +1118,7 @@ void verifyChunk(const section::GType< 6 >& chunk) {
     CHECK(0 == chunk.breakUp());
     CHECK_THAT( 293.6, WithinRel( chunk.TEMP() ) );
     CHECK_THAT( 293.6, WithinRel( chunk.temperature() ) );
-    std::vector< unsigned int > expected_groups(30);
-    std::iota(expected_groups.begin(), expected_groups.end(), 1);
-    for ( size_t g = 0; g < chunk.NGN(); ++g) {
-        CHECK( expected_groups[g] == chunk.groups()[g] );
-    }
+
     // fluxes
     std::vector< double > flux_0_0 = { 1.270791e7, 1.149905e6, 1.158584e6, 1.148732e6, 1.155337e6, 1.154847e6, 1.153966e6, 1.154819e6,
         1.153684e6, 1.154784e6, 1.152800e6, 1.156920e6, 1.154341e6, 1.157786e6, 1.156371e6, 5.809202e5, 7.341455e5, 1.030736e6, 1.175655e6,
@@ -1754,11 +1744,6 @@ void verifyChunkFission( const section::GType< 6 >& chunk ) {
     CHECK(0 == chunk.breakUp());
     CHECK_THAT( 293.6, WithinRel( chunk.TEMP() ) );
     CHECK_THAT( 293.6, WithinRel( chunk.temperature() ) );
-    std::vector< unsigned int > expected_groups(20);
-    std::iota(expected_groups.begin(), expected_groups.end(), 1);
-    for ( size_t g = 0; g < chunk.NGN(); ++g) {
-        CHECK( expected_groups[g] == chunk.groups()[g] );
-    }
 
     std::vector< std::vector< double > > expected_chi = {
         { 1.96730e-14, 1.15287e-11, 7.10093e-11, 7.358034e-9, 9.678216e-7, 9.976067e-5, 8.080721e-4, 4.412081e-3, 3.119482e-3, 2.172044e-2,
