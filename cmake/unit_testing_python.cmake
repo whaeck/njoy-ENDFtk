@@ -40,7 +40,6 @@ add_python_test( RectangularMatrix Test_ENDFtk_RectangularMatrix.py )
 add_python_test( SquareMatrix      Test_ENDFtk_SquareMatrix.py )
 
 add_python_test( MF1.MT451.Section                    MF1/Test_ENDFtk_MF1_MT451_Section.py )
-add_python_test( MF1.MT451.GSection                   MF1/Test_ENDFtk_MF1_MT451_GSection.py )
 add_python_test( MF1.MT452.Section                    MF1/Test_ENDFtk_MF1_MT452_Section.py )
 add_python_test( MF1.MT455.Section                    MF1/Test_ENDFtk_MF1_MT455_Section.py )
 add_python_test( MF1.MT455.DecayConstants             MF1/MT455/Test_ENDFtk_MF1_MT455_DecayConstants.py )
@@ -89,7 +88,6 @@ add_python_test( MF2.MT151.UnresolvedEnergyIndependentLValue            MF2/MT15
 add_python_test( MF2.MT152.Section                                      MF2/Test_ENDFtk_MF2_MT152_Section.py )
 
 add_python_test( MF3.Section MF3/Test_ENDFtk_MF3_Section.py )
-add_python_test( MF3.GSection MF3/Test_ENDFtk_MF3_GSection.py )
 add_python_test( MF3.File    MF3/Test_ENDFtk_MF3_File.py )
 
 add_python_test( MF4.Section                MF4/Test_ENDFtk_MF4_Section.py )
@@ -257,6 +255,12 @@ add_python_test( tree.Material tree/Test_ENDFtk_Tree_Material.py )
 
 ## TODO create task to look into reenabling this. Failures observed in MSVC debug mode which we want to reevaluate on vetcorization of Tree data
 add_python_test( tree.Tape     tree/Test_ENDFtk_Tree_Tape.py )
+
+add_python_test( MF1.MT451.GSection MF1/Test_ENDFtk_MF1_MT451_GSection.py )
+add_python_test( MF3.GSection       MF3/Test_ENDFtk_MF3_GSection.py )
+add_python_test( MF5.MT455.GSection MF5/Test_ENDFtk_MF5_MT455_GSection.py )
+add_python_test( MF5.MT18.GSection  MF5/Test_ENDFtk_MF5_MT18_GSection.py )
+add_python_test( MF6.GSection       MF6/Test_ENDFtk_MF6_GSection.py )
 
 add_python_test( tree.GFile     tree/Test_ENDFtk_Tree_GFile.py )
 add_python_test( tree.GMaterial tree/Test_ENDFtk_Tree_GMaterial.py )

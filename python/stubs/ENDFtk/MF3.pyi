@@ -128,7 +128,7 @@ class GSection:
         Arguments:
             self     the section
             mt       the MT number
-            zaid     the ZA  identifier
+            zaid     the ZA identifier
             awr      the atomic mass ratio
             lr       the complex breakup flag
             temp     the temperature
@@ -239,7 +239,7 @@ class GSection:
     @property
     def number_moments(self) -> int:
         """
-        The mass difference Q value
+        The number of legendre moments
         """
     @property
     def section_number(self) -> int:

@@ -35,6 +35,7 @@ namespace section {
     #include "ENDFtk/gsection/3/src/makeRecords.hpp"
     #include "ENDFtk/gsection/3/src/readRecords.hpp"
     #include "ENDFtk/gsection/3/src/verifySize.hpp"
+    #include "ENDFtk/gsection/3/src/verifyIndex.hpp"
 
   public:
 
@@ -91,24 +92,26 @@ namespace section {
     /**
      *  @brief Return the multigroup cross section for a given moment and dilution
      *
-     *  @param[in] moment   the legendre moment requested
-     *  @param[in] dilution the dilution index requested
+     *  @param[in] moment     the legendre moment requested
+     *  @param[in] dilution   the dilution index requested
      */
-    const std::vector< double >& crossSection( int moment, int dilution ) const {
+    const std::vector< double >& crossSection( std::size_t moment, std::size_t dilution ) const {
 
+      this->verifyIndex( moment, dilution );
       return this->sigma_[moment][dilution];
     }
 
     /**
      *  @brief Return the multigroup ratio data for a given moment and dilution
      *
-     *  @param[in] moment   the legendre moment requested
-     *  @param[in] dilution the dilution index requested
+     *  @param[in] moment     the legendre moment requested
+     *  @param[in] dilution   the dilution index requested
      */
-    const std::vector< double >& ratio( int moment, int dilution ) const {
+    const std::vector< double >& ratio( std::size_t moment, std::size_t dilution ) const {
 
       if (this->ratio_.size() != 0) {
 
+        this->verifyIndex( moment, dilution );
         return this->ratio_[moment][dilution];
       }
       else {
@@ -119,9 +122,13 @@ namespace section {
 
     /**
      *  @brief Return the group fluxes
+     *
+     *  @param[in] moment     the legendre moment requested
+     *  @param[in] dilution   the dilution index requested
      */
-    const std::vector< double >& flux( int moment, int dilution ) const {
+    const std::vector< double >& flux( std::size_t moment, std::size_t dilution ) const {
 
+      this->verifyIndex( moment, dilution );
       return this->flux_[moment][dilution];
     }
 
