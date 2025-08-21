@@ -27,8 +27,8 @@ GType( int mt, int zaid, double awr, int lr, int ngn,
     matrix_( std::move(matrix ) ),
     chi_( std::move( chi ) ) {
 
-   verifySize( this->flux_, this->matrix_, this->chi_ );
- }
+  verifySize( this->flux_, this->matrix_, this->chi_ );
+}
 
 //! @todo check sizes for this last one, and use delegation with the next one?
 
@@ -100,16 +100,17 @@ GType( const HEAD& head,
        const Iterator& end,
        long& lineNumber,
        int MAT )
-    try:
-        GType( head.MT(), head.ZA(), head.AWR(), head.L1(),
-               head.L2(), head.N1(), head.N2(),
-               readRecords( begin, end, lineNumber, head.MAT(), head.MF(),
-                          head.MT(), head.N2() ) ) {
+  try:
+      GType( head.MT(), head.ZA(), head.AWR(), head.L1(),
+             head.L2(), head.N1(), head.N2(),
+             readRecords( begin, end, lineNumber, head.MAT(), head.MF(),
+                        head.MT(), head.N2() ) ) {
 
-               this->readSEND(begin, end, lineNumber, MAT, head.MF());
-            }
-    catch(std::exception& e) {
-        Log::info("Encountered error while reading section {} of file {} fo material {}"
-                  " in GENDF file.", head.MT(), head.MF(), head.MAT());
-        throw e;
-    }
+    this->readSEND(begin, end, lineNumber, MAT, head.MF());
+  }
+  catch(std::exception& e) {
+
+    Log::info( "Encountered error while reading section {} of file {} fo material {}"
+               " in GENDF file.", head.MT(), head.MF(), head.MAT());
+    throw e;
+  }
