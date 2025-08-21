@@ -1,12 +1,12 @@
 /**
  *  @brief Constructor from parameters for delayed fission spectrum
- * 
+ *
  *  @param[in]  zaid        the ZAID identifier
  *  @param[in]  awr         the atomic weight ration
  *  @param[in]  lr          the break-up identifier flag
- *  @param[in]  temp        the temperature 
+ *  @param[in]  temp        the temperature
  *  @param[in]  ng2         number of secondary positions (needed for clipped records)
- *  @param[in]  chi         the delayed neutron spectrum  
+ *  @param[in]  chi         the delayed neutron spectrum
  *  @param[in]  lambda      the time constants
  */
 GType( int zaid, double awr, int lr, double temp, int ng2,
@@ -31,7 +31,7 @@ GType( int zaid, double awr, int lr,
            std::move( std::get<1>( data ) ),        // ng2
            std::move( std::get<2>( data ) ),        // chi
            std::move( std::get<3>( data ) ) ) {}    // lambda
-    
+
 GType( int zaid, double awr, int nt, int lr, int ngn,
        DataRecord&& record ) :
     GType( zaid, awr, lr,
@@ -56,16 +56,16 @@ GType(const HEAD& head,
       const Iterator& end,
       long& lineNumber,
       int MAT)
-    try:
+  try:
         GType( head.ZA(), head.AWR(), head.L1(),
                head.N1(), head.N2(),
-        readRecord( begin, end, lineNumber, head.MAT(), head.MF(),
-                    455 ) ) {
-        this->readSEND( begin, end, lineNumber, MAT, head.MF() );
-    }
-    catch(std::exception& e) {
-        Log::info("Encountered error while reading section {} of file {} fo material {}"
-                  " in GENDF file.", 455, head.MF(), head.MAT());
-        throw e;
-    }
-    
+        DataRecord( begin, end, lineNumber, head.MAT(), head.MF(), 455 ) ) {
+
+    this->readSEND( begin, end, lineNumber, MAT, head.MF() );
+  }
+  catch(std::exception& e) {
+
+    Log::info( "Encountered error while reading section {} of file {} fo material {}"
+               " in GENDF file.", 455, head.MF(), head.MAT());
+    throw e;
+  }

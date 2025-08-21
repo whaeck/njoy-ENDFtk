@@ -26,7 +26,6 @@ namespace section {
         int ngn_;
         double temp_;
         int cutoff_ig_;
-        std::vector< unsigned int > groups_;
         std::vector< std::vector< std::vector< double > > > flux_;
         std::vector< std::vector< std::vector< std::vector< double > > > > matrix_;
         std::vector< std::vector< double > > chi_;
@@ -96,11 +95,6 @@ namespace section {
     double temperature() const { return this->TEMP(); }
 
     /**
-     *  @brief Return the group indices
-     */
-    decltype(auto) groups() const { return this->groups_; }
-
-    /**
      *  @brief Return the matrix for a given moment and dilution
      *
      *  @param[in] moment     the legendre moment requested
@@ -133,6 +127,7 @@ namespace section {
 
       if ( this->chi_.size() != 0 ) {
 
+        this->verifyIndex( dilution );
         return this->chi_[dilution];
       }
       else {

@@ -22,38 +22,17 @@ void wrapGSection_6( python::module& module, python::module&  ) {
     "MF6 gsection - scattering matrices and fission matrices"
   );
 
-    // wrap section
-    gsection
-    .def(
+  // wrap section
+  gsection
+  .def(
 
-        python::init< int, int, double, int, int, double, std::vector< unsigned int >&&,
-                      std::vector < std::vector< std::vector< double > > >&&,
-                      std::vector < std::vector< std::vector< std::vector< double > > > >&&,
-                      int, std::vector< std::vector< double > >&& >(),
-        python::arg( "mt" ), python::arg( "zaid" ), python::arg( "awr" ), python::arg( "lr" ) = 0,
-        python::arg( "ngn" ), python::arg( "temp" ), python::arg( "groups" ), python::arg( "flux" ),
-        python::arg( "matrix" ), python::arg( "cutoff_ig" ), python::arg( "chi" ),
-        "Initialise the section\n\n"
-        "Arguments:\n"
-        "   self        the section\n"
-        "   mt          the MT number\n"
-        "   zaid        the ZA identifier\n"
-        "   awr         the atomic mass ratio\n"
-        "   lr          the complex breakup flag (default 0)\n"
-        "   ngn         the number of neutron groups\n"
-        "   temp        the temperature\n"
-        "   groups      array of the group indices\n"
-        "   flux        3D array of the group-wise fluxes (nl, nz, ngn)\n"
-        "   matrix      4D array of cross-sections ( nl, nz, ngn, ngn )\n"
-    )
-    .def(
-
-    python::init< int, int, double, int, int, double, std::vector< unsigned int >&&,
+    python::init< int, int, double, int, int, double,
                   std::vector < std::vector< std::vector< double > > >&&,
-                  std::vector < std::vector< std::vector< std::vector< double > > > >&& >(),
+                  std::vector < std::vector< std::vector< std::vector< double > > > >&&,
+                  int, std::vector< std::vector< double > >&& >(),
     python::arg( "mt" ), python::arg( "zaid" ), python::arg( "awr" ), python::arg( "lr" ) = 0,
-    python::arg( "ngn" ), python::arg( "temp" ),
-    python::arg( "groups" ), python::arg( "flux" ), python::arg( "matrix" ),
+    python::arg( "ngn" ), python::arg( "temp" ), python::arg( "flux" ),
+    python::arg( "matrix" ), python::arg( "cutoff_ig" ), python::arg( "chi" ),
     "Initialise the section\n\n"
     "Arguments:\n"
     "   self        the section\n"
@@ -63,7 +42,26 @@ void wrapGSection_6( python::module& module, python::module&  ) {
     "   lr          the complex breakup flag (default 0)\n"
     "   ngn         the number of neutron groups\n"
     "   temp        the temperature\n"
-    "   groups      array of the group indices\n"
+    "   flux        3D array of the group-wise fluxes (nl, nz, ngn)\n"
+    "   matrix      4D array of cross-sections ( nl, nz, ngn, ngn )\n"
+  )
+  .def(
+
+    python::init< int, int, double, int, int, double,
+                  std::vector < std::vector< std::vector< double > > >&&,
+                  std::vector < std::vector< std::vector< std::vector< double > > > >&& >(),
+    python::arg( "mt" ), python::arg( "zaid" ), python::arg( "awr" ), python::arg( "lr" ) = 0,
+    python::arg( "ngn" ), python::arg( "temp" ),
+    python::arg( "flux" ), python::arg( "matrix" ),
+    "Initialise the section\n\n"
+    "Arguments:\n"
+    "   self        the section\n"
+    "   mt          the MT number\n"
+    "   zaid        the ZA identifier\n"
+    "   awr         the atomic mass ratio\n"
+    "   lr          the complex breakup flag (default 0)\n"
+    "   ngn         the number of neutron groups\n"
+    "   temp        the temperature\n"
     "   flux        3D array of the group-wise fluxes (nl, nz, ngn)\n"
     "   matrix      4D array of cross-sections ( nl, nz, ngn, ngn )"
   )
@@ -127,33 +125,27 @@ void wrapGSection_6( python::module& module, python::module&  ) {
     &GSection::temperature,
     "The temperature"
   )
-  .def_property_readonly(
+  .def(
 
-    "groups",
-    &GSection::groups,
-    "The neutron group indices"
+    "flux",
+    &GSection::flux,
+    python::arg( "moment" ), python::arg( "dilution" ),
+    "The group fluxes for a given moment and dilution index"
   )
   .def(
 
-        "flux",
-        &GSection::flux,
-        python::arg( "moment" ), python::arg( "dilution" ),
-        "The group fluxes for a given moment and dilution index"
-    )
-    .def(
+    "matrix",
+    &GSection::matrix,
+    python::arg( "moment" ), python::arg( "dilution" ),
+    "The matrix for a given moment and dilution index"
+  )
+  .def(
 
-        "matrix",
-        &GSection::matrix,
-        python::arg( "moment" ), python::arg( "dilution" ),
-        "The matrix for a given moment and dilution index"
-    )
-    .def(
-
-        "chi",
-        &GSection::chi,
-        python::arg( "dilution" ),
-        "The prompt fission spectrum for a given dilution"
-    );
+    "chi",
+    &GSection::chi,
+    python::arg( "dilution" ),
+    "The prompt fission spectrum for a given dilution"
+  );
 
   addStandardGSectionDefinitions< GSection >( gsection );
 }
