@@ -135,7 +135,6 @@ class Test_ENDFtk_MF16_Section( unittest.TestCase ) :
             self.assertAlmostEqual( 0.0, chunk.atomic_weight_ratio )
             self.assertAlmostEqual( 293.6, chunk.TEMP )
             self.assertAlmostEqual( 293.6, chunk.temperature )
-            expected_groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
             expected_flux = [[[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.696074e+6, 1.370348e+6, 3.611499e+5, 1.010491e+6, 7.295986e+5, 1.693616e+6, 5.107883e+5, 1.014623e+6,
               8.255313e+5, 6.500049e+5, 3.338837e+4, 0.0, 0.0, 9.073605e+2]]]
@@ -168,7 +167,6 @@ class Test_ENDFtk_MF16_Section( unittest.TestCase ) :
             ]
 
             for g_i in range( chunk.NGN ) :
-                self.assertAlmostEqual( expected_groups[g_i], chunk.groups[g_i])
                 self.assertAlmostEqual( expected_flux[0][0][g_i], chunk.flux( 0, 0 )[g_i])
                 for g_o in range( 2 ):
                     self.assertAlmostEqual( expected_matrix[0][0][g_i][g_o], chunk.matrix( 0, 0 )[g_i][g_o] )
@@ -191,7 +189,6 @@ class Test_ENDFtk_MF16_Section( unittest.TestCase ) :
             self.assertAlmostEqual( 0.0, chunk.atomic_weight_ratio )
             self.assertAlmostEqual( 293.6, chunk.TEMP )
             self.assertAlmostEqual( 293.6, chunk.temperature )
-            expected_groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
             expected_flux = [[[ 1.611884e+4, 1.110213e+7, 2.451436e+6, 3.461286e+6, 3.753318e+6, 3.571209e+6, 1.696074e+6, 1.370348e+6, 3.611499e+5, 1.010491e+6,
                       7.295986e+5, 1.693616e+6, 5.107883e+5, 1.014623e+6, 8.255313e+5, 6.500049e+5, 3.338837e+4, 1.067061e+5, 2.467532e+3, 9.073605e+2 ]]]
@@ -224,7 +221,6 @@ class Test_ENDFtk_MF16_Section( unittest.TestCase ) :
             ]
 
             for g_i in range( chunk.NGN ) :
-                self.assertAlmostEqual( expected_groups[g_i], chunk.groups[g_i])
                 self.assertAlmostEqual( expected_flux[0][0][g_i], chunk.flux( 0, 0 )[g_i])
                 for g_o in range( 12 ):
                     self.assertAlmostEqual( expected_matrix[0][0][g_i][g_o], chunk.matrix( 0, 0 )[g_i][g_o] )
@@ -235,7 +231,6 @@ class Test_ENDFtk_MF16_Section( unittest.TestCase ) :
         # TESTS
 
         # When the data is provided explicitly for inelastic scattering
-        groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
         flux = [
             [
                 [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.696074e+6, 1.370348e+6, 3.611499e+5, 1.010491e+6, 7.295986e+5, 1.693616e+6, 5.107883e+5, 1.014623e+6,
@@ -271,7 +266,7 @@ class Test_ENDFtk_MF16_Section( unittest.TestCase ) :
             ]
         chunk = GSection( mt = 52, zaid = 92235, awr = 0.0,
                           lr = 0, ngn = 20, temp = 293.6,
-                          groups = groups, flux = flux,
+                          flux = flux,
                           matrix = matrix )
 
         # then it can be verified
@@ -285,7 +280,6 @@ class Test_ENDFtk_MF16_Section( unittest.TestCase ) :
         verify_chunk_inelastic( self, chunk )
 
         # When the data for a fission section is provided explicitly
-        groups = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
         flux = [
             [
                 [ 1.611884e+4, 1.110213e+7, 2.451436e+6, 3.461286e+6, 3.753318e+6, 3.571209e+6, 1.696074e+6, 1.370348e+6, 3.611499e+5, 1.010491e+6,
@@ -321,7 +315,7 @@ class Test_ENDFtk_MF16_Section( unittest.TestCase ) :
 
         chunk = GSection( mt = 18, zaid = 92235, awr = 0.0,
                           lr = 0, ngn = 20, temp = 293.6,
-                          groups = groups, flux = flux,
+                          flux = flux,
                           matrix = matrix )
 
         # then it can be verified
