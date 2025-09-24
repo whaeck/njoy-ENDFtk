@@ -46,7 +46,7 @@ import ENDFtk.MF8.MT459
 import ENDFtk.MF9
 from __future__ import annotations
 import typing
-__all__ = ['File', 'GFile', 'GMaterial', 'GSection', 'GTape', 'Material', 'Section', 'Tape']
+__all__: list[str] = ['File', 'GFile', 'GMaterial', 'GSection', 'GTape', 'Material', 'Section', 'Tape']
 class File:
     """
     ENDF tree file

@@ -3,7 +3,7 @@ MF16 - photon energy-angle distributions
 """
 from __future__ import annotations
 import typing
-__all__ = ['GSection']
+__all__: list[str] = ['GSection']
 class GSection:
     """
     MF16 gsection - neutron-gamma matrices
@@ -20,7 +20,7 @@ class GSection:
             section    the string representing the section
         """
     @typing.overload
-    def __init__(self, mt: int, zaid: int, awr: float, lr: int, ngn: int, temp: float, groups: list[int], flux: list[list[list[float]]], matrix: list[list[list[list[float]]]]) -> None:
+    def __init__(self, mt: int, zaid: int, awr: float, lr: int, ngn: int, temp: float, flux: list[list[list[float]]], matrix: list[list[list[list[float]]]]) -> None:
         """
         Initialise the section
         
@@ -32,7 +32,6 @@ class GSection:
            lr          the complex breakup flag (default 0)
            ngn         the number of neutron groups
            temp        the temperature
-           groups      array of the group indices
            flux        3D array of the group-wise fluxes (nl, nz, ngn)
            matrix      4D array of photon yields ( nl, nz, ngn, ngg )
         """
@@ -111,11 +110,6 @@ class GSection:
     def break_up_id(self) -> int:
         """
         The break up identifier flag
-        """
-    @property
-    def groups(self) -> list[int]:
-        """
-        The neutron group indices
         """
     @property
     def number_dilutions(self) -> int:
