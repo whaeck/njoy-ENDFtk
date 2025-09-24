@@ -28,7 +28,7 @@ makeRecords( double temp,
 
         for ( unsigned int l = 0; l < nmoments; ++l ) {
 
-          if (sigma[l][z][g] != 0.0 || g == ngroups) {
+          if (sigma[l][z][g] != 0.0 || ( g == ngroups - 1 ) ) {
 
             list.push_back( flux[l][z][g] );
             xs.push_back( sigma[l][z][g] );

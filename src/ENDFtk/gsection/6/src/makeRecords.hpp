@@ -71,7 +71,7 @@ makeRecords( double temp,
 
               list.emplace_back( flux[l][z][g_i] );
             } // endif
-            if ( matrix[l][z][g_i][g_o] != 0.0 ) {
+            if ( matrix[l][z][g_i][g_o] != 0.0 || ( g_i == ngroups - 1 && g_o == 0 ) ) {
 
               xs.emplace_back( matrix[l][z][g_i][g_o] );
               if ( z == 0 ) {
@@ -113,7 +113,7 @@ makeRecords( double temp,
               list.emplace_back( flux[l][z][g_i] );
             } // endif
 
-            if ( g_o <= g_i && g_o >= ig2lo) {
+            if ( g_o <= g_i && g_o >= ig2lo ) {
 
               xs.emplace_back( matrix[l][z][g_i][g_o] );
             } // endif
