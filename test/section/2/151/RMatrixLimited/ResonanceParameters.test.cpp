@@ -220,6 +220,30 @@ void verifyChunk( const ResonanceParameters& chunk ) {
   CHECK_THAT( 0., WithinRel( chunk.resonanceParameters()[1][8] ) );
   CHECK_THAT( 0., WithinRel( chunk.resonanceParameters()[1][9] ) );
   CHECK_THAT( 0., WithinRel( chunk.resonanceParameters()[1][10] ) );
+  CHECK_THAT( 1.   , WithinRel( chunk.GAM(0)[0] ) );
+  CHECK_THAT( 1.455, WithinRel( chunk.GAM(0)[1] ) );
+  CHECK_THAT( 9.611086e+5, WithinRel( chunk.GAM(1)[0] ) );
+  CHECK_THAT( 1.187354e+3, WithinRel( chunk.GAM(1)[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.GAM(2)[0] ) );
+  CHECK_THAT( 6., WithinRel( chunk.GAM(2)[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.GAM(3)[0] ) );
+  CHECK_THAT( 7., WithinRel( chunk.GAM(3)[1] ) );
+  CHECK_THAT( 4., WithinRel( chunk.GAM(4)[0] ) );
+  CHECK_THAT( 8., WithinRel( chunk.GAM(4)[1] ) );
+  CHECK_THAT( 5., WithinRel( chunk.GAM(5)[0] ) );
+  CHECK_THAT( 9., WithinRel( chunk.GAM(5)[1] ) );
+  CHECK_THAT( 1.   , WithinRel( chunk.resonanceParameters(0)[0] ) );
+  CHECK_THAT( 1.455, WithinRel( chunk.resonanceParameters(0)[1] ) );
+  CHECK_THAT( 9.611086e+5, WithinRel( chunk.resonanceParameters(1)[0] ) );
+  CHECK_THAT( 1.187354e+3, WithinRel( chunk.resonanceParameters(1)[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.resonanceParameters(2)[0] ) );
+  CHECK_THAT( 6., WithinRel( chunk.resonanceParameters(2)[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.resonanceParameters(3)[0] ) );
+  CHECK_THAT( 7., WithinRel( chunk.resonanceParameters(3)[1] ) );
+  CHECK_THAT( 4., WithinRel( chunk.resonanceParameters(4)[0] ) );
+  CHECK_THAT( 8., WithinRel( chunk.resonanceParameters(4)[1] ) );
+  CHECK_THAT( 5., WithinRel( chunk.resonanceParameters(5)[0] ) );
+  CHECK_THAT( 9., WithinRel( chunk.resonanceParameters(5)[1] ) );
 
   CHECK( 5 == chunk.NC() );
 }
